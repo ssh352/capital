@@ -1,12 +1,7 @@
 package com.bazinga.capital.model;
 
-import com.oracle.webservices.internal.api.databinding.DatabindingMode;
-
-import java.util.Date;
-import java.util.Date;
-import java.util.Date;
-
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 〈用户测试〉<p>
