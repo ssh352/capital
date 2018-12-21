@@ -42,6 +42,9 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     @Value("${xtp.data_folder}")
     private String dataFolder;
 
+    @Value("${xtp.lib_folder}")
+    private String libFolder;
+
     public boolean isLogin() {
         return loginFlag;
     }
