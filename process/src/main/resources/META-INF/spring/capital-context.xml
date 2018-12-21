@@ -13,6 +13,8 @@
 
 	<import resource="classpath:META-INF/spring/capital-service.xml" />
 
+	<import resource="classpath:META-INF/spring/capital-job.xml" />
+
 
 	<!--&lt;!&ndash; ETag &ndash;&gt;-->
 	<!--<bean id="shallowEtagHeaderFilter" class="org.springframework.web.filter.ShallowEtagHeaderFilter" />-->
