@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * @author yunshan 
  */
@@ -90,10 +92,17 @@ public class QuoteSpiImpl implements QuoteSpi{
     }
 
     @Override
-    public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
+    public void onQueryAllTickers(TickerInfoResponse tickerInfoResponse, ErrorMessage errorMessage) {
         log.info("on call back onQueryAllTickers");
         TicketInfo ticketInfo = new TicketInfo();
-        BeanUtils.copyProperties(tickerInfo,ticketInfo);
+        BeanUtils.copyProperties(tickerInfoResponse,ticketInfo);
+        ticketInfo.setTicketName(tickerInfoResponse.getTickerName());
+        ticketInfo.setExchangeType(tickerInfoResponse.getExchangeType().getType());
+        ticketInfo.setTickerType(1);
+        ticketInfo.setLowerLimitPrice(new BigDecimal(String.valueOf(tickerInfoResponse.getLowerLimitPrice())));
+        ticketInfo.setUpperLimitPrice(new BigDecimal(String.valueOf(tickerInfoResponse.getUpperLimitPrice())));
+        ticketInfo.setPreClosePrice(new BigDecimal(String.valueOf(tickerInfoResponse.getPreClosePrice())));
+        ticketInfo.setPriceTick(new BigDecimal(String.valueOf(tickerInfoResponse.getPriceTick())));
         ticketInfoService.save(ticketInfo);
     }
 

@@ -24,7 +24,7 @@ public class QueryAllTicketJob {
         log.info("QueryAllTicketJob start...");
         try {
             quoteApiService.queryAllTickers(ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(60);
         } catch (Exception e) {
             log.error("QueryAllTicketJob error",e);
         }
