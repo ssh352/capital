@@ -22,6 +22,7 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
 
     private boolean loginFlag;
 
+    @Autowired
     private QuoteSpi quoteSpi;
 
     @Value("${xtp.quote.ip}")
@@ -49,10 +50,18 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
         return loginFlag;
     }
 
+    private static void loadLibrary(String libFolder) {
+        System.load(libFolder + "/libxtptraderapi.so");
+        System.load(libFolder + "/libxtpquoteapi.so");
+        System.load(libFolder + "/libglog.so");
+        System.load(libFolder + "/libtradeplugin.so");
+        System.load(libFolder + "/libquoteplugin.so");
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         log.info("afterPropertiesSet start--------");
-        this.quoteSpi = new QuoteSpiImpl();
+        loadLibrary(libFolder);
         quoteApi = new QuoteApi(quoteSpi);
         quoteApi.connect(clientId, dataFolder);
         quoteApi.setHeartBeatInterval(3);

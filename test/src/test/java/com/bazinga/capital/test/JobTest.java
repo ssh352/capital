@@ -2,6 +2,7 @@ package com.bazinga.capital.test;
 
 import com.bazinga.capital.job.QueryAllTicketJob;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -14,6 +15,7 @@ public class JobTest extends BaseTestCase{
     @Autowired
     private QueryAllTicketJob queryAllTicketJob;
 
+    @Test
     public void test(){
         log.info("job start");
         queryAllTicketJob.execute();

@@ -5,6 +5,7 @@ import com.bazinga.capital.service.TicketInfoService;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
 import com.zts.xtp.quote.spi.QuoteSpi;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @author yunshan 
  */
 @Service
+@Slf4j
 public class QuoteSpiImpl implements QuoteSpi{
 
     @Autowired
@@ -89,6 +91,7 @@ public class QuoteSpiImpl implements QuoteSpi{
 
     @Override
     public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
+        log.info("on call back onQueryAllTickers");
         TicketInfo ticketInfo = new TicketInfo();
         BeanUtils.copyProperties(tickerInfo,ticketInfo);
         ticketInfoService.save(ticketInfo);
