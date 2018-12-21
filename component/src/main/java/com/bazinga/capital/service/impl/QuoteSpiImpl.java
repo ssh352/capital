@@ -1,16 +1,23 @@
 package com.bazinga.capital.service.impl;
 
+import com.bazinga.capital.model.TicketInfo;
+import com.bazinga.capital.service.TicketInfoService;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
 import com.zts.xtp.quote.spi.QuoteSpi;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
  * @author yunshan 
  */
-
+@Service
 public class QuoteSpiImpl implements QuoteSpi{
+
+    @Autowired
+    private TicketInfoService ticketInfoService;
 
     @Override
     public void onDisconnected(int reason) {
@@ -82,6 +89,9 @@ public class QuoteSpiImpl implements QuoteSpi{
 
     @Override
     public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
+        TicketInfo ticketInfo = new TicketInfo();
+        BeanUtils.copyProperties(tickerInfo,ticketInfo);
+        ticketInfoService.save(ticketInfo);
     }
 
     @Override

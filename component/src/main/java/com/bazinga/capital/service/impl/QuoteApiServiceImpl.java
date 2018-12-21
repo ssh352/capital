@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author yunshan
  */
-//@Service
+@Service
 @PropertySource("classpath:xtp_config.properties")
 @Slf4j
 public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
@@ -42,9 +42,6 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     @Value("${xtp.data_folder}")
     private String dataFolder;
 
-
-
-
     public boolean isLogin() {
         return loginFlag;
     }
@@ -55,8 +52,10 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
         this.quoteSpi = new QuoteSpiImpl();
         quoteApi = new QuoteApi(quoteSpi);
         quoteApi.connect(clientId, dataFolder);
+        quoteApi.setHeartBeatInterval(3);
         int loginResult = quoteApi.login(ip, port, user, password, 1);
         loginFlag = (loginResult == 0);
+
     }
 
     @Override
@@ -70,8 +69,8 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     }
 
     @Override
-    public int login(String var1, int var2, String var3, String var4, int var5) {
-        return 0;
+    public int login(String ip, int port, String user, String password, int protocol) {
+        return quoteApi.login(ip, port, user, password, protocol);
     }
 
     @Override
@@ -85,8 +84,8 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     }
 
     @Override
-    public int subscribeMarketData(String[] var1, int var2, int var3) {
-        return 0;
+    public int subscribeMarketData(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.subscribeMarketData(tickers,count,exchangeId);
     }
 
     @Override
@@ -145,8 +144,8 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     }
 
     @Override
-    public int queryAllTickers(int var1) {
-        return 0;
+    public int queryAllTickers(int exchangeId) {
+        return quoteApi.queryAllTickers(exchangeId);
     }
 
     @Override
