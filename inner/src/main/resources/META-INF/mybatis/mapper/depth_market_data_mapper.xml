@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.DepthMarketDataDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.DepthMarketData">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="ask" jdbcType="VARCHAR" property="ask"/>
+        <result column="ask_qty" jdbcType="INTEGER" property="askQty"/>
+        <result column="avg_price" jdbcType="DECIMAL" property="avgPrice"/>
+        <result column="bid" jdbcType="VARCHAR" property="bid"/>
+        <result column="bid_qty" jdbcType="INTEGER" property="bidQty"/>
+        <result column="close_price" jdbcType="DECIMAL" property="closePrice"/>
+        <result column="curr_delta" jdbcType="DECIMAL" property="currDelta"/>
+        <result column="dataTime" jdbcType="TIMESTAMP" property="dataTime"/>
+        <result column="exchange_type" jdbcType="TINYINT" property="exchangeType"/>
+        <result column="high_price" jdbcType="DECIMAL" property="highPrice"/>
+        <result column="last_price" jdbcType="DECIMAL" property="lastPrice"/>
+        <result column="lower_limit_price" jdbcType="DECIMAL" property="lowerLimitPrice"/>
+        <result column="low_price" jdbcType="DECIMAL" property="lowPrice"/>
+        <result column="open_price" jdbcType="DECIMAL" property="openPrice"/>
+        <result column="pre_close_price" jdbcType="DECIMAL" property="preClosePrice"/>
+        <result column="pre_delta" jdbcType="DECIMAL" property="preDelta"/>
+        <result column="pre_settlement_price" jdbcType="DECIMAL" property="preSettlementPrice"/>
+        <result column="pre_total_long_positon" jdbcType="BIGINT" property="preTotalLongPositon"/>
+        <result column="qty" jdbcType="BIGINT" property="qty"/>
+        <result column="settlement_price" jdbcType="DECIMAL" property="settlementPrice"/>
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="ticker_status" jdbcType="VARCHAR" property="tickerStatus"/>
+        <result column="total_long_positon" jdbcType="BIGINT" property="totalLongPositon"/>
+        <result column="trades_count" jdbcType="BIGINT" property="tradesCount"/>
+        <result column="turnover" jdbcType="DECIMAL" property="turnover"/>
+        <result column="upper_limit_price" jdbcType="DECIMAL" property="upperLimitPrice"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            ask,
+            ask_qty,
+            avg_price,
+            bid,
+            bid_qty,
+            close_price,
+            curr_delta,
+            dataTime,
+            exchange_type,
+            high_price,
+            last_price,
+            lower_limit_price,
+            low_price,
+            open_price,
+            pre_close_price,
+            pre_delta,
+            pre_settlement_price,
+            pre_total_long_positon,
+            qty,
+            settlement_price,
+            ticker,
+            ticker_status,
+            total_long_positon,
+            trades_count,
+            turnover,
+            upper_limit_price,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from depth_market_data
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.DepthMarketData" useGeneratedKeys="true" keyProperty="id">
+        insert into depth_market_data (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{ask, jdbcType=VARCHAR},
+            #{askQty, jdbcType=INTEGER},
+            #{avgPrice, jdbcType=DECIMAL},
+            #{bid, jdbcType=VARCHAR},
+            #{bidQty, jdbcType=INTEGER},
+            #{closePrice, jdbcType=DECIMAL},
+            #{currDelta, jdbcType=DECIMAL},
+            #{dataTime, jdbcType=TIMESTAMP},
+            #{exchangeType, jdbcType=TINYINT},
+            #{highPrice, jdbcType=DECIMAL},
+            #{lastPrice, jdbcType=DECIMAL},
+            #{lowerLimitPrice, jdbcType=DECIMAL},
+            #{lowPrice, jdbcType=DECIMAL},
+            #{openPrice, jdbcType=DECIMAL},
+            #{preClosePrice, jdbcType=DECIMAL},
+            #{preDelta, jdbcType=DECIMAL},
+            #{preSettlementPrice, jdbcType=DECIMAL},
+            #{preTotalLongPositon, jdbcType=BIGINT},
+            #{qty, jdbcType=BIGINT},
+            #{settlementPrice, jdbcType=DECIMAL},
+            #{ticker, jdbcType=VARCHAR},
+            #{tickerStatus, jdbcType=VARCHAR},
+            #{totalLongPositon, jdbcType=BIGINT},
+            #{tradesCount, jdbcType=BIGINT},
+            #{turnover, jdbcType=DECIMAL},
+            #{upperLimitPrice, jdbcType=DECIMAL},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.DepthMarketData">
+        update depth_market_data
+        <set>
+            <if test="ask != null">
+                ask = #{ask, jdbcType=VARCHAR},
+            </if>
+            <if test="askQty != null">
+                ask_qty = #{askQty, jdbcType=INTEGER},
+            </if>
+            <if test="avgPrice != null">
+                avg_price = #{avgPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="bid != null">
+                bid = #{bid, jdbcType=VARCHAR},
+            </if>
+            <if test="bidQty != null">
+                bid_qty = #{bidQty, jdbcType=INTEGER},
+            </if>
+            <if test="closePrice != null">
+                close_price = #{closePrice, jdbcType=DECIMAL},
+            </if>
+            <if test="currDelta != null">
+                curr_delta = #{currDelta, jdbcType=DECIMAL},
+            </if>
+            <if test="dataTime != null">
+                dataTime = #{dataTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="exchangeType != null">
+                exchange_type = #{exchangeType, jdbcType=TINYINT},
+            </if>
+            <if test="highPrice != null">
+                high_price = #{highPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="lastPrice != null">
+                last_price = #{lastPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="lowerLimitPrice != null">
+                lower_limit_price = #{lowerLimitPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="lowPrice != null">
+                low_price = #{lowPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="openPrice != null">
+                open_price = #{openPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="preClosePrice != null">
+                pre_close_price = #{preClosePrice, jdbcType=DECIMAL},
+            </if>
+            <if test="preDelta != null">
+                pre_delta = #{preDelta, jdbcType=DECIMAL},
+            </if>
+            <if test="preSettlementPrice != null">
+                pre_settlement_price = #{preSettlementPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="preTotalLongPositon != null">
+                pre_total_long_positon = #{preTotalLongPositon, jdbcType=BIGINT},
+            </if>
+            <if test="qty != null">
+                qty = #{qty, jdbcType=BIGINT},
+            </if>
+            <if test="settlementPrice != null">
+                settlement_price = #{settlementPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="tickerStatus != null">
+                ticker_status = #{tickerStatus, jdbcType=VARCHAR},
+            </if>
+            <if test="totalLongPositon != null">
+                total_long_positon = #{totalLongPositon, jdbcType=BIGINT},
+            </if>
+            <if test="tradesCount != null">
+                trades_count = #{tradesCount, jdbcType=BIGINT},
+            </if>
+            <if test="turnover != null">
+                turnover = #{turnover, jdbcType=DECIMAL},
+            </if>
+            <if test="upperLimitPrice != null">
+                upper_limit_price = #{upperLimitPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="ask != null">
+            and ask = #{ask, jdbcType=VARCHAR}
+        </if>
+        <if test="askQty != null">
+            and ask_qty = #{askQty, jdbcType=INTEGER}
+        </if>
+        <if test="avgPrice != null">
+            and avg_price = #{avgPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="bid != null">
+            and bid = #{bid, jdbcType=VARCHAR}
+        </if>
+        <if test="bidQty != null">
+            and bid_qty = #{bidQty, jdbcType=INTEGER}
+        </if>
+        <if test="closePrice != null">
+            and close_price = #{closePrice, jdbcType=DECIMAL}
+        </if>
+        <if test="currDelta != null">
+            and curr_delta = #{currDelta, jdbcType=DECIMAL}
+        </if>
+        <if test="exchangeType != null">
+            and exchange_type = #{exchangeType, jdbcType=TINYINT}
+        </if>
+        <if test="highPrice != null">
+            and high_price = #{highPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="lastPrice != null">
+            and last_price = #{lastPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="lowerLimitPrice != null">
+            and lower_limit_price = #{lowerLimitPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="lowPrice != null">
+            and low_price = #{lowPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="openPrice != null">
+            and open_price = #{openPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="preClosePrice != null">
+            and pre_close_price = #{preClosePrice, jdbcType=DECIMAL}
+        </if>
+        <if test="preDelta != null">
+            and pre_delta = #{preDelta, jdbcType=DECIMAL}
+        </if>
+        <if test="preSettlementPrice != null">
+            and pre_settlement_price = #{preSettlementPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="preTotalLongPositon != null">
+            and pre_total_long_positon = #{preTotalLongPositon, jdbcType=BIGINT}
+        </if>
+        <if test="qty != null">
+            and qty = #{qty, jdbcType=BIGINT}
+        </if>
+        <if test="settlementPrice != null">
+            and settlement_price = #{settlementPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="tickerStatus != null">
+            and ticker_status = #{tickerStatus, jdbcType=VARCHAR}
+        </if>
+        <if test="totalLongPositon != null">
+            and total_long_positon = #{totalLongPositon, jdbcType=BIGINT}
+        </if>
+        <if test="tradesCount != null">
+            and trades_count = #{tradesCount, jdbcType=BIGINT}
+        </if>
+        <if test="turnover != null">
+            and turnover = #{turnover, jdbcType=DECIMAL}
+        </if>
+        <if test="upperLimitPrice != null">
+            and upper_limit_price = #{upperLimitPrice, jdbcType=DECIMAL}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="dataTimeFrom != null">
+            <![CDATA[
+            and dataTime >= #{dataTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="dataTimeTo != null">
+            <![CDATA[
+            and dataTime <= #{dataTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.DepthMarketDataQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from depth_market_data
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.DepthMarketDataQuery" resultType="java.lang.Integer">
+        select count(1)
+        from depth_market_data
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
