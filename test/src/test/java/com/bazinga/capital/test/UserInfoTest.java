@@ -32,7 +32,7 @@ public class UserInfoTest extends BaseTestCase {
     public void add() {
         UserInfo userInfo = new UserInfo();
         userInfo.setName("hanBing");
-        userInfo.setIdCard("21313212312");
+        userInfo.setIdCard("21313212254252");
         userInfo.setSex(1);
         userInfo.setBirthday(new Date());
         userInfo.setStatus(1);
