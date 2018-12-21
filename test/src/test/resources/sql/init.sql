@@ -15,7 +15,7 @@ CREATE TABLE `user_info` (
   KEY `idx_name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
-CREATE TABLE `tickey_info` (
+CREATE TABLE `ticket_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `ticker` varchar(30) NOT NULL COMMENT '股票代码',
   `ticket_name` varchar(60) NOT NULL COMMENT '股票名称',
@@ -31,7 +31,7 @@ CREATE TABLE `tickey_info` (
   KEY `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='股票信息';
 
-CREATE TABLE `depth_marcket_data` (
+CREATE TABLE `depth_market_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ask` varchar(100) NOT NULL COMMENT '10档申卖价',
   `ask_qty` int(10) NOT NULL COMMENT '十档申卖量',

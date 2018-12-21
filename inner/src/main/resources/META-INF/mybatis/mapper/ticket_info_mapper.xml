@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.TicketInfoDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.TicketInfo">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="ticket_name" jdbcType="VARCHAR" property="ticketName"/>
+        <result column="exchange_type" jdbcType="TINYINT" property="exchangeType"/>
+        <result column="ticker_type" jdbcType="TINYINT" property="tickerType"/>
+        <result column="buy_qty_unit" jdbcType="INTEGER" property="buyQtyUnit"/>
+        <result column="upper_limit_price" jdbcType="DECIMAL" property="upperLimitPrice"/>
+        <result column="lower_limit_price" jdbcType="DECIMAL" property="lowerLimitPrice"/>
+        <result column="pre_close_price" jdbcType="DECIMAL" property="preClosePrice"/>
+        <result column="price_tick" jdbcType="DECIMAL" property="priceTick"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            ticker,
+            ticket_name,
+            exchange_type,
+            ticker_type,
+            buy_qty_unit,
+            upper_limit_price,
+            lower_limit_price,
+            pre_close_price,
+            price_tick,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ticket_info
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.TicketInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into ticket_info (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{ticker, jdbcType=VARCHAR},
+            #{ticketName, jdbcType=VARCHAR},
+            #{exchangeType, jdbcType=TINYINT},
+            #{tickerType, jdbcType=TINYINT},
+            #{buyQtyUnit, jdbcType=INTEGER},
+            #{upperLimitPrice, jdbcType=DECIMAL},
+            #{lowerLimitPrice, jdbcType=DECIMAL},
+            #{preClosePrice, jdbcType=DECIMAL},
+            #{priceTick, jdbcType=DECIMAL},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.TicketInfo">
+        update ticket_info
+        <set>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="ticketName != null">
+                ticket_name = #{ticketName, jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeType != null">
+                exchange_type = #{exchangeType, jdbcType=TINYINT},
+            </if>
+            <if test="tickerType != null">
+                ticker_type = #{tickerType, jdbcType=TINYINT},
+            </if>
+            <if test="buyQtyUnit != null">
+                buy_qty_unit = #{buyQtyUnit, jdbcType=INTEGER},
+            </if>
+            <if test="upperLimitPrice != null">
+                upper_limit_price = #{upperLimitPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="lowerLimitPrice != null">
+                lower_limit_price = #{lowerLimitPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="preClosePrice != null">
+                pre_close_price = #{preClosePrice, jdbcType=DECIMAL},
+            </if>
+            <if test="priceTick != null">
+                price_tick = #{priceTick, jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="ticketName != null">
+            and ticket_name = #{ticketName, jdbcType=VARCHAR}
+        </if>
+        <if test="exchangeType != null">
+            and exchange_type = #{exchangeType, jdbcType=TINYINT}
+        </if>
+        <if test="tickerType != null">
+            and ticker_type = #{tickerType, jdbcType=TINYINT}
+        </if>
+        <if test="buyQtyUnit != null">
+            and buy_qty_unit = #{buyQtyUnit, jdbcType=INTEGER}
+        </if>
+        <if test="upperLimitPrice != null">
+            and upper_limit_price = #{upperLimitPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="lowerLimitPrice != null">
+            and lower_limit_price = #{lowerLimitPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="preClosePrice != null">
+            and pre_close_price = #{preClosePrice, jdbcType=DECIMAL}
+        </if>
+        <if test="priceTick != null">
+            and price_tick = #{priceTick, jdbcType=DECIMAL}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.TicketInfoQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from ticket_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.TicketInfoQuery" resultType="java.lang.Integer">
+        select count(1)
+        from ticket_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
