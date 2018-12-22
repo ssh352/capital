@@ -63,14 +63,13 @@ CREATE TABLE `tick_by_tick` (
 
 CREATE TABLE `tick_by_tick_entrust` (
   `id` BIGINT  NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelNo` INT NOT NULL COMMENT '频道代码',
-  `ordType` varchar NOT NULL COMMENT '订单类别: 1: 市价; 2: 限价; 3: 本方最优',
-  `price` decimal NOT NULL COMMENT '委托价格',
+  `channelNo` INT(10) NOT NULL COMMENT '频道代码',
+  `ordType` varchar(5) NOT NULL COMMENT '订单类别: 1: 市价; 2: 限价; 3: 本方最优',
+  `price` decimal(10,2) NOT NULL COMMENT '委托价格',
   `qty` BIGINT NOT NULL COMMENT '委托数量',
   `seq` BIGINT NOT NULL COMMENT '委托序号(在同一个channel_no内唯一，从1开始连续)',
-  `side` varchar NOT NULL COMMENT '1:买; 2:卖; G:借入; F:出借',
+  `side` varchar(5) NOT NULL COMMENT '1:买; 2:卖; G:借入; F:出借',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `is_deleted` int(11) NOT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='逐笔委托(仅适用深交所)';
 
