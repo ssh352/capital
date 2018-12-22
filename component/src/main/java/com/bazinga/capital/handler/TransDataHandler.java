@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author yunshan
  */
-public abstract class ITransDataHandler<T> implements InitializingBean {
+public abstract class TransDataHandler<T> implements InitializingBean {
 
     protected ExecutorService executorService;
 

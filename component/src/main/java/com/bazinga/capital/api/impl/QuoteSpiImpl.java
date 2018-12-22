@@ -1,7 +1,7 @@
 package com.bazinga.capital.api.impl;
 
 import com.bazinga.capital.enums.ApiResponseEnum;
-import com.bazinga.capital.handler.ITransDataHandler;
+import com.bazinga.capital.handler.TransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
@@ -18,10 +18,12 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onDisconnected(int reason) {
+        log.error("onDisconnected");
     }
 
     @Override
     public void onError(ErrorMessage errorMessage) {
+        log.error("on error");
     }
 
     @Override
@@ -35,7 +37,7 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthQuote) {
         log.info("on callBack onDepthMarketData");
-        ITransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+        TransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
         handler.transDataToPersist(depthMarketData);
     }
 
@@ -90,7 +92,7 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
         log.info("on callBack onQueryAllTickers");
-        ITransDataHandler<TickerInfoResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
+        TransDataHandler<TickerInfoResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
         handler.transDataToPersist(tickerInfo);
     }
 
