@@ -1,17 +1,16 @@
-package com.bazinga.capital.service.impl;
+package com.bazinga.capital.api.impl;
 
+import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.model.TicketInfo;
-import com.bazinga.capital.service.TicketInfoService;
+import com.bazinga.capital.api.TicketInfoService;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
 import com.zts.xtp.quote.spi.QuoteSpi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 /**
  * @author yunshan 
@@ -92,18 +91,8 @@ public class QuoteSpiImpl implements QuoteSpi{
     }
 
     @Override
-    public void onQueryAllTickers(TickerInfoResponse tickerInfoResponse, ErrorMessage errorMessage) {
-        log.info("on call back onQueryAllTickers");
-        TicketInfo ticketInfo = new TicketInfo();
-        BeanUtils.copyProperties(tickerInfoResponse,ticketInfo);
-        ticketInfo.setTicketName(tickerInfoResponse.getTickerName());
-        ticketInfo.setExchangeType(tickerInfoResponse.getExchangeType().getType());
-        ticketInfo.setTickerType(1);
-        ticketInfo.setLowerLimitPrice(new BigDecimal(String.valueOf(tickerInfoResponse.getLowerLimitPrice())));
-        ticketInfo.setUpperLimitPrice(new BigDecimal(String.valueOf(tickerInfoResponse.getUpperLimitPrice())));
-        ticketInfo.setPreClosePrice(new BigDecimal(String.valueOf(tickerInfoResponse.getPreClosePrice())));
-        ticketInfo.setPriceTick(new BigDecimal(String.valueOf(tickerInfoResponse.getPriceTick())));
-        ticketInfoService.save(ticketInfo);
+    public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
+        TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
     }
 
     @Override
