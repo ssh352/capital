@@ -97,6 +97,13 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
 
     }
 
+    /**
+     *
+     * @param tickers 合约ID数组
+     * @param count 要订阅/退订行情的合约个数
+     * @param exchangeId 交易所代码
+     * @return
+     */
     @Override
     public int subscribeMarketData(String[] tickers, int count, int exchangeId) {
         return this.quoteApi.subscribeMarketData(tickers,count,exchangeId);
