@@ -19,9 +19,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class QuoteSpiImpl implements QuoteSpi{
 
-    @Autowired
-    private TicketInfoService ticketInfoService;
-
     @Override
     public void onDisconnected(int reason) {
     }
@@ -92,6 +89,7 @@ public class QuoteSpiImpl implements QuoteSpi{
 
     @Override
     public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
+        log.info("on callBack onQueryAllTickers");
         TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
     }
 

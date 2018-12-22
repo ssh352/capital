@@ -255,10 +255,10 @@
             <version>${version.commons-digester}</version>
         </dependency>
         <dependency>
-        <groupId>com.capitalxtp</groupId>
-        <artifactId>xtp</artifactId>
-        <version>1.0.0</version>
-    </dependency>
+            <groupId>com.capitalxtp</groupId>
+            <artifactId>xtp</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
