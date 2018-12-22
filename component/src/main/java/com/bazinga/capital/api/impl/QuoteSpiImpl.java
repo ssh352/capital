@@ -1,6 +1,7 @@
 package com.bazinga.capital.api.impl;
 
 import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.handler.ITransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.model.TicketInfo;
 import com.bazinga.capital.api.TicketInfoService;
@@ -90,7 +91,8 @@ public class QuoteSpiImpl implements QuoteSpi{
     @Override
     public void onQueryAllTickers(TickerInfoResponse tickerInfo, ErrorMessage errorMessage) {
         log.info("on callBack onQueryAllTickers");
-        TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
+        ITransDataHandler<TickerInfoResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.TICKET_INFO_RESPONSE.getCode());
+        handler.transDataToPersist(tickerInfo);
     }
 
     @Override
