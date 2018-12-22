@@ -65,7 +65,7 @@ CREATE TABLE `tick_by_tick_entrust` (
   `id` BIGINT  NOT NULL AUTO_INCREMENT COMMENT 'id',
   `channelNo` INT NOT NULL COMMENT '频道代码',
   `ordType` varchar NOT NULL COMMENT '订单类别: 1: 市价; 2: 限价; 3: 本方最优',
-  `price` decimal NOT NULL COMMENT '状态',
+  `price` decimal NOT NULL COMMENT '委托价格',
   `qty` BIGINT NOT NULL COMMENT '委托数量',
   `seq` BIGINT NOT NULL COMMENT '委托序号(在同一个channel_no内唯一，从1开始连续)',
   `side` varchar NOT NULL COMMENT '1:买; 2:卖; G:借入; F:出借',
