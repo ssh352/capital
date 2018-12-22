@@ -102,3 +102,33 @@ CREATE TABLE `order_info` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单信息';
+
+CREATE TABLE `asset` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `account_type` tinyint(4) DEFAULT NULL COMMENT '账户类型 信用账户 1 衍生品账户 2 普通账户 3 未知账户类型 4',
+  `banlance` decimal(10,2) DEFAULT NULL COMMENT '当前余额',
+  `buying_power` decimal(10,2) DEFAULT NULL COMMENT '可用资金',
+  `captial_asset` decimal(10,2) DEFAULT NULL COMMENT '资金资产',
+  `deposit_withdraw` decimal(10,2) DEFAULT NULL COMMENT '当天出入金',
+  `force_freeze_amount` decimal(10,2) DEFAULT NULL COMMENT '强锁资金',
+  `frozen_exec_cash` decimal(10,2) DEFAULT NULL COMMENT '行权冻结资金',
+  `frozen_exec_fee` decimal(10,2) DEFAULT NULL COMMENT '行权费用',
+  `frozen_margin` decimal(10,2) DEFAULT NULL COMMENT '冻结的保证金',
+  `fund_buy_amount` decimal(10,2) DEFAULT NULL COMMENT '累计买入成交证券占用资金',
+  `fund_buy_fee` decimal(10,2) DEFAULT NULL COMMENT '累计买入成交交易费用',
+  `fund_sell_amount` decimal(10,2) DEFAULT NULL COMMENT '累计卖出成交证券所得资金',
+  `fund_sell_fee` decimal(10,2) DEFAULT NULL COMMENT '累计卖出成交交易费用',
+  `last_resp` tinyint(4) DEFAULT NULL COMMENT '此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应',
+  `orig_banlance` decimal(10,2) DEFAULT NULL COMMENT '昨日余额',
+  `pay_later` decimal(10,2) DEFAULT NULL COMMENT '垫付资金',
+  `preadva_pay` decimal(10,2) DEFAULT NULL COMMENT '预垫付资金',
+  `preferred_amount` decimal(10,2) DEFAULT NULL COMMENT '可取资金',
+  `request_id` bigint(20) DEFAULT NULL COMMENT '此消息响应函数对应的请求ID',
+  `security_asset` decimal(10,2) DEFAULT NULL COMMENT '证券资产',
+  `total_asset` decimal(10,2) DEFAULT NULL COMMENT '总资产(=可用资金 + 证券资产（目前为0）+ 预扣的资金)',
+  `trade_netting` decimal(10,2) DEFAULT NULL COMMENT '当日交易资金轧差',
+  `unknown` bigint(20) DEFAULT NULL COMMENT '保留字段',
+  `withholding_amount` decimal(10,2) DEFAULT NULL COMMENT 'XTP系统预扣的资金（包括购买卖股票时预扣的交易资金+预扣手续费）',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='资产信息';
