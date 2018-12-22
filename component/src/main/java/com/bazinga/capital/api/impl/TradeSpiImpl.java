@@ -1,5 +1,8 @@
 package com.bazinga.capital.api.impl;
 
+import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.handler.AbstractTransDataHandler;
+import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.trade.model.response.*;
 import com.zts.xtp.trade.spi.TradeSpi;
@@ -31,7 +34,10 @@ public class TradeSpiImpl implements TradeSpi {
     }
 
     @Override
-    public void onQueryAsset(AssetResponse assetInfo, ErrorMessage errorMessage, String sessionId) {
+    public void onQueryAsset(AssetResponse assetResponse, ErrorMessage errorMessage, String sessionId) {
+        log.info("on callBack onQueryAsset");
+        AbstractTransDataHandler<AssetResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ASSET_RESPONSE.getCode());
+        handler.transDataToPersist(assetResponse);
     }
 
     @Override

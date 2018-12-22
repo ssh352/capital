@@ -8,10 +8,14 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author yunshan
  */
-public abstract class TransDataHandler<T> implements InitializingBean {
+public abstract class AbstractTransDataHandler<T> implements InitializingBean {
 
     protected ExecutorService executorService;
 
+    /**
+     * 将响应信息持久化
+     * @param response api 响应信息
+     */
     public abstract void transDataToPersist(T response);
 
     @Override

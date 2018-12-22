@@ -16,7 +16,7 @@ import java.util.Date;
  * @date 2018/12/22
  */
 @Service
-public class DepthMarketDataHandlerImpl extends TransDataHandler<DepthMarketDataResponse> {
+public class DepthMarketDataHandlerImpl extends AbstractTransDataHandler<DepthMarketDataResponse> {
 
     @Autowired
     private DepthMarketDataService depthMarketDataService;

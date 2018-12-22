@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  */
 @Service
 @Slf4j
-public class TicketInfoResponseHandlerImpl extends TransDataHandler<TickerInfoResponse> {
+public class TicketInfoResponseHandlerImpl extends AbstractTransDataHandler<TickerInfoResponse> {
 
     @Autowired
     private TicketInfoService ticketInfoService;

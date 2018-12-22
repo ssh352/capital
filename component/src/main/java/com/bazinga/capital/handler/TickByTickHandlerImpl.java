@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @date 2018/12/22
  */
 @Service
-public class TickByTickHandlerImpl extends TransDataHandler<TickByTickResponse> {
+public class TickByTickHandlerImpl extends AbstractTransDataHandler<TickByTickResponse> {
 
     @Autowired
     private TickByTickComponent tickByTickComponent;
