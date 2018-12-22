@@ -32,13 +32,13 @@ public class TickByTickTest extends BaseTestCase{
     @Test
     public void add(){
         TickByTick tickByTick = new TickByTick();
-        tickByTick.setDatetime(null);
-        tickByTick.setSeq(null);
-        tickByTick.setTicker(null);
-        tickByTick.setEntrustId(null);
-        tickByTick.setExchangeType(null);
-        tickByTick.setTradeId(null);
-        tickByTick.setType(null);
+        tickByTick.setDatetime(String.valueOf(new Date().getTime()));
+        tickByTick.setSeq(213213L);
+        tickByTick.setTicker("322424");
+        tickByTick.setEntrustId(213L);
+        tickByTick.setExchangeType(1);
+        tickByTick.setTradeId(321312L);
+        tickByTick.setType(1);
         tickByTick.setCreateTime(new Date());
 
         TickByTick result = tickByTickService.save(tickByTick);
