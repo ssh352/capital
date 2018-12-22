@@ -1,9 +1,9 @@
-package com.bazinga.capital.service.impl;
+package com.bazinga.capital.api.impl;
 
 import com.bazinga.capital.dao.UserInfoDAO;
 import com.bazinga.capital.model.UserInfo;
 import com.bazinga.capital.query.UserInfoQuery;
-import com.bazinga.capital.service.UserInfoService;
+import com.bazinga.capital.api.UserInfoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

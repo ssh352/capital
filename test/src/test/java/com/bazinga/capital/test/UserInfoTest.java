@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.base.Sort;
 import com.bazinga.capital.model.UserInfo;
 import com.bazinga.capital.query.UserInfoQuery;
-import com.bazinga.capital.service.UserInfoService;
+import com.bazinga.capital.api.UserInfoService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.bazinga.capital.job;
 
-import com.bazinga.capital.service.QuoteApiService;
+import com.bazinga.capital.api.QuoteApiService;
 import com.zts.xtp.common.enums.ExchangeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

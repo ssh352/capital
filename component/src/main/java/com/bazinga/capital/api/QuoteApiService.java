@@ -1,4 +1,4 @@
-package com.bazinga.capital.service;
+package com.bazinga.capital.api;
 
 /**
  * 行情接口
