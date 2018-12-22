@@ -2,7 +2,7 @@ package com.bazinga.capital.test;
 
 import com.bazinga.capital.base.Sort;
 import com.bazinga.capital.model.TicketInfo;
-import com.bazinga.capital.api.TicketInfoService;
+import com.bazinga.capital.service.TicketInfoService;
 import com.bazinga.capital.query.TicketInfoQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.bazinga.capital.handler;
 
-import com.bazinga.capital.api.TicketInfoService;
+import com.bazinga.capital.service.TicketInfoService;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.model.TicketInfo;
 import com.zts.xtp.quote.model.response.TickerInfoResponse;

@@ -1,9 +1,9 @@
-package com.bazinga.capital.api.impl;
+package com.bazinga.capital.service.impl;
 
 import com.bazinga.capital.dao.DepthMarketDataDAO;
 import com.bazinga.capital.model.DepthMarketData;
 import com.bazinga.capital.query.DepthMarketDataQuery;
-import com.bazinga.capital.api.DepthMarketDataService;
+import com.bazinga.capital.service.DepthMarketDataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
