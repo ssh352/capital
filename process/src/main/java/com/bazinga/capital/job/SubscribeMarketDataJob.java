@@ -20,14 +20,14 @@ public class SubscribeMarketDataJob {
     private QuoteApiService quoteApiService;
 
     public void execute() {
-        log.info("QueryAllTicketJob start...");
+        log.info("SubscribeMarketDataJob start...");
         try {
             String[] tickerArray = new String[]{"000001", "000002"};
             quoteApiService.subscribeMarketData(tickerArray, 2, ExchangeType.SZ.getType());
             TimeUnit.SECONDS.sleep(5);
         } catch (Exception e) {
-            log.error("QueryAllTicketJob error", e);
+            log.error("SubscribeMarketDataJob error", e);
         }
-        log.info("QueryAllTicketJob end ");
+        log.info("SubscribeMarketDataJob end ");
     }
 }

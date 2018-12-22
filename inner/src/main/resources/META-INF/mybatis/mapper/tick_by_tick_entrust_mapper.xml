@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.bazinga.capital.model.TickByTickEntrust">
         <id column="id" jdbcType="BIGINT"  property="id" />
         <result column="channelNo" jdbcType="INTEGER" property="channelNo"/>
-        <result column="ordType" jdbcType="VARCHAR" property="ordType"/>
+        <result column="ordType" jdbcType="VARCHAR" property="ordT ype"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="qty" jdbcType="BIGINT" property="qty"/>
         <result column="seq" jdbcType="BIGINT" property="seq"/>
