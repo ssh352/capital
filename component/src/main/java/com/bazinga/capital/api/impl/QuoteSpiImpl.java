@@ -62,7 +62,10 @@ public class QuoteSpiImpl implements QuoteSpi {
     }
 
     @Override
-    public void onTickByTick(TickByTickResponse tickData) {
+    public void onTickByTick(TickByTickResponse tickByTickResponse) {
+        log.info("on callBack onQueryAllTickers");
+        TransDataHandler<TickByTickResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.TICK_BY_TICK.getCode());
+        handler.transDataToPersist(tickByTickResponse);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.bazinga.capital.handler;
 
 import com.bazinga.capital.component.TickByTickComponent;
+import com.bazinga.capital.enums.ApiResponseEnum;
 import com.zts.xtp.quote.model.response.TickByTickResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,6 @@ public class TickByTickHandlerImpl extends TransDataHandler<TickByTickResponse> 
 
     @Override
     String handlerMapKey() {
-        return null;
+        return ApiResponseEnum.TICK_BY_TICK.getCode();
     }
 }
