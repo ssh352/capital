@@ -1,5 +1,6 @@
 package com.bazinga.capital.api.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.TransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
@@ -28,10 +29,27 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onSubMarketData(SpecificTickerResponse ticker, ErrorMessage errorMessage) {
+        log.info("onSubMarketData");
+        if (ticker != null) {
+            log.info("exchangeType={},ticker={},lastResp = {}", ticker.getExchangeType().getType(),
+                    ticker.getTicker(), ticker.isLastResp());
+        }
+        if (errorMessage != null) {
+            log.error("errorId=" + errorMessage.getErrorId() + "errorMessage = " + errorMessage.getErrorMsg()
+                    + "requestId = " + errorMessage.getRequestId());
+        }
     }
 
     @Override
     public void onUnSubMarketData(SpecificTickerResponse ticker, ErrorMessage errorMessage) {
+        log.info("onUnSubMarketData");
+        if (ticker != null) {
+            log.info("SpecificTickerResponse ={}", JSONObject.toJSONString(ticker));
+        }
+        if (errorMessage != null) {
+            log.error("SpecificTickerResponse ErrorMessage={}", JSONObject.toJSONString(errorMessage));
+        }
+
     }
 
     @Override
@@ -74,6 +92,11 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onUnSubscribeAllMarketData(int exchangeId, ErrorMessage errorMessage) {
+        log.info("exchangeId ={}", exchangeId);
+        if (errorMessage != null) {
+            log.error("errorId=" + errorMessage.getErrorId() + "errorMessage = " + errorMessage.getErrorMsg()
+                    + "requestId = " + errorMessage.getRequestId());
+        }
     }
 
     @Override
