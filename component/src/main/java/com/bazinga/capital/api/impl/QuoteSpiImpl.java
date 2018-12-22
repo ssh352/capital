@@ -10,11 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * @author yunshan 
+ * @author yunshan
  */
 @Service
 @Slf4j
-public class QuoteSpiImpl implements QuoteSpi{
+public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onDisconnected(int reason) {
@@ -34,6 +34,9 @@ public class QuoteSpiImpl implements QuoteSpi{
 
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthQuote) {
+        log.info("on callBack onDepthMarketData");
+        ITransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+        handler.transDataToPersist(depthMarketData);
     }
 
     @Override
@@ -102,15 +105,19 @@ public class QuoteSpiImpl implements QuoteSpi{
     @Override
     public void onUnSubscribeAllOptionMarketData(int exchangeId, ErrorMessage errorMessage) {
     }
+
     @Override
     public void onSubscribeAllOptionOrderBook(int exchangeId, ErrorMessage errorMessage) {
     }
+
     @Override
     public void onUnSubscribeAllOptionOrderBook(int exchangeId, ErrorMessage errorMessage) {
     }
+
     @Override
     public void onSubscribeAllOptionTickByTick(int exchangeId, ErrorMessage errorMessage) {
     }
+
     @Override
     public void onUnSubscribeAllOptionTickByTick(int exchangeId, ErrorMessage errorMessage) {
     }

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Slf4j
-public class SubscribeMarketDataJob {
+public class SubscribeAllMarketDataJob {
 
     @Autowired
     private QuoteApiService quoteApiService;
@@ -22,9 +22,8 @@ public class SubscribeMarketDataJob {
     public void execute() {
         log.info("QueryAllTicketJob start...");
         try {
-            String[] tickerArray = new String[]{"000001", "000002"};
-            quoteApiService.subscribeMarketData(tickerArray, 2, ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(5);
+            quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
+            TimeUnit.SECONDS.sleep(30);
         } catch (Exception e) {
             log.error("QueryAllTicketJob error", e);
         }
