@@ -160,11 +160,6 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     @Override
     public int queryAllTickers(int exchangeId) {
         int result = quoteApi.queryAllTickers(exchangeId);
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            log.error("sleep error",e);
-        }
         return result;
 
     }
