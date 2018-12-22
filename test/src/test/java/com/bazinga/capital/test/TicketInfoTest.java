@@ -2,7 +2,7 @@ package com.bazinga.capital.test;
 
 import com.bazinga.capital.base.Sort;
 import com.bazinga.capital.model.TicketInfo;
-import com.bazinga.capital.service.TicketInfoService;
+import com.bazinga.capital.api.TicketInfoService;
 import com.bazinga.capital.query.TicketInfoQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import javax.annotation.Resource;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
 
 /**
 * 〈 股票信息  Test〉<p>

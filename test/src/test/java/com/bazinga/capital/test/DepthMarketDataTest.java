@@ -1,7 +1,7 @@
 package com.bazinga.capital.test;
 
 import com.bazinga.capital.model.DepthMarketData;
-import com.bazinga.capital.service.DepthMarketDataService;
+import com.bazinga.capital.api.DepthMarketDataService;
 import com.bazinga.capital.query.DepthMarketDataQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +9,8 @@ import org.junit.Test;
 import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import javax.annotation.Resource;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
 
 /**
 * 〈 普通行情  Test〉<p>
