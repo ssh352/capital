@@ -64,4 +64,17 @@ CREATE TABLE `depth_market_data` (
   KEY `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='普通行情';
 
+CREATE TABLE `tick_by_tick` (
+  `id` BIGINT  NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `datetime` long NOT NULL COMMENT '委托时间',
+  `seq` long DEFAULT NULL COMMENT '预留',
+  `ticker` varchar(16) NOT NULL COMMENT '合约代码',
+  `entrust_id` BIGINT NOT NULL COMMENT '逐笔委托id',
+  `exchange_type` TINYINT NOT NULL COMMENT '交易所代码',
+  `trade_id` BIGINT NOT NULL COMMENT '逐笔成交id',
+	`type` TINYINT NOT NULL COMMENT '委托 or 成交',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='逐笔行情通知 包括股票指数和期权';
+
 

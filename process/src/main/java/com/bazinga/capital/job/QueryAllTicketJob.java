@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author yunshan
  * @date 2018/12/21
@@ -22,6 +24,7 @@ public class QueryAllTicketJob {
         log.info("QueryAllTicketJob start...");
         try {
             quoteApiService.queryAllTickers(ExchangeType.SZ.getType());
+            TimeUnit.SECONDS.sleep(60);
         } catch (Exception e) {
             log.error("QueryAllTicketJob error",e);
         }
