@@ -12,7 +12,7 @@ public abstract class ITransDataHandler<T> implements InitializingBean {
 
     protected ExecutorService executorService;
 
-    abstract  void transDataToPersist(T response);
+    public abstract void transDataToPersist(T response);
 
     @Override
     public void afterPropertiesSet() throws Exception {
