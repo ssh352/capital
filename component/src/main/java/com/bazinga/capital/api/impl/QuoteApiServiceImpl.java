@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author yunshan
  */
@@ -157,7 +159,14 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
 
     @Override
     public int queryAllTickers(int exchangeId) {
-        return quoteApi.queryAllTickers(exchangeId);
+        int result = quoteApi.queryAllTickers(exchangeId);
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            log.error("sleep error",e);
+        }
+        return result;
+
     }
 
     @Override
