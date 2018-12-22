@@ -69,6 +69,7 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
         quoteApi.setHeartBeatInterval(3);
         int loginResult = quoteApi.login(ip, port, user, password, 1);
         loginFlag = (loginResult == 0);
+        log.info("logResult={} code={}", loginFlag, loginResult);
 
     }
 
