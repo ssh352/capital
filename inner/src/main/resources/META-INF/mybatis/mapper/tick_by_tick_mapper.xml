@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.TickByTickDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.TickByTick">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="datetime" jdbcType="VARCHAR" property="datetime"/>
+        <result column="seq" jdbcType="BIGINT" property="seq"/>
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="entrust_id" jdbcType="BIGINT" property="entrustId"/>
+        <result column="exchange_type" jdbcType="TINYINT" property="exchangeType"/>
+        <result column="trade_id" jdbcType="BIGINT" property="tradeId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            datetime,
+            seq,
+            ticker,
+            entrust_id,
+            exchange_type,
+            trade_id,
+            type,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tick_by_tick
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.TickByTick" useGeneratedKeys="true" keyProperty="id">
+        insert into tick_by_tick (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{datetime, jdbcType=VARCHAR},
+            #{seq, jdbcType=BIGINT},
+            #{ticker, jdbcType=VARCHAR},
+            #{entrustId, jdbcType=BIGINT},
+            #{exchangeType, jdbcType=TINYINT},
+            #{tradeId, jdbcType=BIGINT},
+            #{type, jdbcType=TINYINT},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.TickByTick">
+        update tick_by_tick
+        <set>
+            <if test="datetime != null">
+                datetime = #{datetime, jdbcType=VARCHAR},
+            </if>
+            <if test="seq != null">
+                seq = #{seq, jdbcType=BIGINT},
+            </if>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="entrustId != null">
+                entrust_id = #{entrustId, jdbcType=BIGINT},
+            </if>
+            <if test="exchangeType != null">
+                exchange_type = #{exchangeType, jdbcType=TINYINT},
+            </if>
+            <if test="tradeId != null">
+                trade_id = #{tradeId, jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="datetime != null">
+            and datetime = #{datetime, jdbcType=VARCHAR}
+        </if>
+        <if test="seq != null">
+            and seq = #{seq, jdbcType=BIGINT}
+        </if>
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="entrustId != null">
+            and entrust_id = #{entrustId, jdbcType=BIGINT}
+        </if>
+        <if test="exchangeType != null">
+            and exchange_type = #{exchangeType, jdbcType=TINYINT}
+        </if>
+        <if test="tradeId != null">
+            and trade_id = #{tradeId, jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and type = #{type, jdbcType=TINYINT}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.TickByTickQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from tick_by_tick
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.TickByTickQuery" resultType="java.lang.Integer">
+        select count(1)
+        from tick_by_tick
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>

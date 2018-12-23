@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.OrderInfoDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.OrderInfo">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="business_type" jdbcType="TINYINT" property="businessType"/>
+        <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime"/>
+        <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime"/>
+        <result column="market_type" jdbcType="TINYINT" property="marketType"/>
+        <result column="order_cancel_client_id" jdbcType="INTEGER" property="orderCancelClientId"/>
+        <result column="order_cancel_xtp_id" jdbcType="INTEGER" property="orderCancelXtpId"/>
+        <result column="order_client_id" jdbcType="INTEGER" property="orderClientId"/>
+        <result column="order_local_id" jdbcType="VARCHAR" property="orderLocalId"/>
+        <result column="order_status_type" jdbcType="TINYINT" property="orderStatusType"/>
+        <result column="order_submit_status_type" jdbcType="TINYINT" property="orderSubmitStatusType"/>
+        <result column="order_xtp_id" jdbcType="VARCHAR" property="orderXtpId"/>
+        <result column="position_effect_type" jdbcType="TINYINT" property="positionEffectType"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="price_type" jdbcType="TINYINT" property="priceType"/>
+        <result column="qty_left" jdbcType="BIGINT" property="qtyLeft"/>
+        <result column="qty_traded" jdbcType="BIGINT" property="qtyTraded"/>
+        <result column="quantity" jdbcType="BIGINT" property="quantity"/>
+        <result column="request_id" jdbcType="BIGINT" property="requestId"/>
+        <result column="side_type" jdbcType="TINYINT" property="sideType"/>
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="trade_amount" jdbcType="DECIMAL" property="tradeAmount"/>
+        <result column="txtp_order_type_type" jdbcType="VARCHAR" property="txtpOrderTypeType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            business_type,
+            cancel_time,
+            insert_time,
+            market_type,
+            order_cancel_client_id,
+            order_cancel_xtp_id,
+            order_client_id,
+            order_local_id,
+            order_status_type,
+            order_submit_status_type,
+            order_xtp_id,
+            position_effect_type,
+            price,
+            price_type,
+            qty_left,
+            qty_traded,
+            quantity,
+            request_id,
+            side_type,
+            ticker,
+            trade_amount,
+            txtp_order_type_type,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_info
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.OrderInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into order_info (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{businessType, jdbcType=TINYINT},
+            #{cancelTime, jdbcType=TIMESTAMP},
+            #{insertTime, jdbcType=TIMESTAMP},
+            #{marketType, jdbcType=TINYINT},
+            #{orderCancelClientId, jdbcType=INTEGER},
+            #{orderCancelXtpId, jdbcType=INTEGER},
+            #{orderClientId, jdbcType=INTEGER},
+            #{orderLocalId, jdbcType=VARCHAR},
+            #{orderStatusType, jdbcType=TINYINT},
+            #{orderSubmitStatusType, jdbcType=TINYINT},
+            #{orderXtpId, jdbcType=VARCHAR},
+            #{positionEffectType, jdbcType=TINYINT},
+            #{price, jdbcType=DECIMAL},
+            #{priceType, jdbcType=TINYINT},
+            #{qtyLeft, jdbcType=BIGINT},
+            #{qtyTraded, jdbcType=BIGINT},
+            #{quantity, jdbcType=BIGINT},
+            #{requestId, jdbcType=BIGINT},
+            #{sideType, jdbcType=TINYINT},
+            #{ticker, jdbcType=VARCHAR},
+            #{tradeAmount, jdbcType=DECIMAL},
+            #{txtpOrderTypeType, jdbcType=VARCHAR},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.OrderInfo">
+        update order_info
+        <set>
+            <if test="businessType != null">
+                business_type = #{businessType, jdbcType=TINYINT},
+            </if>
+            <if test="cancelTime != null">
+                cancel_time = #{cancelTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="insertTime != null">
+                insert_time = #{insertTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="marketType != null">
+                market_type = #{marketType, jdbcType=TINYINT},
+            </if>
+            <if test="orderCancelClientId != null">
+                order_cancel_client_id = #{orderCancelClientId, jdbcType=INTEGER},
+            </if>
+            <if test="orderCancelXtpId != null">
+                order_cancel_xtp_id = #{orderCancelXtpId, jdbcType=INTEGER},
+            </if>
+            <if test="orderClientId != null">
+                order_client_id = #{orderClientId, jdbcType=INTEGER},
+            </if>
+            <if test="orderLocalId != null">
+                order_local_id = #{orderLocalId, jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatusType != null">
+                order_status_type = #{orderStatusType, jdbcType=TINYINT},
+            </if>
+            <if test="orderSubmitStatusType != null">
+                order_submit_status_type = #{orderSubmitStatusType, jdbcType=TINYINT},
+            </if>
+            <if test="orderXtpId != null">
+                order_xtp_id = #{orderXtpId, jdbcType=VARCHAR},
+            </if>
+            <if test="positionEffectType != null">
+                position_effect_type = #{positionEffectType, jdbcType=TINYINT},
+            </if>
+            <if test="price != null">
+                price = #{price, jdbcType=DECIMAL},
+            </if>
+            <if test="priceType != null">
+                price_type = #{priceType, jdbcType=TINYINT},
+            </if>
+            <if test="qtyLeft != null">
+                qty_left = #{qtyLeft, jdbcType=BIGINT},
+            </if>
+            <if test="qtyTraded != null">
+                qty_traded = #{qtyTraded, jdbcType=BIGINT},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity, jdbcType=BIGINT},
+            </if>
+            <if test="requestId != null">
+                request_id = #{requestId, jdbcType=BIGINT},
+            </if>
+            <if test="sideType != null">
+                side_type = #{sideType, jdbcType=TINYINT},
+            </if>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="tradeAmount != null">
+                trade_amount = #{tradeAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="txtpOrderTypeType != null">
+                txtp_order_type_type = #{txtpOrderTypeType, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="businessType != null">
+            and business_type = #{businessType, jdbcType=TINYINT}
+        </if>
+        <if test="marketType != null">
+            and market_type = #{marketType, jdbcType=TINYINT}
+        </if>
+        <if test="orderCancelClientId != null">
+            and order_cancel_client_id = #{orderCancelClientId, jdbcType=INTEGER}
+        </if>
+        <if test="orderCancelXtpId != null">
+            and order_cancel_xtp_id = #{orderCancelXtpId, jdbcType=INTEGER}
+        </if>
+        <if test="orderClientId != null">
+            and order_client_id = #{orderClientId, jdbcType=INTEGER}
+        </if>
+        <if test="orderLocalId != null">
+            and order_local_id = #{orderLocalId, jdbcType=VARCHAR}
+        </if>
+        <if test="orderStatusType != null">
+            and order_status_type = #{orderStatusType, jdbcType=TINYINT}
+        </if>
+        <if test="orderSubmitStatusType != null">
+            and order_submit_status_type = #{orderSubmitStatusType, jdbcType=TINYINT}
+        </if>
+        <if test="orderXtpId != null">
+            and order_xtp_id = #{orderXtpId, jdbcType=VARCHAR}
+        </if>
+        <if test="positionEffectType != null">
+            and position_effect_type = #{positionEffectType, jdbcType=TINYINT}
+        </if>
+        <if test="price != null">
+            and price = #{price, jdbcType=DECIMAL}
+        </if>
+        <if test="priceType != null">
+            and price_type = #{priceType, jdbcType=TINYINT}
+        </if>
+        <if test="qtyLeft != null">
+            and qty_left = #{qtyLeft, jdbcType=BIGINT}
+        </if>
+        <if test="qtyTraded != null">
+            and qty_traded = #{qtyTraded, jdbcType=BIGINT}
+        </if>
+        <if test="quantity != null">
+            and quantity = #{quantity, jdbcType=BIGINT}
+        </if>
+        <if test="requestId != null">
+            and request_id = #{requestId, jdbcType=BIGINT}
+        </if>
+        <if test="sideType != null">
+            and side_type = #{sideType, jdbcType=TINYINT}
+        </if>
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="tradeAmount != null">
+            and trade_amount = #{tradeAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="txtpOrderTypeType != null">
+            and txtp_order_type_type = #{txtpOrderTypeType, jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="cancelTimeFrom != null">
+            <![CDATA[
+            and cancel_time >= #{cancelTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="cancelTimeTo != null">
+            <![CDATA[
+            and cancel_time <= #{cancelTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="insertTimeFrom != null">
+            <![CDATA[
+            and insert_time >= #{insertTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="insertTimeTo != null">
+            <![CDATA[
+            and insert_time <= #{insertTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.OrderInfoQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from order_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.OrderInfoQuery" resultType="java.lang.Integer">
+        select count(1)
+        from order_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>

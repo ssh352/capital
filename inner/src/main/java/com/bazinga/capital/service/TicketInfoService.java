@@ -1,4 +1,4 @@
-package com.bazinga.capital.api;
+package com.bazinga.capital.service;
 
 import com.bazinga.capital.model.TicketInfo;
 import com.bazinga.capital.query.TicketInfoQuery;

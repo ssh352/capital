@@ -1,7 +1,7 @@
 package com.bazinga.capital.test;
 
 import com.bazinga.capital.model.DepthMarketData;
-import com.bazinga.capital.api.DepthMarketDataService;
+import com.bazinga.capital.service.DepthMarketDataService;
 import com.bazinga.capital.query.DepthMarketDataQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
