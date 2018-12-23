@@ -18,6 +18,7 @@
         <task:scheduled ref="testJob" method="test" cron="0/5 * * * * ?"/>
         <task:scheduled ref="queryAllTicketJob" method="execute" cron="0 0/5 * * * ?"/>
         <task:scheduled ref="subscribeMarketDataJob" method="execute" cron="0 0/5 * * * ?"/>
+        <task:scheduled ref="ticketByTicketJob" method="execute" cron="0 0/5 * * * ?"/>
 
     </task:scheduled-tasks>
 

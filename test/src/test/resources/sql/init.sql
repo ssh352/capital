@@ -30,7 +30,7 @@ CREATE TABLE `depth_market_data` (
   `last_price` decimal(10,2) NOT NULL COMMENT '最新价',
   `lower_limit_price` decimal(10,2) NOT NULL COMMENT '跌停价',
   `low_price` decimal(10,2) NOT NULL COMMENT '最低价',
-  `open_price` decimal(10,2) NOT NULL COMMENT '今日开盘价',
+  `open_price` decimal(10,2) NOT NULL COMMENT '今日开盘价 9点25分集合竞价结束的价格',
 	`pre_close_price` decimal(10,2) NOT NULL COMMENT '昨日收盘价',
 	`pre_delta` decimal(10,2) NOT NULL COMMENT '昨日预留',
  	`pre_settlement_price` decimal(10,2) NOT NULL COMMENT '昨日结算价',
@@ -62,17 +62,16 @@ CREATE TABLE `tick_by_tick` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逐笔行情通知 包括股票指数和期权';
 
 CREATE TABLE `tick_by_tick_entrust` (
-  `id` BIGINT  NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `channelNo` INT NOT NULL COMMENT '频道代码',
-  `ordType` varchar NOT NULL COMMENT '订单类别: 1: 市价; 2: 限价; 3: 本方最优',
-  `price` decimal NOT NULL COMMENT '状态',
-  `qty` BIGINT NOT NULL COMMENT '委托数量',
-  `seq` BIGINT NOT NULL COMMENT '委托序号(在同一个channel_no内唯一，从1开始连续)',
-  `side` varchar NOT NULL COMMENT '1:买; 2:卖; G:借入; F:出借',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `channel_no` int(10) NOT NULL COMMENT '频道代码',
+  `ord_type` varchar(5) NOT NULL COMMENT '订单类别: 1: 市价; 2: 限价; 3: 本方最优',
+  `price` decimal(10,2) NOT NULL COMMENT '委托价格',
+  `qty` bigint(20) NOT NULL COMMENT '委托数量',
+  `seq` bigint(20) NOT NULL COMMENT '委托序号(在同一个channel_no内唯一，从1开始连续)',
+  `side` varchar(5) NOT NULL COMMENT '1:买; 2:卖; G:借入; F:出借',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `is_deleted` int(11) NOT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='逐笔委托(仅适用深交所)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='逐笔委托(仅适用深交所)';
 
 
 CREATE TABLE `order_info` (
@@ -103,3 +102,33 @@ CREATE TABLE `order_info` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单信息';
+
+CREATE TABLE `asset` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `account_type` tinyint(4) DEFAULT NULL COMMENT '账户类型 信用账户 1 衍生品账户 2 普通账户 3 未知账户类型 4',
+  `banlance` decimal(10,2) DEFAULT NULL COMMENT '当前余额',
+  `buying_power` decimal(10,2) DEFAULT NULL COMMENT '可用资金',
+  `captial_asset` decimal(10,2) DEFAULT NULL COMMENT '资金资产',
+  `deposit_withdraw` decimal(10,2) DEFAULT NULL COMMENT '当天出入金',
+  `force_freeze_amount` decimal(10,2) DEFAULT NULL COMMENT '强锁资金',
+  `frozen_exec_cash` decimal(10,2) DEFAULT NULL COMMENT '行权冻结资金',
+  `frozen_exec_fee` decimal(10,2) DEFAULT NULL COMMENT '行权费用',
+  `frozen_margin` decimal(10,2) DEFAULT NULL COMMENT '冻结的保证金',
+  `fund_buy_amount` decimal(10,2) DEFAULT NULL COMMENT '累计买入成交证券占用资金',
+  `fund_buy_fee` decimal(10,2) DEFAULT NULL COMMENT '累计买入成交交易费用',
+  `fund_sell_amount` decimal(10,2) DEFAULT NULL COMMENT '累计卖出成交证券所得资金',
+  `fund_sell_fee` decimal(10,2) DEFAULT NULL COMMENT '累计卖出成交交易费用',
+  `last_resp` tinyint(4) DEFAULT NULL COMMENT '此消息响应函数是否为request_id这条请求所对应的最后一个响应，当为最后一个的时候为true，如果为false，表示还有其他后续消息响应',
+  `orig_banlance` decimal(10,2) DEFAULT NULL COMMENT '昨日余额',
+  `pay_later` decimal(10,2) DEFAULT NULL COMMENT '垫付资金',
+  `preadva_pay` decimal(10,2) DEFAULT NULL COMMENT '预垫付资金',
+  `preferred_amount` decimal(10,2) DEFAULT NULL COMMENT '可取资金',
+  `request_id` bigint(20) DEFAULT NULL COMMENT '此消息响应函数对应的请求ID',
+  `security_asset` decimal(10,2) DEFAULT NULL COMMENT '证券资产',
+  `total_asset` decimal(10,2) DEFAULT NULL COMMENT '总资产(=可用资金 + 证券资产（目前为0）+ 预扣的资金)',
+  `trade_netting` decimal(10,2) DEFAULT NULL COMMENT '当日交易资金轧差',
+  `unknown` bigint(20) DEFAULT NULL COMMENT '保留字段',
+  `withholding_amount` decimal(10,2) DEFAULT NULL COMMENT 'XTP系统预扣的资金（包括购买卖股票时预扣的交易资金+预扣手续费）',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='资产信息';

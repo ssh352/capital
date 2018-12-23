@@ -14,20 +14,21 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Slf4j
-public class SubscribeMarketDataJob {
+public class TicketByTicketJob {
 
     @Autowired
     private QuoteApiService quoteApiService;
 
     public void execute() {
-        log.info("SubscribeMarketDataJob start...");
+        log.info("TicketByTicketJob start...");
         try {
-            String[] tickerArray = new String[]{"000001", "000002"};
-            quoteApiService.subscribeMarketData(tickerArray, 2, ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(5);
+            quoteApiService.subscribeAllTickByTick(ExchangeType.SZ.getType());
+            TimeUnit.SECONDS.sleep(30);
         } catch (Exception e) {
-            log.error("SubscribeMarketDataJob error", e);
+            log.error("TicketByTicketJob error", e);
         }
-        log.info("SubscribeMarketDataJob end ");
+        log.info("TicketByTicketJob end ");
     }
+
+
 }

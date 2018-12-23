@@ -9,9 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TransDataHandlerFactory {
 
-    public static Map<String, ITransDataHandler> handlerMap = new ConcurrentHashMap<>(64);
+    public static Map<String, AbstractTransDataHandler> handlerMap = new ConcurrentHashMap<>(64);
 
-    public static ITransDataHandler createHandler(String key){
+    public static AbstractTransDataHandler createHandler(String key){
         return handlerMap.get(key);
     }
 

@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @PropertySource("classpath:xtp_config.properties")
 @Slf4j
-public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
+public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     private QuoteApi quoteApi;
 
     private boolean loginFlag;
@@ -69,12 +69,13 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
         quoteApi.setHeartBeatInterval(3);
         int loginResult = quoteApi.login(ip, port, user, password, 1);
         loginFlag = (loginResult == 0);
+        log.info("logResult={} code={}", loginFlag, loginResult);
 
     }
 
     @Override
     public void connect(short var1, String var2) {
-        quoteApi.connect(var1,var2);
+        quoteApi.connect(var1, var2);
     }
 
     @Override
@@ -89,79 +90,78 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
 
     @Override
     public int logout() {
-        return 0;
+        return quoteApi.logout();
     }
 
     @Override
-    public void setHeartBeatInterval(int var1) {
-
+    public void setHeartBeatInterval(int seconds) {
+        setHeartBeatInterval(seconds);
     }
 
     /**
-     *
-     * @param tickers 合约ID数组
-     * @param count 要订阅/退订行情的合约个数
+     * @param tickers    合约ID数组
+     * @param count      要订阅/退订行情的合约个数
      * @param exchangeId 交易所代码
      * @return
      */
     @Override
     public int subscribeMarketData(String[] tickers, int count, int exchangeId) {
-        return this.quoteApi.subscribeMarketData(tickers,count,exchangeId);
+        return this.quoteApi.subscribeMarketData(tickers, count, exchangeId);
     }
 
     @Override
-    public int unSubscribeMarketData(String[] var1, int var2, int var3) {
-        return 0;
+    public int unSubscribeMarketData(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.unSubscribeMarketData(tickers, count, exchangeId);
     }
 
     @Override
-    public int subscribeOrderBook(String[] var1, int var2, int var3) {
-        return 0;
+    public int subscribeOrderBook(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.subscribeOrderBook(tickers, count, exchangeId);
     }
 
     @Override
-    public int unSubscribeOrderBook(String[] var1, int var2, int var3) {
-        return 0;
+    public int unSubscribeOrderBook(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.unSubscribeOrderBook(tickers, count, exchangeId);
     }
 
     @Override
-    public int subscribeTickByTick(String[] var1, int var2, int var3) {
-        return 0;
+    public int subscribeTickByTick(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.subscribeTickByTick(tickers, count, exchangeId);
     }
 
     @Override
-    public int unSubscribeTickByTick(String[] var1, int var2, int var3) {
-        return 0;
+    public int unSubscribeTickByTick(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.unSubscribeTickByTick(tickers, count, exchangeId);
     }
 
     @Override
-    public int subscribeAllMarketData(int var1) {
-        return 0;
+    public int subscribeAllMarketData(int exchangeId) {
+        return this.quoteApi.subscribeAllMarketData(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllMarketData(int var1) {
-        return 0;
+    public int unSubscribeAllMarketData(int exchangeId) {
+        return this.quoteApi.unSubscribeAllMarketData(exchangeId);
     }
 
     @Override
-    public int subscribeAllOrderBook(int var1) {
-        return 0;
+    public int subscribeAllOrderBook(int exchangeId) {
+        return this.quoteApi.subscribeAllOrderBook(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllOrderBook(int var1) {
-        return 0;
+    public int unSubscribeAllOrderBook(int exchangeId) {
+        return this.quoteApi.unSubscribeAllOrderBook(exchangeId);
     }
 
     @Override
-    public int subscribeAllTickByTick(int var1) {
-        return 0;
+    public int subscribeAllTickByTick(int exchangeId) {
+        return this.quoteApi.subscribeAllTickByTick(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllTickByTick(int var1) {
-        return 0;
+    public int unSubscribeAllTickByTick(int exchangeId) {
+        return this.quoteApi.unSubscribeAllTickByTick(exchangeId);
     }
 
     @Override
@@ -172,37 +172,37 @@ public class QuoteApiServiceImpl implements QuoteApiService,InitializingBean {
     }
 
     @Override
-    public int queryTickersPriceInfo(String[] var1, int var2, int var3) {
-        return 0;
+    public int queryTickersPriceInfo(String[] tickers, int count, int exchangeId) {
+        return this.quoteApi.queryTickersPriceInfo(tickers, count, exchangeId);
     }
 
     @Override
-    public int subscribeAllOptionMarketData(int var1) {
-        return 0;
+    public int subscribeAllOptionMarketData(int exchangeId) {
+        return this.quoteApi.subscribeAllOptionMarketData(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllOptionMarketData(int var1) {
-        return 0;
+    public int unSubscribeAllOptionMarketData(int exchangeId) {
+        return this.quoteApi.unSubscribeAllOptionMarketData(exchangeId);
     }
 
     @Override
-    public int subscribeAllOptionOrderBook(int var1) {
-        return 0;
+    public int subscribeAllOptionOrderBook(int exchangeId) {
+        return this.quoteApi.subscribeAllOptionOrderBook(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllOptionOrderBook(int var1) {
-        return 0;
+    public int unSubscribeAllOptionOrderBook(int exchangeId) {
+        return this.quoteApi.unSubscribeAllOptionOrderBook(exchangeId);
     }
 
     @Override
-    public int subscribeAllOptionTickByTick(int var1) {
-        return 0;
+    public int subscribeAllOptionTickByTick(int exchangeId) {
+        return this.quoteApi.subscribeAllOptionTickByTick(exchangeId);
     }
 
     @Override
-    public int unSubscribeAllOptionTickByTick(int var1) {
-        return 0;
+    public int unSubscribeAllOptionTickByTick(int exchangeId) {
+        return this.unSubscribeAllOptionTickByTick(exchangeId);
     }
 }

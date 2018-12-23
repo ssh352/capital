@@ -4,8 +4,8 @@
 
     <resultMap id="BaseResultMap" type="com.bazinga.capital.model.TickByTickEntrust">
         <id column="id" jdbcType="BIGINT"  property="id" />
-        <result column="channelNo" jdbcType="INTEGER" property="channelNo"/>
-        <result column="ordType" jdbcType="VARCHAR" property="ordType"/>
+        <result column="channel_no" jdbcType="INTEGER" property="channelNo"/>
+        <result column="ord_type" jdbcType="VARCHAR" property="ordType"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="qty" jdbcType="BIGINT" property="qty"/>
         <result column="seq" jdbcType="BIGINT" property="seq"/>
@@ -16,8 +16,8 @@
     <!-- 字段列表 -->
     <sql id="Base_Column_List">
         id,
-            channelNo,
-            ordType,
+            channel_no,
+            ord_type,
             price,
             qty,
             seq,
@@ -53,10 +53,10 @@
         update tick_by_tick_entrust
         <set>
             <if test="channelNo != null">
-                channelNo = #{channelNo, jdbcType=INTEGER},
+                channel_no = #{channelNo, jdbcType=INTEGER},
             </if>
             <if test="ordType != null">
-                ordType = #{ordType, jdbcType=VARCHAR},
+                ord_type = #{ordType, jdbcType=VARCHAR},
             </if>
             <if test="price != null">
                 price = #{price, jdbcType=DECIMAL},
@@ -80,10 +80,10 @@
     <!-- 等值查询条件 -->
     <sql id="Equal_Where_List">
         <if test="channelNo != null">
-            and channelNo = #{channelNo, jdbcType=INTEGER}
+            and channel_no = #{channelNo, jdbcType=INTEGER}
         </if>
         <if test="ordType != null">
-            and ordType = #{ordType, jdbcType=VARCHAR}
+            and ord_type = #{ordType, jdbcType=VARCHAR}
         </if>
         <if test="price != null">
             and price = #{price, jdbcType=DECIMAL}

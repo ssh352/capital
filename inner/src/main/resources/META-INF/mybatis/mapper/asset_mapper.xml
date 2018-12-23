@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.AssetDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.Asset">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="account_type" jdbcType="TINYINT" property="accountType"/>
+        <result column="banlance" jdbcType="DECIMAL" property="banlance"/>
+        <result column="buying_power" jdbcType="DECIMAL" property="buyingPower"/>
+        <result column="captial_asset" jdbcType="DECIMAL" property="captialAsset"/>
+        <result column="deposit_withdraw" jdbcType="DECIMAL" property="depositWithdraw"/>
+        <result column="force_freeze_amount" jdbcType="DECIMAL" property="forceFreezeAmount"/>
+        <result column="frozen_exec_cash" jdbcType="DECIMAL" property="frozenExecCash"/>
+        <result column="frozen_exec_fee" jdbcType="DECIMAL" property="frozenExecFee"/>
+        <result column="frozen_margin" jdbcType="DECIMAL" property="frozenMargin"/>
+        <result column="fund_buy_amount" jdbcType="DECIMAL" property="fundBuyAmount"/>
+        <result column="fund_buy_fee" jdbcType="DECIMAL" property="fundBuyFee"/>
+        <result column="fund_sell_amount" jdbcType="DECIMAL" property="fundSellAmount"/>
+        <result column="fund_sell_fee" jdbcType="DECIMAL" property="fundSellFee"/>
+        <result column="last_resp" jdbcType="TINYINT" property="lastResp"/>
+        <result column="orig_banlance" jdbcType="DECIMAL" property="origBanlance"/>
+        <result column="pay_later" jdbcType="DECIMAL" property="payLater"/>
+        <result column="preadva_pay" jdbcType="DECIMAL" property="preadvaPay"/>
+        <result column="preferred_amount" jdbcType="DECIMAL" property="preferredAmount"/>
+        <result column="request_id" jdbcType="BIGINT" property="requestId"/>
+        <result column="security_asset" jdbcType="DECIMAL" property="securityAsset"/>
+        <result column="total_asset" jdbcType="DECIMAL" property="totalAsset"/>
+        <result column="trade_netting" jdbcType="DECIMAL" property="tradeNetting"/>
+        <result column="unknown" jdbcType="BIGINT" property="unknown"/>
+        <result column="withholding_amount" jdbcType="DECIMAL" property="withholdingAmount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            account_type,
+            banlance,
+            buying_power,
+            captial_asset,
+            deposit_withdraw,
+            force_freeze_amount,
+            frozen_exec_cash,
+            frozen_exec_fee,
+            frozen_margin,
+            fund_buy_amount,
+            fund_buy_fee,
+            fund_sell_amount,
+            fund_sell_fee,
+            last_resp,
+            orig_banlance,
+            pay_later,
+            preadva_pay,
+            preferred_amount,
+            request_id,
+            security_asset,
+            total_asset,
+            trade_netting,
+            unknown,
+            withholding_amount,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from asset
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.Asset" useGeneratedKeys="true" keyProperty="id">
+        insert into asset (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{accountType, jdbcType=TINYINT},
+            #{banlance, jdbcType=DECIMAL},
+            #{buyingPower, jdbcType=DECIMAL},
+            #{captialAsset, jdbcType=DECIMAL},
+            #{depositWithdraw, jdbcType=DECIMAL},
+            #{forceFreezeAmount, jdbcType=DECIMAL},
+            #{frozenExecCash, jdbcType=DECIMAL},
+            #{frozenExecFee, jdbcType=DECIMAL},
+            #{frozenMargin, jdbcType=DECIMAL},
+            #{fundBuyAmount, jdbcType=DECIMAL},
+            #{fundBuyFee, jdbcType=DECIMAL},
+            #{fundSellAmount, jdbcType=DECIMAL},
+            #{fundSellFee, jdbcType=DECIMAL},
+            #{lastResp, jdbcType=TINYINT},
+            #{origBanlance, jdbcType=DECIMAL},
+            #{payLater, jdbcType=DECIMAL},
+            #{preadvaPay, jdbcType=DECIMAL},
+            #{preferredAmount, jdbcType=DECIMAL},
+            #{requestId, jdbcType=BIGINT},
+            #{securityAsset, jdbcType=DECIMAL},
+            #{totalAsset, jdbcType=DECIMAL},
+            #{tradeNetting, jdbcType=DECIMAL},
+            #{unknown, jdbcType=BIGINT},
+            #{withholdingAmount, jdbcType=DECIMAL},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.Asset">
+        update asset
+        <set>
+            <if test="accountType != null">
+                account_type = #{accountType, jdbcType=TINYINT},
+            </if>
+            <if test="banlance != null">
+                banlance = #{banlance, jdbcType=DECIMAL},
+            </if>
+            <if test="buyingPower != null">
+                buying_power = #{buyingPower, jdbcType=DECIMAL},
+            </if>
+            <if test="captialAsset != null">
+                captial_asset = #{captialAsset, jdbcType=DECIMAL},
+            </if>
+            <if test="depositWithdraw != null">
+                deposit_withdraw = #{depositWithdraw, jdbcType=DECIMAL},
+            </if>
+            <if test="forceFreezeAmount != null">
+                force_freeze_amount = #{forceFreezeAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="frozenExecCash != null">
+                frozen_exec_cash = #{frozenExecCash, jdbcType=DECIMAL},
+            </if>
+            <if test="frozenExecFee != null">
+                frozen_exec_fee = #{frozenExecFee, jdbcType=DECIMAL},
+            </if>
+            <if test="frozenMargin != null">
+                frozen_margin = #{frozenMargin, jdbcType=DECIMAL},
+            </if>
+            <if test="fundBuyAmount != null">
+                fund_buy_amount = #{fundBuyAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="fundBuyFee != null">
+                fund_buy_fee = #{fundBuyFee, jdbcType=DECIMAL},
+            </if>
+            <if test="fundSellAmount != null">
+                fund_sell_amount = #{fundSellAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="fundSellFee != null">
+                fund_sell_fee = #{fundSellFee, jdbcType=DECIMAL},
+            </if>
+            <if test="lastResp != null">
+                last_resp = #{lastResp, jdbcType=TINYINT},
+            </if>
+            <if test="origBanlance != null">
+                orig_banlance = #{origBanlance, jdbcType=DECIMAL},
+            </if>
+            <if test="payLater != null">
+                pay_later = #{payLater, jdbcType=DECIMAL},
+            </if>
+            <if test="preadvaPay != null">
+                preadva_pay = #{preadvaPay, jdbcType=DECIMAL},
+            </if>
+            <if test="preferredAmount != null">
+                preferred_amount = #{preferredAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="requestId != null">
+                request_id = #{requestId, jdbcType=BIGINT},
+            </if>
+            <if test="securityAsset != null">
+                security_asset = #{securityAsset, jdbcType=DECIMAL},
+            </if>
+            <if test="totalAsset != null">
+                total_asset = #{totalAsset, jdbcType=DECIMAL},
+            </if>
+            <if test="tradeNetting != null">
+                trade_netting = #{tradeNetting, jdbcType=DECIMAL},
+            </if>
+            <if test="unknown != null">
+                unknown = #{unknown, jdbcType=BIGINT},
+            </if>
+            <if test="withholdingAmount != null">
+                withholding_amount = #{withholdingAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="accountType != null">
+            and account_type = #{accountType, jdbcType=TINYINT}
+        </if>
+        <if test="banlance != null">
+            and banlance = #{banlance, jdbcType=DECIMAL}
+        </if>
+        <if test="buyingPower != null">
+            and buying_power = #{buyingPower, jdbcType=DECIMAL}
+        </if>
+        <if test="captialAsset != null">
+            and captial_asset = #{captialAsset, jdbcType=DECIMAL}
+        </if>
+        <if test="depositWithdraw != null">
+            and deposit_withdraw = #{depositWithdraw, jdbcType=DECIMAL}
+        </if>
+        <if test="forceFreezeAmount != null">
+            and force_freeze_amount = #{forceFreezeAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="frozenExecCash != null">
+            and frozen_exec_cash = #{frozenExecCash, jdbcType=DECIMAL}
+        </if>
+        <if test="frozenExecFee != null">
+            and frozen_exec_fee = #{frozenExecFee, jdbcType=DECIMAL}
+        </if>
+        <if test="frozenMargin != null">
+            and frozen_margin = #{frozenMargin, jdbcType=DECIMAL}
+        </if>
+        <if test="fundBuyAmount != null">
+            and fund_buy_amount = #{fundBuyAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="fundBuyFee != null">
+            and fund_buy_fee = #{fundBuyFee, jdbcType=DECIMAL}
+        </if>
+        <if test="fundSellAmount != null">
+            and fund_sell_amount = #{fundSellAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="fundSellFee != null">
+            and fund_sell_fee = #{fundSellFee, jdbcType=DECIMAL}
+        </if>
+        <if test="lastResp != null">
+            and last_resp = #{lastResp, jdbcType=TINYINT}
+        </if>
+        <if test="origBanlance != null">
+            and orig_banlance = #{origBanlance, jdbcType=DECIMAL}
+        </if>
+        <if test="payLater != null">
+            and pay_later = #{payLater, jdbcType=DECIMAL}
+        </if>
+        <if test="preadvaPay != null">
+            and preadva_pay = #{preadvaPay, jdbcType=DECIMAL}
+        </if>
+        <if test="preferredAmount != null">
+            and preferred_amount = #{preferredAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="requestId != null">
+            and request_id = #{requestId, jdbcType=BIGINT}
+        </if>
+        <if test="securityAsset != null">
+            and security_asset = #{securityAsset, jdbcType=DECIMAL}
+        </if>
+        <if test="totalAsset != null">
+            and total_asset = #{totalAsset, jdbcType=DECIMAL}
+        </if>
+        <if test="tradeNetting != null">
+            and trade_netting = #{tradeNetting, jdbcType=DECIMAL}
+        </if>
+        <if test="unknown != null">
+            and unknown = #{unknown, jdbcType=BIGINT}
+        </if>
+        <if test="withholdingAmount != null">
+            and withholding_amount = #{withholdingAmount, jdbcType=DECIMAL}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.AssetQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from asset
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.AssetQuery" resultType="java.lang.Integer">
+        select count(1)
+        from asset
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
