@@ -22,9 +22,9 @@ public class SubscribeMarketDataJob {
     public void execute() {
         log.info("SubscribeMarketDataJob start...");
         try {
-            String[] tickerArray = new String[]{"000001", "000002"};
-            quoteApiService.subscribeMarketData(tickerArray, 2, ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(5);
+            String[] tickerArray = new String[]{"002868"};
+            quoteApiService.subscribeMarketData(tickerArray, 1, ExchangeType.SZ.getType());
+            TimeUnit.SECONDS.sleep(3600);
         } catch (Exception e) {
             log.error("SubscribeMarketDataJob error", e);
         }
