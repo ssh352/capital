@@ -73,6 +73,11 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onSubTickByTick(SpecificTickerResponse ticker, ErrorMessage errorMessage) {
+        log.info(" onSubscribeAllMarketData exchangeId ={}", JSONObject.toJSONString(ticker));
+        if (errorMessage != null) {
+            log.error("errorId=" + errorMessage.getErrorId() + "errorMessage = " + errorMessage.getErrorMsg()
+                    + "requestId = " + errorMessage.getRequestId());
+        }
     }
 
     @Override
@@ -88,11 +93,16 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onSubscribeAllMarketData(int exchangeId, ErrorMessage errorMessage) {
+        log.info(" onSubscribeAllMarketData exchangeId ={}", exchangeId);
+        if (errorMessage != null) {
+            log.error("errorId=" + errorMessage.getErrorId() + "errorMessage = " + errorMessage.getErrorMsg()
+                    + "requestId = " + errorMessage.getRequestId());
+        }
     }
 
     @Override
     public void onUnSubscribeAllMarketData(int exchangeId, ErrorMessage errorMessage) {
-        log.info("exchangeId ={}", exchangeId);
+        log.info(" onUnSubscribeAllMarketData exchangeId ={}", exchangeId);
         if (errorMessage != null) {
             log.error("errorId=" + errorMessage.getErrorId() + "errorMessage = " + errorMessage.getErrorMsg()
                     + "requestId = " + errorMessage.getRequestId());
