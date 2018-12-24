@@ -30,7 +30,7 @@ CREATE TABLE `depth_market_data` (
   `last_price` decimal(10,2) NOT NULL COMMENT '最新价',
   `lower_limit_price` decimal(10,2) NOT NULL COMMENT '跌停价',
   `low_price` decimal(10,2) NOT NULL COMMENT '最低价',
-  `open_price` decimal(10,2) NOT NULL COMMENT '今日开盘价',
+  `open_price` decimal(10,2) NOT NULL COMMENT '今日开盘价 9点25分集合竞价结束的价格',
 	`pre_close_price` decimal(10,2) NOT NULL COMMENT '昨日收盘价',
 	`pre_delta` decimal(10,2) NOT NULL COMMENT '昨日预留',
  	`pre_settlement_price` decimal(10,2) NOT NULL COMMENT '昨日结算价',
