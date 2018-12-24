@@ -23,7 +23,7 @@ public class SubscribeAllMarketDataJob {
         log.info("SubscribeAllMarketDataJob start...");
         try {
             quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(60);
+            TimeUnit.SECONDS.sleep(3600);
         } catch (Exception e) {
             log.error("SubscribeAllMarketDataJob error", e);
         }
