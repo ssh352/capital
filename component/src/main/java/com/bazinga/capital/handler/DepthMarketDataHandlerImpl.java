@@ -3,6 +3,7 @@ package com.bazinga.capital.handler;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.model.DepthMarketData;
 import com.bazinga.capital.service.DepthMarketDataService;
+import com.bazinga.capital.util.DateUtil;
 import com.zts.xtp.quote.model.response.DepthMarketDataResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class DepthMarketDataHandlerImpl extends AbstractTransDataHandler<DepthMa
         depthMarketData.setAsk(Objects.toString(response.getAsk(),""));
 
         depthMarketData.setBid(Objects.toString(response.getBid(),""));
-        depthMarketData.setDataTime(new Date(response.getDataTime()));
+        depthMarketData.setDataTime(DateUtil.parseDate(String.valueOf(response.getDataTime()),DateUtil.yyyyMMddHHmmssSSS));
         depthMarketData.setExchangeType(response.getExchangeType().getType());
         depthMarketData.setClosePrice(new BigDecimal(String.valueOf(response.getClosePrice())));
         depthMarketData.setTurnover(new BigDecimal(String.valueOf(response.getTurnover())));
