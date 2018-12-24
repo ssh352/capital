@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author yunshan
@@ -33,6 +34,9 @@ public class DepthMarketDataHandlerImpl extends AbstractTransDataHandler<DepthMa
 
     private void transformData(DepthMarketDataResponse response, DepthMarketData depthMarketData) {
         BeanUtils.copyProperties(response, depthMarketData);
+        depthMarketData.setAsk(Objects.toString(response.getAsk(),""));
+
+        depthMarketData.setBid(Objects.toString(response.getBid(),""));
         depthMarketData.setDataTime(new Date(response.getDataTime()));
         depthMarketData.setExchangeType(response.getExchangeType().getType());
         depthMarketData.setClosePrice(new BigDecimal(String.valueOf(response.getClosePrice())));
