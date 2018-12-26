@@ -1,9 +1,6 @@
 package com.bazinga.capital.test;
 
-import com.bazinga.capital.job.QueryAllTicketJob;
-import com.bazinga.capital.job.SubscribeAllMarketDataJob;
-import com.bazinga.capital.job.SubscribeMarketDataJob;
-import com.bazinga.capital.job.TicketByTicketJob;
+import com.bazinga.capital.job.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,12 @@ public class JobTest extends BaseTestCase{
 
     @Autowired
     private SubscribeMarketDataJob subscribeMarketDataJob;
+
+    @Autowired
+    private InsertOrderJob insertOrderJob;
+
+    @Autowired
+    private QueryAssertJob queryAssertJob;
     @Test
     public void test(){
         log.info("job start");
@@ -45,5 +48,16 @@ public class JobTest extends BaseTestCase{
     @Test
     public void test3(){
         subscribeMarketDataJob.execute();
+    }
+
+    @Test
+    public void test4(){
+
+        insertOrderJob.execute();
+    }
+
+    @Test
+    public void test5(){
+        queryAssertJob.execute();
     }
 }

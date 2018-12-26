@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author yunshan
  * @date 2018/12/26
@@ -26,11 +28,17 @@ public class InsertOrderJob {
     public void execute() {
         log.info("testInsertOrder");
         OrderInsertRequest req = OrderInsertRequest.builder()
-                .orderXtpId("0").orderClientId(13).ticker("000002").marketType(MarketType.XTP_MKT_SZ_A)
-                .price(22.44).stopPrice(0).quantity(200).priceType(PriceType.XTP_PRICE_LIMIT)
+                .orderXtpId("0").orderClientId(13).ticker("300760").marketType(MarketType.XTP_MKT_SZ_A)
+                .price(116.59).stopPrice(0).quantity(1000).priceType(PriceType.XTP_PRICE_LIMIT)
                 .sideType(SideType.XTP_SIDE_BUY).businessType(BusinessType.XTP_BUSINESS_TYPE_CASH).build();
 
-        String orderXtpId = tradeApiService.insertOrder(req);
+        String orderXtpId = null;
+        try {
+            orderXtpId = tradeApiService.insertOrder(req);
+            TimeUnit.SECONDS.sleep(10);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         log.info("orderXtpId={}", orderXtpId);
     }
 }

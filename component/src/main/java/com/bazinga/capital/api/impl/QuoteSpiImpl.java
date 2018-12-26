@@ -55,8 +55,8 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthQuote) {
         log.info("on callBack onDepthMarketData");
-//        AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
-//        handler.transDataToPersist(depthMarketData);
+        AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+        handler.transDataToPersist(depthMarketData);
     }
 
     @Override
