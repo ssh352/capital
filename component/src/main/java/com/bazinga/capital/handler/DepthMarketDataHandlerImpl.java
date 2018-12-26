@@ -1,5 +1,6 @@
 package com.bazinga.capital.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.model.DepthMarketData;
 import com.bazinga.capital.service.DepthMarketDataService;
@@ -35,10 +36,9 @@ public class DepthMarketDataHandlerImpl extends AbstractTransDataHandler<DepthMa
 
     private void transformData(DepthMarketDataResponse response, DepthMarketData depthMarketData) {
         BeanUtils.copyProperties(response, depthMarketData);
-        depthMarketData.setAsk(Objects.toString(response.getAsk(),""));
-
-        depthMarketData.setBid(Objects.toString(response.getBid(),""));
-        depthMarketData.setDataTime(DateUtil.parseDate(String.valueOf(response.getDataTime()),DateUtil.yyyyMMddHHmmssSSS));
+        depthMarketData.setAsk(JSONObject.toJSONString(response.getAsk()));
+        depthMarketData.setBid(JSONObject.toJSONString(response.getBid()));
+        depthMarketData.setDataTime(DateUtil.parseDate(String.valueOf(response.getDataTime()), DateUtil.yyyyMMddHHmmssSSS));
         depthMarketData.setExchangeType(response.getExchangeType().getType());
         depthMarketData.setClosePrice(new BigDecimal(String.valueOf(response.getClosePrice())));
         depthMarketData.setTurnover(new BigDecimal(String.valueOf(response.getTurnover())));
