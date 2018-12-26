@@ -29,6 +29,9 @@ public class JobTest extends BaseTestCase{
 
     @Autowired
     private QueryAssertJob queryAssertJob;
+
+    @Autowired
+    private SubcribeOrderBookJob subcribeOrderBookJob;
     @Test
     public void test(){
         log.info("job start");
@@ -59,5 +62,10 @@ public class JobTest extends BaseTestCase{
     @Test
     public void test5(){
         queryAssertJob.execute();
+    }
+
+    @Test
+    public void test6(){
+        subcribeOrderBookJob.execute();
     }
 }
