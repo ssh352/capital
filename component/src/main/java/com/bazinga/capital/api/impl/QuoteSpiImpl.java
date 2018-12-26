@@ -69,6 +69,7 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onOrderBook(OrderBookResponse orderBook) {
+        log.info("OrderBookResponse= {}",JSONObject.toJSONString(orderBook));
     }
 
     @Override
