@@ -1,5 +1,6 @@
 package com.bazinga.capital.api.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
@@ -30,7 +31,10 @@ public class TradeSpiImpl implements TradeSpi {
     }
 
     @Override
-    public void onOrderEvent(OrderResponse orderInfo, ErrorMessage errorMessage, String sessionId) {
+    public void onOrderEvent(OrderResponse orderResponse, ErrorMessage errorMessage, String sessionId) {
+        log.info("on callBack onOrderEvent");
+        AbstractTransDataHandler<OrderResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ORDER_RESPONSE.getCode());
+        handler.transDataToPersist(orderResponse);
     }
 
     @Override
@@ -77,7 +81,8 @@ public class TradeSpiImpl implements TradeSpi {
     }
 
     @Override
-    public void onTradeEvent(TradeResponse tradeInfo, String sessionId) {
+    public void onTradeEvent(TradeResponse tradeResponse, String sessionId) {
+        log.info("TradeResponse= {},", JSONObject.toJSONString(tradeResponse));
     }
 
     @Override
