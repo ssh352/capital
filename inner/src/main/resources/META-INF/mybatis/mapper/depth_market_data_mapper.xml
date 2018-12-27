@@ -5,10 +5,10 @@
     <resultMap id="BaseResultMap" type="com.bazinga.capital.model.DepthMarketData">
         <id column="id" jdbcType="BIGINT"  property="id" />
         <result column="ask" jdbcType="VARCHAR" property="ask"/>
-        <result column="ask_qty" jdbcType="INTEGER" property="askQty"/>
+        <result column="ask_qty" jdbcType="VARCHAR" property="askQty"/>
         <result column="avg_price" jdbcType="DECIMAL" property="avgPrice"/>
         <result column="bid" jdbcType="VARCHAR" property="bid"/>
-        <result column="bid_qty" jdbcType="INTEGER" property="bidQty"/>
+        <result column="bid_qty" jdbcType="VARCHAR" property="bidQty"/>
         <result column="close_price" jdbcType="DECIMAL" property="closePrice"/>
         <result column="curr_delta" jdbcType="DECIMAL" property="currDelta"/>
         <result column="dataTime" jdbcType="TIMESTAMP" property="dataTime"/>
@@ -79,10 +79,10 @@
         values(
         #{id, jdbcType=BIGINT},
             #{ask, jdbcType=VARCHAR},
-            #{askQty, jdbcType=INTEGER},
+            #{askQty, jdbcType=VARCHAR},
             #{avgPrice, jdbcType=DECIMAL},
             #{bid, jdbcType=VARCHAR},
-            #{bidQty, jdbcType=INTEGER},
+            #{bidQty, jdbcType=VARCHAR},
             #{closePrice, jdbcType=DECIMAL},
             #{currDelta, jdbcType=DECIMAL},
             #{dataTime, jdbcType=TIMESTAMP},
@@ -116,7 +116,7 @@
                 ask = #{ask, jdbcType=VARCHAR},
             </if>
             <if test="askQty != null">
-                ask_qty = #{askQty, jdbcType=INTEGER},
+                ask_qty = #{askQty, jdbcType=VARCHAR},
             </if>
             <if test="avgPrice != null">
                 avg_price = #{avgPrice, jdbcType=DECIMAL},
@@ -125,7 +125,7 @@
                 bid = #{bid, jdbcType=VARCHAR},
             </if>
             <if test="bidQty != null">
-                bid_qty = #{bidQty, jdbcType=INTEGER},
+                bid_qty = #{bidQty, jdbcType=VARCHAR},
             </if>
             <if test="closePrice != null">
                 close_price = #{closePrice, jdbcType=DECIMAL},
@@ -203,7 +203,7 @@
             and ask = #{ask, jdbcType=VARCHAR}
         </if>
         <if test="askQty != null">
-            and ask_qty = #{askQty, jdbcType=INTEGER}
+            and ask_qty = #{askQty, jdbcType=VARCHAR}
         </if>
         <if test="avgPrice != null">
             and avg_price = #{avgPrice, jdbcType=DECIMAL}
@@ -212,7 +212,7 @@
             and bid = #{bid, jdbcType=VARCHAR}
         </if>
         <if test="bidQty != null">
-            and bid_qty = #{bidQty, jdbcType=INTEGER}
+            and bid_qty = #{bidQty, jdbcType=VARCHAR}
         </if>
         <if test="closePrice != null">
             and close_price = #{closePrice, jdbcType=DECIMAL}

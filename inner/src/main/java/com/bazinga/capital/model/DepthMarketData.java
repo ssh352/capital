@@ -1,30 +1,18 @@
 package com.bazinga.capital.model;
 
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
- * 〈普通行情〉<p>
+ * 〈DepthMarketData〉<p>
  *
  * @author
- * @date 2018-12-21
+ * @date 2018-12-27
  */
+@Data
 public class DepthMarketData implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,10 +38,11 @@ public class DepthMarketData implements Serializable {
     /**
      * 十档申卖量
      *
+     * @最大长度   100
      * @允许为空   NO
      * @是否索引   NO
      */
-    private Integer askQty;
+    private String askQty;
 
     /**
      * 当日均价=(turnover/qty)
@@ -67,7 +56,7 @@ public class DepthMarketData implements Serializable {
      * 十档申买价
      *
      * @最大长度   100
-     * @允许为空   YES
+     * @允许为空   NO
      * @是否索引   NO
      */
     private String bid;
@@ -75,10 +64,11 @@ public class DepthMarketData implements Serializable {
     /**
      * 十档申买量
      *
+     * @最大长度   100
      * @允许为空   NO
      * @是否索引   NO
      */
-    private Integer bidQty;
+    private String bidQty;
 
     /**
      * 今收盘
@@ -258,261 +248,5 @@ public class DepthMarketData implements Serializable {
      */
     private Date createTime;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAsk() {
-        return ask;
-    }
-
-    public void setAsk(String ask) {
-        this.ask = ask;
-    }
-
-    public Integer getAskQty() {
-        return askQty;
-    }
-
-    public void setAskQty(Integer askQty) {
-        this.askQty = askQty;
-    }
-
-    public BigDecimal getAvgPrice() {
-        return avgPrice;
-    }
-
-    public void setAvgPrice(BigDecimal avgPrice) {
-        this.avgPrice = avgPrice;
-    }
-
-    public String getBid() {
-        return bid;
-    }
-
-    public void setBid(String bid) {
-        this.bid = bid;
-    }
-
-    public Integer getBidQty() {
-        return bidQty;
-    }
-
-    public void setBidQty(Integer bidQty) {
-        this.bidQty = bidQty;
-    }
-
-    public BigDecimal getClosePrice() {
-        return closePrice;
-    }
-
-    public void setClosePrice(BigDecimal closePrice) {
-        this.closePrice = closePrice;
-    }
-
-    public BigDecimal getCurrDelta() {
-        return currDelta;
-    }
-
-    public void setCurrDelta(BigDecimal currDelta) {
-        this.currDelta = currDelta;
-    }
-
-    public Date getDataTime() {
-        return dataTime;
-    }
-
-    public void setDataTime(Date dataTime) {
-        this.dataTime = dataTime;
-    }
-
-    public Integer getExchangeType() {
-        return exchangeType;
-    }
-
-    public void setExchangeType(Integer exchangeType) {
-        this.exchangeType = exchangeType;
-    }
-
-    public BigDecimal getHighPrice() {
-        return highPrice;
-    }
-
-    public void setHighPrice(BigDecimal highPrice) {
-        this.highPrice = highPrice;
-    }
-
-    public BigDecimal getLastPrice() {
-        return lastPrice;
-    }
-
-    public void setLastPrice(BigDecimal lastPrice) {
-        this.lastPrice = lastPrice;
-    }
-
-    public BigDecimal getLowerLimitPrice() {
-        return lowerLimitPrice;
-    }
-
-    public void setLowerLimitPrice(BigDecimal lowerLimitPrice) {
-        this.lowerLimitPrice = lowerLimitPrice;
-    }
-
-    public BigDecimal getLowPrice() {
-        return lowPrice;
-    }
-
-    public void setLowPrice(BigDecimal lowPrice) {
-        this.lowPrice = lowPrice;
-    }
-
-    public BigDecimal getOpenPrice() {
-        return openPrice;
-    }
-
-    public void setOpenPrice(BigDecimal openPrice) {
-        this.openPrice = openPrice;
-    }
-
-    public BigDecimal getPreClosePrice() {
-        return preClosePrice;
-    }
-
-    public void setPreClosePrice(BigDecimal preClosePrice) {
-        this.preClosePrice = preClosePrice;
-    }
-
-    public BigDecimal getPreDelta() {
-        return preDelta;
-    }
-
-    public void setPreDelta(BigDecimal preDelta) {
-        this.preDelta = preDelta;
-    }
-
-    public BigDecimal getPreSettlementPrice() {
-        return preSettlementPrice;
-    }
-
-    public void setPreSettlementPrice(BigDecimal preSettlementPrice) {
-        this.preSettlementPrice = preSettlementPrice;
-    }
-
-    public Long getPreTotalLongPositon() {
-        return preTotalLongPositon;
-    }
-
-    public void setPreTotalLongPositon(Long preTotalLongPositon) {
-        this.preTotalLongPositon = preTotalLongPositon;
-    }
-
-    public Long getQty() {
-        return qty;
-    }
-
-    public void setQty(Long qty) {
-        this.qty = qty;
-    }
-
-    public BigDecimal getSettlementPrice() {
-        return settlementPrice;
-    }
-
-    public void setSettlementPrice(BigDecimal settlementPrice) {
-        this.settlementPrice = settlementPrice;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
-
-    public String getTickerStatus() {
-        return tickerStatus;
-    }
-
-    public void setTickerStatus(String tickerStatus) {
-        this.tickerStatus = tickerStatus;
-    }
-
-    public Long getTotalLongPositon() {
-        return totalLongPositon;
-    }
-
-    public void setTotalLongPositon(Long totalLongPositon) {
-        this.totalLongPositon = totalLongPositon;
-    }
-
-    public Long getTradesCount() {
-        return tradesCount;
-    }
-
-    public void setTradesCount(Long tradesCount) {
-        this.tradesCount = tradesCount;
-    }
-
-    public BigDecimal getTurnover() {
-        return turnover;
-    }
-
-    public void setTurnover(BigDecimal turnover) {
-        this.turnover = turnover;
-    }
-
-    public BigDecimal getUpperLimitPrice() {
-        return upperLimitPrice;
-    }
-
-    public void setUpperLimitPrice(BigDecimal upperLimitPrice) {
-        this.upperLimitPrice = upperLimitPrice;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return "DepthMarketData{" +
-                "id=" + id +
-                ", ask='" + ask + '\'' +
-                ", askQty=" + askQty +
-                ", avgPrice=" + avgPrice +
-                ", bid='" + bid + '\'' +
-                ", bidQty=" + bidQty +
-                ", closePrice=" + closePrice +
-                ", currDelta=" + currDelta +
-                ", dataTime=" + dataTime +
-                ", exchangeType=" + exchangeType +
-                ", highPrice=" + highPrice +
-                ", lastPrice=" + lastPrice +
-                ", lowerLimitPrice=" + lowerLimitPrice +
-                ", lowPrice=" + lowPrice +
-                ", openPrice=" + openPrice +
-                ", preClosePrice=" + preClosePrice +
-                ", preDelta=" + preDelta +
-                ", preSettlementPrice=" + preSettlementPrice +
-                ", preTotalLongPositon=" + preTotalLongPositon +
-                ", qty=" + qty +
-                ", settlementPrice=" + settlementPrice +
-                ", ticker='" + ticker + '\'' +
-                ", tickerStatus='" + tickerStatus + '\'' +
-                ", totalLongPositon=" + totalLongPositon +
-                ", tradesCount=" + tradesCount +
-                ", turnover=" + turnover +
-                ", upperLimitPrice=" + upperLimitPrice +
-                ", createTime=" + createTime +
-                '}';
-    }
 }
