@@ -132,3 +132,26 @@ CREATE TABLE `asset` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='资产信息';
+
+CREATE TABLE `circulate_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticker` varchar(255) NOT NULL COMMENT 'ticker编号',
+  `ticker_name` varchar(255)  NOT NULL  COMMENT 'ticker名称',
+  `circulate` bigint(20) NOT NULL DEFAULT '0' COMMENT '总流通量',
+  `circulate_z` bigint(20) NOT NULL DEFAULT '0' COMMENT '流通量z',
+  `circulate_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类型  0 一亿一下  1 1亿到3亿   2 3亿以上',
+  `change_time` datetime NOT NULL COMMENT '季度',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT '流通信息';
+
+CREATE TABLE `depth_market_data_ex` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ask1_Count` int(10) NOT NULL DEFAULT '0' COMMENT '卖一队列的有效委托笔数',
+  `ask1_qty` varchar(255) NOT NULL DEFAULT '' COMMENT '卖一队列数据',
+  `bid1_count` int(11) NOT NULL DEFAULT '0' COMMENT '买一队列的有效委托笔数',
+  `bid1_qty` varchar(255) NOT NULL DEFAULT '' COMMENT '买一队列数据',
+  `max_ask1_count` int(10) NOT NULL DEFAULT '0' COMMENT '卖一队列总委托笔数',
+  `max_bid1_count` int(10) NOT NULL DEFAULT '0' COMMENT '买一队列总委托笔数',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '买一买一队列信息'
