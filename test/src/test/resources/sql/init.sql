@@ -18,10 +18,10 @@ CREATE TABLE `ticket_info` (
 CREATE TABLE `depth_market_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ask` varchar(100) NOT NULL COMMENT '10档申卖价',
-  `ask_qty` int(10) NOT NULL COMMENT '十档申卖量',
+  `ask_qty` varchar(10) NOT NULL COMMENT '十档申卖量',
   `avg_price` decimal(10,2) NOT NULL COMMENT '当日均价=(turnover/qty)',
   `bid` varchar(100) DEFAULT NULL COMMENT '十档申买价',
-	`bid_qty` int(10) NOT NULL COMMENT '十档申买量',
+	`bid_qty` varchar(10) NOT NULL COMMENT '十档申买量',
   `close_price`decimal(10,2) NOT NULL COMMENT '今收盘',
   `curr_delta` decimal(10,2) NOT NULL COMMENT '预留',
 	`dataTime` TIMESTAMP COMMENT '行情时间',
