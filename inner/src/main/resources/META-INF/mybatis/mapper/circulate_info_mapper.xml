@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.CirculateInfoDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.CirculateInfo">
+        <id column="id" jdbcType="INTEGER"  property="id" />
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="ticker_name" jdbcType="VARCHAR" property="tickerName"/>
+        <result column="circulate" jdbcType="BIGINT" property="circulate"/>
+        <result column="circulate_z" jdbcType="BIGINT" property="circulateZ"/>
+        <result column="circulate_type" jdbcType="TINYINT" property="circulateType"/>
+        <result column="change_time" jdbcType="TIMESTAMP" property="changeTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            ticker,
+            ticker_name,
+            circulate,
+            circulate_z,
+            circulate_type,
+            change_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from circulate_info
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.CirculateInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into circulate_info (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=INTEGER},
+            #{ticker, jdbcType=VARCHAR},
+            #{tickerName, jdbcType=VARCHAR},
+            #{circulate, jdbcType=BIGINT},
+            #{circulateZ, jdbcType=BIGINT},
+            #{circulateType, jdbcType=TINYINT},
+            #{changeTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.CirculateInfo">
+        update circulate_info
+        <set>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="tickerName != null">
+                ticker_name = #{tickerName, jdbcType=VARCHAR},
+            </if>
+            <if test="circulate != null">
+                circulate = #{circulate, jdbcType=BIGINT},
+            </if>
+            <if test="circulateZ != null">
+                circulate_z = #{circulateZ, jdbcType=BIGINT},
+            </if>
+            <if test="circulateType != null">
+                circulate_type = #{circulateType, jdbcType=TINYINT},
+            </if>
+            <if test="changeTime != null">
+                change_time = #{changeTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="tickerName != null">
+            and ticker_name = #{tickerName, jdbcType=VARCHAR}
+        </if>
+        <if test="circulate != null">
+            and circulate = #{circulate, jdbcType=BIGINT}
+        </if>
+        <if test="circulateZ != null">
+            and circulate_z = #{circulateZ, jdbcType=BIGINT}
+        </if>
+        <if test="circulateType != null">
+            and circulate_type = #{circulateType, jdbcType=TINYINT}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="changeTimeFrom != null">
+            <![CDATA[
+            and change_time >= #{changeTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="changeTimeTo != null">
+            <![CDATA[
+            and change_time <= #{changeTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.CirculateInfoQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from circulate_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.CirculateInfoQuery" resultType="java.lang.Integer">
+        select count(1)
+        from circulate_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
