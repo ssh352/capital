@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.DepthMarketDataExDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.DepthMarketDataEx">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="ask1_Count" jdbcType="INTEGER" property="ask1Count"/>
+        <result column="ask1_qty" jdbcType="VARCHAR" property="ask1Qty"/>
+        <result column="bid1_count" jdbcType="INTEGER" property="bid1Count"/>
+        <result column="bid1_qty" jdbcType="VARCHAR" property="bid1Qty"/>
+        <result column="max_ask1_count" jdbcType="INTEGER" property="maxAsk1Count"/>
+        <result column="max_bid1_count" jdbcType="INTEGER" property="maxBid1Count"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            ask1_Count,
+            ask1_qty,
+            bid1_count,
+            bid1_qty,
+            max_ask1_count,
+            max_bid1_count,
+            create_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from depth_market_data_ex
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.DepthMarketDataEx" useGeneratedKeys="true" keyProperty="id">
+        insert into depth_market_data_ex (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{ask1Count, jdbcType=INTEGER},
+            #{ask1Qty, jdbcType=VARCHAR},
+            #{bid1Count, jdbcType=INTEGER},
+            #{bid1Qty, jdbcType=VARCHAR},
+            #{maxAsk1Count, jdbcType=INTEGER},
+            #{maxBid1Count, jdbcType=INTEGER},
+            #{createTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.DepthMarketDataEx">
+        update depth_market_data_ex
+        <set>
+            <if test="ask1Count != null">
+                ask1_Count = #{ask1Count, jdbcType=INTEGER},
+            </if>
+            <if test="ask1Qty != null">
+                ask1_qty = #{ask1Qty, jdbcType=VARCHAR},
+            </if>
+            <if test="bid1Count != null">
+                bid1_count = #{bid1Count, jdbcType=INTEGER},
+            </if>
+            <if test="bid1Qty != null">
+                bid1_qty = #{bid1Qty, jdbcType=VARCHAR},
+            </if>
+            <if test="maxAsk1Count != null">
+                max_ask1_count = #{maxAsk1Count, jdbcType=INTEGER},
+            </if>
+            <if test="maxBid1Count != null">
+                max_bid1_count = #{maxBid1Count, jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="ask1Count != null">
+            and ask1_Count = #{ask1Count, jdbcType=INTEGER}
+        </if>
+        <if test="ask1Qty != null">
+            and ask1_qty = #{ask1Qty, jdbcType=VARCHAR}
+        </if>
+        <if test="bid1Count != null">
+            and bid1_count = #{bid1Count, jdbcType=INTEGER}
+        </if>
+        <if test="bid1Qty != null">
+            and bid1_qty = #{bid1Qty, jdbcType=VARCHAR}
+        </if>
+        <if test="maxAsk1Count != null">
+            and max_ask1_count = #{maxAsk1Count, jdbcType=INTEGER}
+        </if>
+        <if test="maxBid1Count != null">
+            and max_bid1_count = #{maxBid1Count, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.DepthMarketDataExQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from depth_market_data_ex
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.DepthMarketDataExQuery" resultType="java.lang.Integer">
+        select count(1)
+        from depth_market_data_ex
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
