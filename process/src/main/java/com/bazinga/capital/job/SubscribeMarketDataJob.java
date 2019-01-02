@@ -24,7 +24,7 @@ public class SubscribeMarketDataJob {
         try {
             String[] tickerArray = new String[]{"002868"};
             quoteApiService.subscribeMarketData(tickerArray, 1, ExchangeType.SZ.getType());
-            TimeUnit.SECONDS.sleep(3600);
+
         } catch (Exception e) {
             log.error("SubscribeMarketDataJob error", e);
         }
