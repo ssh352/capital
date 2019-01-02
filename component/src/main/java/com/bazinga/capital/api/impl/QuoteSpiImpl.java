@@ -49,14 +49,15 @@ public class QuoteSpiImpl implements QuoteSpi {
         if (errorMessage != null) {
             log.error("SpecificTickerResponse ErrorMessage={}", JSONObject.toJSONString(errorMessage));
         }
-
     }
 
     @Override
-    public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthQuote) {
+    public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthMarketDataExResponse) {
         log.info("on callBack onDepthMarketData");
         AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
         handler.transDataToPersist(depthMarketData);
+        AbstractTransDataHandler<DepthMarketDataExResponse> exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
+        exHandler.transDataToPersist(depthMarketDataExResponse);
     }
 
     @Override
