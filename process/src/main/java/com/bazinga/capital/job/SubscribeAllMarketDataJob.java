@@ -28,7 +28,6 @@ public class SubscribeAllMarketDataJob {
             } else {
                 log.info("未登录 ---------->");
             }
-            TimeUnit.SECONDS.sleep(3600);
         } catch (Exception e) {
             log.error("SubscribeAllMarketDataJob error", e);
         }
