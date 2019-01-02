@@ -20,9 +20,11 @@ public class DepthMarketDataExHandlerImpl extends AbstractTransDataHandler<Depth
 
     @Override
     public void transDataToPersist(DepthMarketDataExResponse response) {
-        DepthMarketDataEx depthMarketDataEx = new DepthMarketDataEx();
-        transformData(response, depthMarketDataEx);
-        depthMarketDataExService.save(depthMarketDataEx);
+        this.executorService.execute(()->{
+            DepthMarketDataEx depthMarketDataEx = new DepthMarketDataEx();
+            transformData(response, depthMarketDataEx);
+            depthMarketDataExService.save(depthMarketDataEx);
+        });
     }
 
     private void transformData(DepthMarketDataExResponse response, DepthMarketDataEx depthMarketDataEx) {
