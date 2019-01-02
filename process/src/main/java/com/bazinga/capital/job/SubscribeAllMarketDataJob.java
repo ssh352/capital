@@ -1,6 +1,7 @@
 package com.bazinga.capital.job;
 
 import com.bazinga.capital.api.QuoteApiService;
+import com.bazinga.capital.constant.LoginState;
 import com.zts.xtp.common.enums.ExchangeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class SubscribeAllMarketDataJob {
     public void execute() {
         log.info("SubscribeAllMarketDataJob start...");
         try {
-            quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
+            if (LoginState.LOGIN_RESULT) {
+                quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
+            } else {
+                log.info("未登录 ---------->");
+            }
             TimeUnit.SECONDS.sleep(3600);
         } catch (Exception e) {
             log.error("SubscribeAllMarketDataJob error", e);
