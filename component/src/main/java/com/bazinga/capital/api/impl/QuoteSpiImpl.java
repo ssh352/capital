@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class QuoteSpiImpl implements QuoteSpi {
 
+    private AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+
+    private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
+
     @Override
     public void onDisconnected(int reason) {
         log.error("onDisconnected reason =" + reason);
@@ -56,9 +60,8 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthMarketDataExResponse) {
         log.info("on callBack onDepthMarketData");
-        AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
         handler.transDataToPersist(depthMarketData);
-        AbstractTransDataHandler<DepthMarketDataExResponse> exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
+
         exHandler.transDataToPersist(depthMarketDataExResponse);
     }
 
