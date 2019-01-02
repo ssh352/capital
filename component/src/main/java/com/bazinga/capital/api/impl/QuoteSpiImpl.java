@@ -11,6 +11,8 @@ import com.zts.xtp.quote.spi.QuoteSpi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author yunshan
  */
@@ -18,9 +20,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class QuoteSpiImpl implements QuoteSpi {
 
-    private AbstractTransDataHandler<DepthMarketDataResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+    private AbstractTransDataHandler<DepthMarketDataResponse> handler ;
 
-    private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
+    private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler;
+
+    @PostConstruct
+    public void init (){
+        handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
+        exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
+    }
 
     @Override
     public void onDisconnected(int reason) {
