@@ -37,6 +37,8 @@ public class DepthMarketDataHandlerImpl extends AbstractTransDataHandler<DepthMa
     private void transformData(DepthMarketDataResponse response, DepthMarketData depthMarketData) {
         BeanUtils.copyProperties(response, depthMarketData);
         depthMarketData.setAsk(JSONObject.toJSONString(response.getAsk()));
+        depthMarketData.setAskQty(JSONObject.toJSONString(response.getAskQty()));
+        depthMarketData.setBidQty(JSONObject.toJSONString(response.getBidQty()));
         depthMarketData.setBid(JSONObject.toJSONString(response.getBid()));
         depthMarketData.setDataTime(DateUtil.parseDate(String.valueOf(response.getDataTime()), DateUtil.yyyyMMddHHmmssSSS));
         depthMarketData.setExchangeType(response.getExchangeType().getType());
