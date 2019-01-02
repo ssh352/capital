@@ -5,13 +5,15 @@ package com.bazinga.capital.api;
  */
 public interface QuoteApiService {
 
-     void connect(short var1, String var2);
+     void connect();
 
      void disconnect();
 
-     int login(String var1, int var2, String var3, String var4, int var5);
+     int login();
 
      int logout();
+
+
 
      void setHeartBeatInterval(int var1);
 

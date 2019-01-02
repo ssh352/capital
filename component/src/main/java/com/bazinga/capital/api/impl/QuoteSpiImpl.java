@@ -1,6 +1,7 @@
 package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bazinga.capital.constant.LoginState;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
@@ -19,12 +20,13 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onDisconnected(int reason) {
-        log.error("onDisconnected");
+        log.error("onDisconnected reason =" + reason);
+        LoginState.LOGIN_RESULT= false;
     }
 
     @Override
     public void onError(ErrorMessage errorMessage) {
-        log.error("on error");
+        log.error("on error"+JSONObject.toJSONString(errorMessage));
     }
 
     @Override
@@ -70,7 +72,7 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onOrderBook(OrderBookResponse orderBook) {
-        log.info("OrderBookResponse= {}",JSONObject.toJSONString(orderBook));
+        log.info("OrderBookResponse= {}", JSONObject.toJSONString(orderBook));
     }
 
     @Override

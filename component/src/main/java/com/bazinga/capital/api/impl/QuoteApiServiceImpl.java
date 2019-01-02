@@ -2,6 +2,7 @@ package com.bazinga.capital.api.impl;
 
 
 import com.bazinga.capital.api.QuoteApiService;
+import com.bazinga.capital.constant.LoginState;
 import com.zts.xtp.quote.api.QuoteApi;
 import com.zts.xtp.quote.spi.QuoteSpi;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     private QuoteApi quoteApi;
 
-    private boolean loginFlag;
 
     @Autowired
     private QuoteSpi quoteSpi;
@@ -48,9 +48,6 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     @Value("${xtp.lib_folder}")
     private String libFolder;
 
-    public boolean isLogin() {
-        return loginFlag;
-    }
 
     private static void loadLibrary(String libFolder) {
         System.load(libFolder + "/libxtptraderapi.so");
@@ -68,14 +65,14 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
         quoteApi.connect(clientId, dataFolder);
         quoteApi.setHeartBeatInterval(3);
         int loginResult = quoteApi.login(ip, port, user, password, 1);
-        loginFlag = (loginResult == 0);
-        log.info("logResult={} code={}", loginFlag, loginResult);
+        LoginState.LOGIN_RESULT = (loginResult == 0);
+        log.info("logResult={} code={}", LoginState.LOGIN_RESULT, loginResult);
 
     }
 
     @Override
-    public void connect(short var1, String var2) {
-        quoteApi.connect(var1, var2);
+    public void connect() {
+        quoteApi.connect(clientId, dataFolder);
     }
 
     @Override
@@ -84,14 +81,15 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     }
 
     @Override
-    public int login(String ip, int port, String user, String password, int protocol) {
-        return quoteApi.login(ip, port, user, password, protocol);
+    public int login() {
+        return quoteApi.login(ip, port, user, password, 1);
     }
 
     @Override
     public int logout() {
         return quoteApi.logout();
     }
+
 
     @Override
     public void setHeartBeatInterval(int seconds) {
