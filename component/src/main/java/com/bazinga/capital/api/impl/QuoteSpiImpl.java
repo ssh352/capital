@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 /**
  * @author yunshan
@@ -19,16 +20,11 @@ import javax.annotation.PostConstruct;
 @Service
 @Slf4j
 public class QuoteSpiImpl implements QuoteSpi {
-
+    @Resource(name = "depthMarketDataHandlerImpl")
     private AbstractTransDataHandler<DepthMarketDataResponse> handler ;
 
+    @Resource(name = "depthMarketDataExHandlerImpl")
     private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler;
-
-    @PostConstruct
-    public void init (){
-        handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_RESPONSE.getCode());
-        exHandler = TransDataHandlerFactory.createHandler(ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode());
-    }
 
     @Override
     public void onDisconnected(int reason) {
