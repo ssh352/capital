@@ -2,6 +2,7 @@ package com.bazinga.capital.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.api.TradeApiService;
+import com.bazinga.capital.constant.CacheDataCenter;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.zts.xtp.common.enums.BusinessType;
 import com.zts.xtp.common.enums.MarketType;
@@ -28,18 +29,24 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
     @Override
     public void onApplicationEvent(MarketData2InsertOrderEvent event) {
         log.info("监听到委托下单事件 ticker = {},price = {}", event.getTicker(), event.getOrderPrice());
-        OrderInsertRequest orderInsertRequest = OrderInsertRequest.builder()
-                .businessType(BusinessType.XTP_BUSINESS_TYPE_CASH)
-                .marketType(MarketType.XTP_MKT_SZ_A)
-                .price(event.getOrderPrice().doubleValue())
-                .ticker(event.getTicker())
-                .sideType(SideType.XTP_SIDE_BUY)
-                .quantity(1000).build();
-        try {
-            String xtpOrderId = tradeApiService.insertOrder(orderInsertRequest);
-            log.info("调用 api 委托下单完成");
-        } catch (Exception e) {
-            log.error("委托下单异常 参数 = " + JSONObject.toJSONString(event), e);
+        if(CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(event.getTicker())){
+            log.info("当天 已经下单 不满足下单条件");
+        }else{
+            try {
+                OrderInsertRequest orderInsertRequest = OrderInsertRequest.builder()
+                        .businessType(BusinessType.XTP_BUSINESS_TYPE_CASH)
+                        .marketType(MarketType.XTP_MKT_SZ_A)
+                        .price(event.getOrderPrice().doubleValue())
+                        .ticker(event.getTicker())
+                        .sideType(SideType.XTP_SIDE_BUY)
+                        .quantity(1000).build();
+                String xtpOrderId = tradeApiService.insertOrder(orderInsertRequest);
+                CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(event.getTicker());
+                log.info("调用 api 委托下单完成");
+            } catch (Exception e) {
+                log.error("委托下单异常 参数 = " + JSONObject.toJSONString(event), e);
+            }
         }
+
     }
 }
