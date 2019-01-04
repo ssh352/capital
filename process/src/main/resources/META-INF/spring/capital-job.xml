@@ -19,7 +19,7 @@
         <task:scheduled ref="queryAllTicketJob" method="execute" cron="0 0 1 * * ?"/>
         <task:scheduled ref="subscribeAllMarketDataJob" method="execute" fixed-delay="1000" initial-delay="1000"/>
         <task:scheduled ref="ticketByTicketJob" method="execute" cron="0 0 1 * * ?"/>
-        <task:scheduled ref="queryAssertJob" method="execute" cron="0 0 1 * * ?"/>
+        <task:scheduled ref="queryAssertJob" method="execute" cron="0 0/1 * * * ?"/>
 
     </task:scheduled-tasks>
 
