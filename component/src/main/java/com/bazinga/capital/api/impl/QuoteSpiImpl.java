@@ -74,6 +74,7 @@ public class QuoteSpiImpl implements QuoteSpi {
         boolean isSaved = false;
         if (depthMarketData.getLastPrice() == depthMarketData.getUpperLimitPrice()
                 && depthMarketData.getDataType().type == 0
+                && depthMarketData.getLastPrice()>0
                 && !CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(depthMarketData.getTicker())) {
             applicationContext.publishEvent(new MarketData2InsertOrderEvent(this, depthMarketData.getTicker(),
                     new BigDecimal(String.valueOf(depthMarketData.getUpperLimitPrice()))));
