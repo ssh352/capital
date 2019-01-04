@@ -1,18 +1,22 @@
 package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bazinga.capital.constant.CacheDataCenter;
 import com.bazinga.capital.constant.LoginState;
 import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
 import com.zts.xtp.quote.spi.QuoteSpi;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * @author yunshan
@@ -20,8 +24,12 @@ import javax.annotation.Resource;
 @Service
 @Slf4j
 public class QuoteSpiImpl implements QuoteSpi {
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Resource(name = "depthMarketDataHandlerImpl")
-    private AbstractTransDataHandler<DepthMarketDataResponse> handler ;
+    private AbstractTransDataHandler<DepthMarketDataResponse> handler;
 
     @Resource(name = "depthMarketDataExHandlerImpl")
     private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler;
@@ -29,12 +37,12 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDisconnected(int reason) {
         log.error("onDisconnected reason =" + reason);
-        LoginState.LOGIN_RESULT= false;
+        LoginState.LOGIN_RESULT = false;
     }
 
     @Override
     public void onError(ErrorMessage errorMessage) {
-        log.error("on error"+JSONObject.toJSONString(errorMessage));
+        log.error("on error" + JSONObject.toJSONString(errorMessage));
     }
 
     @Override
@@ -64,9 +72,21 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthMarketDataExResponse) {
         log.info("on callBack onDepthMarketData");
-        handler.transDataToPersist(depthMarketData);
-
-        exHandler.transDataToPersist(depthMarketDataExResponse);
+        boolean isSaved = false;
+        if (depthMarketData.getLastPrice() == depthMarketData.getUpperLimitPrice()) {
+            applicationContext.publishEvent(new MarketData2InsertOrderEvent(this, depthMarketData.getTicker(),
+                    new BigDecimal(String.valueOf(depthMarketData.getUpperLimitPrice()))));
+            log.info("触发涨停 下单事件发布成功 ticker={} ,price={}", depthMarketData.getTicker(), depthMarketData.getUpperLimitPrice());
+            handler.transDataToPersist(depthMarketData);
+            exHandler.transDataToPersist(depthMarketDataExResponse);
+            log.info("行情触发涨停 ticker = {}", depthMarketData.getTicker());
+            isSaved = true;
+        }
+        if (!isSaved && CacheDataCenter.TICKER_PERSIST_SET.contains(depthMarketData.getTicker())) {
+            log.info("行情需要保存 ticker = {}", depthMarketData.getTicker());
+            handler.transDataToPersist(depthMarketData);
+            exHandler.transDataToPersist(depthMarketDataExResponse);
+        }
     }
 
     @Override

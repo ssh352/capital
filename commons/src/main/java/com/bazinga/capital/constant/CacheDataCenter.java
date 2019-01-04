@@ -1,0 +1,19 @@
+package com.bazinga.capital.constant;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * @author yunshan
+ * @date 2019/1/4
+ */
+public class CacheDataCenter {
+
+    public static Map<String, String> tickerPersistMap = new ConcurrentHashMap<>(256);
+    public static Set<String> TICKER_PERSIST_SET = new HashSet<>();
+
+
+
+}

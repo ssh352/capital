@@ -4,11 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
+import com.bazinga.capital.util.ThreadPoolUtils;
+import com.zts.xtp.common.enums.OrderStatusType;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.trade.model.response.*;
 import com.zts.xtp.trade.spi.TradeSpi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yunshan
@@ -17,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class TradeSpiImpl implements TradeSpi {
+    private static final ScheduledExecutorService threadPool = ThreadPoolUtils.createScheduled(4, "delayGetMarket");
 
     @Override
     public void onDisconnect(String sessionId, int reason) {
@@ -35,6 +42,16 @@ public class TradeSpiImpl implements TradeSpi {
         log.info("on callBack onOrderEvent");
         AbstractTransDataHandler<OrderResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ORDER_RESPONSE.getCode());
         handler.transDataToPersist(orderResponse);
+        switch (orderResponse.getOrderStatusType()) {
+            case XTP_ORDER_STATUS_ALLTRADED:
+                threadPool.schedule(() -> {
+
+                }, 10, TimeUnit.SECONDS);
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
