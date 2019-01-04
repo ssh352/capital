@@ -2,7 +2,6 @@ package com.bazinga.capital.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.api.TradeApiService;
-import com.bazinga.capital.constant.CacheDataCenter;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.zts.xtp.common.enums.BusinessType;
 import com.zts.xtp.common.enums.MarketType;
@@ -47,6 +46,5 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                 log.error("委托下单异常 参数 = " + JSONObject.toJSONString(event), e);
             }
         }
-
     }
 }
