@@ -5,6 +5,7 @@ import com.bazinga.capital.api.TradeApiService;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.zts.xtp.common.enums.BusinessType;
 import com.zts.xtp.common.enums.MarketType;
+import com.zts.xtp.common.enums.PriceType;
 import com.zts.xtp.common.enums.SideType;
 import com.zts.xtp.trade.model.request.OrderInsertRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,10 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                 .price(event.getOrderPrice().doubleValue())
                 .ticker(event.getTicker())
                 .sideType(SideType.XTP_SIDE_BUY)
+                .orderXtpId("0")
+                .orderClientId(13)
+                .stopPrice(0L)
+                .priceType(PriceType.XTP_PRICE_LIMIT)
                 .quantity(1000).build();
         try {
             String xtpOrderId = tradeApiService.insertOrder(orderInsertRequest);
