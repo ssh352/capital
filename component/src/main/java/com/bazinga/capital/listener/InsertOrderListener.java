@@ -6,6 +6,7 @@ import com.bazinga.capital.constant.CacheDataCenter;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.zts.xtp.common.enums.BusinessType;
 import com.zts.xtp.common.enums.MarketType;
+import com.zts.xtp.common.enums.PriceType;
 import com.zts.xtp.common.enums.SideType;
 import com.zts.xtp.trade.model.request.OrderInsertRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,10 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
         }else{
             try {
                 OrderInsertRequest orderInsertRequest = OrderInsertRequest.builder()
-                        .businessType(BusinessType.XTP_BUSINESS_TYPE_CASH)
+                        .businessType(BusinessType.XTP_BUSINESS_TYPE_CASH).orderXtpId("0")
+                        .orderClientId(13)
+                        .stopPrice(0)
+                        .priceType(PriceType.XTP_PRICE_LIMIT)
                         .marketType(MarketType.XTP_MKT_SZ_A)
                         .price(event.getOrderPrice().doubleValue())
                         .ticker(event.getTicker())
