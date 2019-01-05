@@ -75,7 +75,8 @@ public class QuoteSpiImpl implements QuoteSpi {
         if (depthMarketData.getLastPrice() == depthMarketData.getUpperLimitPrice()
                 && depthMarketData.getDataType().type == 0
                 && depthMarketData.getLastPrice()>0
-                && !CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(depthMarketData.getTicker())) {
+                && !CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(depthMarketData.getTicker())
+                && depthMarketData.getBid()[0]>600000) {
             applicationContext.publishEvent(new MarketData2InsertOrderEvent(this, depthMarketData.getTicker(),
                     new BigDecimal(String.valueOf(depthMarketData.getUpperLimitPrice()))));
             log.info("触发涨停 下单事件发布成功 ticker={} ,price={}", depthMarketData.getTicker(), depthMarketData.getUpperLimitPrice());
