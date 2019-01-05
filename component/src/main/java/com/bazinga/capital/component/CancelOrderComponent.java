@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class ApiComponent {
+public class CancelOrderComponent {
 
     @Autowired
     private TradeApiService tradeApiService;
@@ -76,7 +76,7 @@ public class ApiComponent {
                             tradeApiService.cancelOrder(orderXtpId);
                         }
                     } else {
-                        log.warn("流通 z 信息类型不存在");
+                        log.warn("流通 z 信息 类型不存在");
                     }
                 }
             }

@@ -1,12 +1,11 @@
 package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bazinga.capital.component.ApiComponent;
+import com.bazinga.capital.component.CancelOrderComponent;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.util.ThreadPoolUtils;
-import com.zts.xtp.common.enums.OrderStatusType;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.trade.model.response.*;
 import com.zts.xtp.trade.spi.TradeSpi;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +26,7 @@ public class TradeSpiImpl implements TradeSpi {
     private static final ScheduledExecutorService threadPool = ThreadPoolUtils.createScheduled(4, "delayGetMarket");
 
     @Autowired
-    private ApiComponent apiComponent;
+    private CancelOrderComponent cancelOrderComponent;
 
     @Override
     public void onDisconnect(String sessionId, int reason) {
@@ -50,7 +48,7 @@ public class TradeSpiImpl implements TradeSpi {
         switch (orderResponse.getOrderStatusType()) {
             case XTP_ORDER_STATUS_NOTRADEQUEUEING:
                 threadPool.schedule(() -> {
-                    apiComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(),orderResponse.getOrderXtpId());
+                    cancelOrderComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(),orderResponse.getOrderXtpId());
                 }, 10, TimeUnit.SECONDS);
                 break;
             default:
