@@ -2,9 +2,6 @@ package com.bazinga.capital.component;
 
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.dto.TickerConfigDTO;
-import com.bazinga.capital.enums.ApiResponseEnum;
-import com.bazinga.capital.handler.AbstractTransDataHandler;
-import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.util.ThreadPoolUtils;
 import com.zts.xtp.trade.model.response.OrderResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +24,16 @@ public class OnOrderEventComponent {
     @Autowired
     private CancelOrderComponent cancelOrderComponent;
 
-    public void dealWithOrderInfo(OrderResponse orderResponse) {
+    @Autowired
+    private OrderInfoPersistComponent orderInfoPersistComponent;
 
-        AbstractTransDataHandler<OrderResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ORDER_RESPONSE.getCode());
-        handler.transDataToPersist(orderResponse);
+    public void dealWithOrderInfo(OrderResponse orderResponse) {
+        try {
+            orderInfoPersistComponent.orderInfoPersist(orderResponse);
+        } catch (Exception e) {
+            log.error("同步保存订单信息异常 ticker=" + orderResponse.getTicker() + "orderXtpId="
+                    + orderResponse.getOrderXtpId(), e);
+        }
         TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(orderResponse.getTicker());
         switch (orderResponse.getOrderStatusType()) {
             case XTP_ORDER_STATUS_NOTRADEQUEUEING:
