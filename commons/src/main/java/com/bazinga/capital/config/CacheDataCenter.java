@@ -1,4 +1,4 @@
-package com.bazinga.capital.constant;
+package com.bazinga.capital.config;
 
 import java.util.HashSet;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bazinga.capital.constant.CacheDataCenter;
+import com.bazinga.capital.config.CacheDataCenter;
 import com.bazinga.capital.constant.LoginState;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
