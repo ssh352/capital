@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 〈本地订单信息 查询参数〉<p>
+ * 〈系统订单信息 查询参数〉<p>
  *
  * @author
  * @date 2019-01-06
@@ -60,6 +60,16 @@ public class CapitalOrderInfoQuery extends PagingQuery implements Serializable {
     private Integer status;
 
     /**
+     * 0 可以下单  1 禁止下单
+     */
+    private Integer stopInsert;
+
+    /**
+     * 0 允许撤单, 1 禁止撤单
+     */
+    private Integer stopCancel;
+
+    /**
      * 创建时间 开始
      */
     private Date createTimeFrom;
@@ -78,5 +88,6 @@ public class CapitalOrderInfoQuery extends PagingQuery implements Serializable {
      * 更新时间 结束
      */
     private Date updateTimeTo;
+
 
 }

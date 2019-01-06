@@ -12,6 +12,8 @@
         <result column="traded_quantity" jdbcType="INTEGER" property="tradedQuantity"/>
         <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="stop_insert" jdbcType="TINYINT" property="stopInsert"/>
+        <result column="stop_cancel" jdbcType="TINYINT" property="stopCancel"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
@@ -27,6 +29,8 @@
             traded_quantity,
             order_price,
             status,
+            stop_insert,
+            stop_cancel,
             create_time,
             update_time
         </sql>
@@ -70,6 +74,12 @@
         <if test="status != null">
             status = #{status, jdbcType=TINYINT},
         </if>
+        <if test="stopInsert != null">
+            stop_insert = #{stopInsert, jdbcType=TINYINT},
+        </if>
+        <if test="stopCancel != null">
+            stop_cancel = #{stopCancel, jdbcType=TINYINT},
+        </if>
         <if test="createTime != null">
             create_time = #{createTime, jdbcType=TIMESTAMP},
         </if>
@@ -92,6 +102,8 @@
             #{tradedQuantity, jdbcType=INTEGER},
             #{orderPrice, jdbcType=DECIMAL},
             #{status, jdbcType=TINYINT},
+            #{stopInsert, jdbcType=TINYINT},
+            #{stopCancel, jdbcType=TINYINT},
             #{createTime, jdbcType=TIMESTAMP},
             #{updateTime, jdbcType=TIMESTAMP}
             )
@@ -124,6 +136,12 @@
             </if>
             <if test="status != null">
                 status = #{status, jdbcType=TINYINT},
+            </if>
+            <if test="stopInsert != null">
+                stop_insert = #{stopInsert, jdbcType=TINYINT},
+            </if>
+            <if test="stopCancel != null">
+                stop_cancel = #{stopCancel, jdbcType=TINYINT},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -160,6 +178,12 @@
         </if>
         <if test="status != null">
             and status = #{status, jdbcType=TINYINT}
+        </if>
+        <if test="stopInsert != null">
+            and stop_insert = #{stopInsert, jdbcType=TINYINT}
+        </if>
+        <if test="stopCancel != null">
+            and stop_cancel = #{stopCancel, jdbcType=TINYINT}
         </if>
     </sql>
 

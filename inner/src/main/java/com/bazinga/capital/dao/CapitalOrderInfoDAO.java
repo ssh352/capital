@@ -6,7 +6,7 @@ import com.bazinga.capital.query.CapitalOrderInfoQuery;
 import java.util.List;
 
 /**
- * 〈本地订单信息 DAO〉<p>
+ * 〈系统订单信息 DAO〉<p>
  * 〈功能详细描述〉
  *
  * @author

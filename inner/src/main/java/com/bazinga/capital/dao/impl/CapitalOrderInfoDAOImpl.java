@@ -3,7 +3,6 @@ package com.bazinga.capital.dao.impl;
 import com.bazinga.capital.dao.CapitalOrderInfoDAO;
 import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.query.CapitalOrderInfoQuery;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -11,13 +10,11 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.util.List;
 
-import org.springframework.util.Assert;
-
  /**
-  * 〈本地订单信息 DAO〉<p>
+  * 〈系统订单信息 DAO〉<p>
   * 〈功能详细描述〉
   *
-  * @author
+  * @author yunshan
   * @date 2019-01-06
   */
 @Repository

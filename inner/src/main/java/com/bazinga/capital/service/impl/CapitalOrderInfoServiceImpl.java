@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 〈本地订单信息 Service〉<p>
+ * 〈系统订单信息 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author yunshan

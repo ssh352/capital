@@ -7,7 +7,7 @@ import java.util.Date;
 import java.io.Serializable;
 
 /**
- * 〈本地订单信息〉<p>
+ * 〈系统订单信息〉<p>
  *
  * @author
  * @date 2019-01-06
@@ -94,6 +94,22 @@ public class CapitalOrderInfo implements Serializable {
      * @是否索引   NO
      */
     private Integer status;
+
+    /**
+     * 0 可以下单  1 禁止下单
+     *
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private Integer stopInsert;
+
+    /**
+     * 0 允许撤单, 1 禁止撤单
+     *
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private Integer stopCancel;
 
     /**
      * 创建时间
