@@ -114,7 +114,7 @@ public class QuoteSpiImpl implements QuoteSpi {
             return false;
         }
         Long minInsertQuantity = tickerConfigDTO.getMinInsertQuantity();
-        return response.getBid()[0] > minInsertQuantity;
+        return response.getBidQty()[0] > minInsertQuantity;
     }
 
     @Override
