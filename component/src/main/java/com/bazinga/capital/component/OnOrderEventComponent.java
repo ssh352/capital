@@ -44,6 +44,8 @@ public class OnOrderEventComponent {
                     cancelOrderComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 }, tickerConfigDTO.getCheckCirculateDelay(), TimeUnit.SECONDS);
                 break;
+            case XTP_ORDER_STATUS_CANCELED:
+                CacheDataCenter.DISABLE_INSERT_ORDER_SET.remove(orderResponse.getTicker());
             default:
                 break;
         }

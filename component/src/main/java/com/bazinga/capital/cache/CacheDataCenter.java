@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author yunshan
@@ -31,7 +32,7 @@ public class CacheDataCenter {
     /**
      * 禁用下单集合
      */
-    public static Set<String> DISABLE_INSERT_ORDER_SET = new HashSet<>();
+    public static Set<String> DISABLE_INSERT_ORDER_SET = new CopyOnWriteArraySet<>();
 
 
 }

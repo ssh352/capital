@@ -1,17 +1,13 @@
 package com.bazinga.capital.component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bazinga.capital.api.QuoteApiService;
 import com.bazinga.capital.api.TradeApiService;
 import com.bazinga.capital.base.Sort;
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.dto.TickerConfigDTO;
-import com.bazinga.capital.model.CirculateInfo;
 import com.bazinga.capital.model.DepthMarketData;
-import com.bazinga.capital.query.CirculateInfoQuery;
 import com.bazinga.capital.query.DepthMarketDataQuery;
-import com.bazinga.capital.service.CirculateInfoService;
 import com.bazinga.capital.service.DepthMarketDataService;
 import com.bazinga.capital.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +30,7 @@ public class CancelOrderComponent {
     private TradeApiService tradeApiService;
 
     @Autowired
-    private QuoteApiService quoteApiService;
-
-    @Autowired
     private DepthMarketDataService depthMarketDataService;
-
-    @Autowired
-    private CirculateInfoService circulateInfoService;
 
     public void checkCirculationAndCancelOrder(String ticker, String orderXtpId) {
         DepthMarketDataQuery query = new DepthMarketDataQuery();
