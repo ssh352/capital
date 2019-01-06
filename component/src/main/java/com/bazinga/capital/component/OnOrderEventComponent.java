@@ -34,11 +34,13 @@ public class OnOrderEventComponent {
         TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(orderResponse.getTicker());
         switch (orderResponse.getOrderStatusType()) {
             case XTP_ORDER_STATUS_NOTRADEQUEUEING:
+                log.info("未成交 ,ticker={}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 threadPool.schedule(() -> {
                     cancelOrderComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 }, tickerConfigDTO.getCheckCirculateDelay(), TimeUnit.SECONDS);
                 break;
             case XTP_ORDER_STATUS_INIT:
+                log.info("order response 初始化 ,ticker={}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 threadPool.schedule(() -> {
                     cancelOrderComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 }, tickerConfigDTO.getCheckCirculateDelay(), TimeUnit.SECONDS);
