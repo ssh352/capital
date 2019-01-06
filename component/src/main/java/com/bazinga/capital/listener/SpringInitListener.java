@@ -31,8 +31,6 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("spring initialed ----------->");
-        quoteApiService.connectAndLogin();
-        tradeApiService.initAndLogin();
         try {
             initDataComponent.initConfigData();
             if (LoginState.LOGIN_RESULT) {
@@ -43,7 +41,9 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
             log.error("初始化配置信息异常", e);
         }
         log.info("<------数据初始化成功------->");
-
+        quoteApiService.connectAndLogin();
+        tradeApiService.initAndLogin();
+        log.info("<------登录初始化成功------->");
 
     }
 }
