@@ -26,7 +26,10 @@ public class SubscribeAllMarketDataJob {
             if (LoginState.LOGIN_RESULT) {
                 quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
             } else {
-                log.info("未登录 ---------->");
+                quoteApiService.connectAndLogin();
+                if (LoginState.LOGIN_RESULT) {
+                    quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
+                }
             }
         } catch (Exception e) {
             log.error("SubscribeAllMarketDataJob error", e);
