@@ -44,7 +44,7 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                         .ticker(event.getTicker())
                         .sideType(SideType.XTP_SIDE_BUY)
                         .quantity(1000).build();
-                String xtpOrderId = tradeApiService.insertOrder(orderInsertRequest);
+                tradeApiService.insertOrder(orderInsertRequest);
                 CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(event.getTicker());
                 log.info("调用 api 委托下单完成");
             } catch (Exception e) {

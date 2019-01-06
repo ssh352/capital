@@ -1,7 +1,9 @@
 package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.component.CancelOrderComponent;
+import com.bazinga.capital.component.OnOrderEventComponent;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
@@ -23,10 +25,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 public class TradeSpiImpl implements TradeSpi {
-    private static final ScheduledExecutorService threadPool = ThreadPoolUtils.createScheduled(4, "delayGetMarket");
+
 
     @Autowired
-    private CancelOrderComponent cancelOrderComponent;
+    private OnOrderEventComponent onOrderEventComponent;
 
     @Override
     public void onDisconnect(String sessionId, int reason) {
@@ -43,18 +45,7 @@ public class TradeSpiImpl implements TradeSpi {
     @Override
     public void onOrderEvent(OrderResponse orderResponse, ErrorMessage errorMessage, String sessionId) {
         log.info("on callBack onOrderEvent");
-        AbstractTransDataHandler<OrderResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ORDER_RESPONSE.getCode());
-        handler.transDataToPersist(orderResponse);
-        switch (orderResponse.getOrderStatusType()) {
-            case XTP_ORDER_STATUS_NOTRADEQUEUEING:
-                threadPool.schedule(() -> {
-                    cancelOrderComponent.checkCirculationAndCancelOrder(orderResponse.getTicker(),orderResponse.getOrderXtpId());
-                }, 10, TimeUnit.SECONDS);
-                break;
-            default:
-                break;
-        }
-
+        onOrderEventComponent.dealWithOrderInfo(orderResponse);
     }
 
     @Override

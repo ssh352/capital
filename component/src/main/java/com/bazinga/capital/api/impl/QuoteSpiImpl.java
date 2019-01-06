@@ -2,11 +2,14 @@ package com.bazinga.capital.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.cache.CacheDataCenter;
+import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.constant.LoginState;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
+import com.bazinga.capital.model.CirculateTypeConfig;
+import com.bazinga.capital.service.CirculateInfoService;
 import com.zts.xtp.common.model.ErrorMessage;
 import com.zts.xtp.quote.model.response.*;
 import com.zts.xtp.quote.spi.QuoteSpi;
@@ -14,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -33,6 +37,9 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Resource(name = "depthMarketDataExHandlerImpl")
     private AbstractTransDataHandler<DepthMarketDataExResponse> exHandler;
+
+    @Autowired
+    private CirculateInfoService circulateInfoService;
 
     @Override
     public void onDisconnected(int reason) {
@@ -72,11 +79,7 @@ public class QuoteSpiImpl implements QuoteSpi {
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthMarketDataExResponse) {
         boolean isSaved = false;
-        if (depthMarketData.getLastPrice() == depthMarketData.getUpperLimitPrice()
-                && depthMarketData.getDataType().type == 0
-                && depthMarketData.getLastPrice()>0
-                && !CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(depthMarketData.getTicker())
-                && depthMarketData.getBid()[0]>600000) {
+        if (isCanInsertOrder(depthMarketData)) {
             applicationContext.publishEvent(new MarketData2InsertOrderEvent(this, depthMarketData.getTicker(),
                     new BigDecimal(String.valueOf(depthMarketData.getUpperLimitPrice()))));
             log.info("触发涨停 下单事件发布成功 ticker={} ,price={}", depthMarketData.getTicker(), depthMarketData.getUpperLimitPrice());
@@ -90,6 +93,36 @@ public class QuoteSpiImpl implements QuoteSpi {
             handler.transDataToPersist(depthMarketData);
             exHandler.transDataToPersist(depthMarketDataExResponse);
         }
+    }
+
+    private boolean isCanInsertOrder(DepthMarketDataResponse response) {
+        boolean firstCheckResult = response.getLastPrice() == response.getUpperLimitPrice()
+                && response.getDataType().type == 0
+                && response.getLastPrice() > 0
+                && !CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(response.getTicker());
+        if (!firstCheckResult) {
+            return firstCheckResult;
+        }
+        if (CollectionUtils.isEmpty(CacheDataCenter.CONFIG_MAP)) {
+            log.error("股票类型配置信息不存在");
+            return false;
+        }
+        if (CollectionUtils.isEmpty(CacheDataCenter.TICKER_TYPE_MAP)) {
+            log.error("股票流通 z 信息不存在");
+            return false;
+        }
+        Integer type = CacheDataCenter.TICKER_TYPE_MAP.get(response.getTicker());
+        if (type == null) {
+            log.warn("该行情对应的股票信息 在 流通 z 表中不存在 ticker={}", response.getTicker());
+            return false;
+        }
+        CirculateTypeConfig circulateTypeConfig = CacheDataCenter.CONFIG_MAP.get(CommonConstant.CONFIG_MAP_KEY_PREFIX + type);
+        if (circulateTypeConfig == null) {
+            log.warn("股票类型配置信息 type={}", type);
+            return false;
+        }
+        Long minInsertQuantity = circulateTypeConfig.getMinInsertQuantity();
+        return response.getBid()[0] > minInsertQuantity;
     }
 
     @Override
