@@ -25,7 +25,6 @@ public class OnOrderEventComponent {
     @Autowired
     private CancelOrderComponent cancelOrderComponent;
 
-
     public void dealWithOrderInfo(OrderResponse orderResponse) {
 
         AbstractTransDataHandler<OrderResponse> handler = TransDataHandlerFactory.createHandler(ApiResponseEnum.ORDER_RESPONSE.getCode());

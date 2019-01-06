@@ -1,6 +1,7 @@
 package com.bazinga.capital.component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.model.CirculateInfo;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.bazinga.capital.cache.CacheDataCenter.CONFIG_MAP;
 
 /**
  * @author yunshan
@@ -33,14 +36,20 @@ public class InitDataComponent {
         CirculateTypeConfigQuery query = new CirculateTypeConfigQuery();
         List<CirculateTypeConfig> circulateTypeConfigs = circulateTypeConfigService.listByCondition(query);
         circulateTypeConfigs.forEach(item -> {
-            CacheDataCenter.CONFIG_MAP.put(CommonConstant.CONFIG_MAP_KEY_PREFIX + item.getCirculateType(), item);
+            CONFIG_MAP.put(CommonConstant.CONFIG_MAP_KEY_PREFIX + item.getCirculateType(), item);
             log.info("config-->:{}", JSONObject.toJSONString(item));
         });
 
         CirculateInfoQuery circulateInfoQuery = new CirculateInfoQuery();
         List<CirculateInfo> circulateInfos = circulateInfoService.listByCondition(circulateInfoQuery);
         circulateInfos.forEach(item -> {
-            CacheDataCenter.TICKER_TYPE_MAP.put(item.getTicker(), item.getCirculateType());
+            TickerConfigDTO tickerConfigDTO = new TickerConfigDTO();
+            CirculateTypeConfig config = CONFIG_MAP.get(CommonConstant.CONFIG_MAP_KEY_PREFIX + item.getCirculateType());
+            tickerConfigDTO.setCheckCirculateDelay(config.getCheckCirculateDelay());
+            tickerConfigDTO.setPercent(config.getPercent());
+            tickerConfigDTO.setMinInsertQuantity(config.getMinInsertQuantity());
+            tickerConfigDTO.setCirculateType(config.getCirculateType());
+            CacheDataCenter.TICKER_CONFIG_MAP.put(item.getTicker(), tickerConfigDTO);
         });
 
     }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.constant.LoginState;
+import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
@@ -103,25 +104,16 @@ public class QuoteSpiImpl implements QuoteSpi {
         if (!firstCheckResult) {
             return firstCheckResult;
         }
-        if (CollectionUtils.isEmpty(CacheDataCenter.CONFIG_MAP)) {
-            log.error("股票类型配置信息不存在");
-            return false;
-        }
-        if (CollectionUtils.isEmpty(CacheDataCenter.TICKER_TYPE_MAP)) {
+        if (CollectionUtils.isEmpty(CacheDataCenter.TICKER_CONFIG_MAP)) {
             log.error("股票流通 z 信息不存在");
             return false;
         }
-        Integer type = CacheDataCenter.TICKER_TYPE_MAP.get(response.getTicker());
-        if (type == null) {
-            log.warn("该行情对应的股票信息 在 流通 z 表中不存在 ticker={}", response.getTicker());
+        TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(response.getTicker());
+        if (tickerConfigDTO == null) {
+            log.warn("股票置信息不存在 ticker={}", response.getTicker());
             return false;
         }
-        CirculateTypeConfig circulateTypeConfig = CacheDataCenter.CONFIG_MAP.get(CommonConstant.CONFIG_MAP_KEY_PREFIX + type);
-        if (circulateTypeConfig == null) {
-            log.warn("股票类型配置信息 type={}", type);
-            return false;
-        }
-        Long minInsertQuantity = circulateTypeConfig.getMinInsertQuantity();
+        Long minInsertQuantity = tickerConfigDTO.getMinInsertQuantity();
         return response.getBid()[0] > minInsertQuantity;
     }
 

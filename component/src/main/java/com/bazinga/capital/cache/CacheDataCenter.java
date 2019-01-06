@@ -1,5 +1,6 @@
 package com.bazinga.capital.cache;
 
+import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.model.CirculateTypeConfig;
 
 import java.util.HashSet;
@@ -20,7 +21,10 @@ public class CacheDataCenter {
      */
     public static Map<String, CirculateTypeConfig> CONFIG_MAP = new ConcurrentHashMap<>(8);
 
-    public static Map<String, Integer> TICKER_TYPE_MAP= new ConcurrentHashMap<>(4096);
+    /**
+     * 单只股票的业务配置信息
+     */
+    public static Map<String, TickerConfigDTO> TICKER_CONFIG_MAP= new ConcurrentHashMap<>(4096);
 
     public static Set<String> TICKER_PERSIST_SET = new HashSet<>();
 
