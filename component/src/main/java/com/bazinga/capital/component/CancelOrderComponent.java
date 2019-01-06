@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.api.QuoteApiService;
 import com.bazinga.capital.api.TradeApiService;
 import com.bazinga.capital.base.Sort;
+import com.bazinga.capital.cache.CacheDataCenter;
+import com.bazinga.capital.constant.CommonConstant;
+import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.model.CirculateInfo;
 import com.bazinga.capital.model.DepthMarketData;
 import com.bazinga.capital.query.CirculateInfoQuery;
@@ -49,38 +52,20 @@ public class CancelOrderComponent {
         query.addOrderBy("date_time", Sort.SortType.DESC);
         List<DepthMarketData> list = depthMarketDataService.listByCondition(query);
         if (CollectionUtils.isEmpty(list)) {
-            log.warn("未查询到10s 后的行情数据");
+            log.warn("未查询到10s 后的行情数据 ticker= {},orderXtpId ={}", ticker, orderXtpId);
         } else {
             DepthMarketData depthMarketData = list.get(0);
             String bidQty = depthMarketData.getBidQty();
             Long[] bidQtyArr = JSONObject.parseObject(bidQty, Long[].class);
             if (bidQty != null && bidQtyArr.length > 0) {
-                CirculateInfoQuery circulateQuery = new CirculateInfoQuery();
-                circulateQuery.setTicker(ticker);
-                List<CirculateInfo> circulateInfos = circulateInfoService.listByCondition(circulateQuery);
-                if (!CollectionUtils.isEmpty(circulateInfos)) {
-                    CirculateInfo circulateInfo = circulateInfos.get(0);
-                    if (circulateInfo.getCirculateType() == 0) {
-                        if (bidQtyArr[0] < circulateInfo.getCirculateZ() * 0.05) {
-                            log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
-                            tradeApiService.cancelOrder(orderXtpId);
-                        }
-                    } else if (circulateInfo.getCirculateType() == 1) {
-                        if (bidQtyArr[0] < circulateInfo.getCirculateZ() * 0.03) {
-                            log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
-                            tradeApiService.cancelOrder(orderXtpId);
-                        }
-                    } else if (circulateInfo.getCirculateType() == 2) {
-                        if (bidQtyArr[0] < circulateInfo.getCirculateZ() * 0.02) {
-                            log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
-                            tradeApiService.cancelOrder(orderXtpId);
-                        }
-                    } else {
-                        log.warn("流通 z 信息 类型不存在");
+                TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(ticker);
+                if (tickerConfigDTO != null) {
+                    if (bidQtyArr[0] < tickerConfigDTO.getCirculateZ() * tickerConfigDTO.getPercent() / CommonConstant.ONE_HUNDRED) {
+                        log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
+                        tradeApiService.cancelOrder(orderXtpId);
                     }
                 }
             }
-
         }
     }
 

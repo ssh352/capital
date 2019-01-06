@@ -41,4 +41,13 @@ public class TickerConfigDTO {
      */
     private Integer checkCirculateDelay;
 
+    /**
+     * 流通量z
+     *
+     * @允许为空   NO
+     * @是否索引   NO
+     */
+    private Long circulateZ;
+
+
 }

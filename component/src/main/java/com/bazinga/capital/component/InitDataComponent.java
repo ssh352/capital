@@ -49,6 +49,7 @@ public class InitDataComponent {
             tickerConfigDTO.setPercent(config.getPercent());
             tickerConfigDTO.setMinInsertQuantity(config.getMinInsertQuantity());
             tickerConfigDTO.setCirculateType(config.getCirculateType());
+            tickerConfigDTO.setCirculateZ(item.getCirculateZ());
             CacheDataCenter.TICKER_CONFIG_MAP.put(item.getTicker(), tickerConfigDTO);
         });
 
