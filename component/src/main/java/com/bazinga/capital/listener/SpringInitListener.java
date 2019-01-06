@@ -1,6 +1,7 @@
 package com.bazinga.capital.listener;
 
 import com.bazinga.capital.api.QuoteApiService;
+import com.bazinga.capital.api.TradeApiService;
 import com.bazinga.capital.component.InitDataComponent;
 import com.bazinga.capital.constant.LoginState;
 import com.zts.xtp.common.enums.ExchangeType;
@@ -24,11 +25,14 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
     @Autowired
     private QuoteApiService quoteApiService;
 
+    @Autowired
+    private TradeApiService tradeApiService;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("spring initialed ----------->");
-        boolean loginResult = quoteApiService.connectAndLogin();
-        log.info("行情登录结果loginResult = {}", loginResult);
+        quoteApiService.connectAndLogin();
+        tradeApiService.initAndLogin();
         try {
             initDataComponent.initConfigData();
             if (LoginState.LOGIN_RESULT) {

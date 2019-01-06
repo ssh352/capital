@@ -58,7 +58,6 @@ public class QuoteApiServiceImpl implements QuoteApiService {
 
     @Override
     public boolean connectAndLogin() {
-        log.info("afterPropertiesSet start--------");
         loadLibrary(libFolder);
         quoteApi = new QuoteApi(quoteSpi);
         quoteApi.connect(clientId, dataFolder);
