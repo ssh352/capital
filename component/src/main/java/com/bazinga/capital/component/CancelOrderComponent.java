@@ -33,6 +33,7 @@ public class CancelOrderComponent {
     private DepthMarketDataService depthMarketDataService;
 
     public void checkCirculationAndCancelOrder(String ticker, String orderXtpId) {
+        log.info("<----- checkCirculationAndCancelOrder ---->");
         DepthMarketDataQuery query = new DepthMarketDataQuery();
         Date currentDate = new Date();
         Date startDate = DateUtil.addSeconds(currentDate, 10);

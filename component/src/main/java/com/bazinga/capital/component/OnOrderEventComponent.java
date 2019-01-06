@@ -53,7 +53,15 @@ public class OnOrderEventComponent {
                 log.info("撤单成功 ticker ={}, orderXtpId= {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
                 break;
             case XTP_ORDER_STATUS_ALLTRADED:
-                log.info("交易成功 ticker = {}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
+                log.info("全部成交 ticker = {}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
+                break;
+            case XTP_ORDER_STATUS_REJECTED:
+                log.info("已拒绝 ticker = {}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
+                CacheDataCenter.TICKER_PERSIST_SET.remove(orderResponse.getTicker());
+                break;
+            case XTP_ORDER_STATUS_PARTTRADEDQUEUEING:
+                log.info("部分成交 ticker = {}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
+                break;
             default:
                 break;
         }

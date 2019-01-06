@@ -30,9 +30,9 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
     @Override
     public void onApplicationEvent(MarketData2InsertOrderEvent event) {
         log.info("监听到委托下单事件 ticker = {},price = {}", event.getTicker(), event.getOrderPrice());
-        if(CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(event.getTicker())){
+        if (CacheDataCenter.DISABLE_INSERT_ORDER_SET.contains(event.getTicker())) {
             log.info("当天 已经下单 不满足下单条件");
-        }else{
+        } else {
             try {
                 OrderInsertRequest orderInsertRequest = OrderInsertRequest.builder()
                         .businessType(BusinessType.XTP_BUSINESS_TYPE_CASH).orderXtpId("0")
@@ -43,7 +43,7 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                         .price(event.getOrderPrice().doubleValue())
                         .ticker(event.getTicker())
                         .sideType(SideType.XTP_SIDE_BUY)
-                        .quantity(1000).build();
+                        .quantity(100).build();
                 tradeApiService.insertOrder(orderInsertRequest);
                 CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(event.getTicker());
                 CacheDataCenter.TICKER_PERSIST_SET.add(event.getTicker());
