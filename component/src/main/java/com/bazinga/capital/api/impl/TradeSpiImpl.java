@@ -5,6 +5,8 @@ import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.component.CancelOrderComponent;
 import com.bazinga.capital.component.OnOrderEventComponent;
 import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.enums.LoginTypeEnum;
+import com.bazinga.capital.event.OnDisconnectedEvent;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.util.ThreadPoolUtils;
@@ -13,6 +15,7 @@ import com.zts.xtp.trade.model.response.*;
 import com.zts.xtp.trade.spi.TradeSpi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TradeSpiImpl implements TradeSpi {
 
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
     private OnOrderEventComponent onOrderEventComponent;
@@ -33,7 +38,8 @@ public class TradeSpiImpl implements TradeSpi {
     @Override
     public void onDisconnect(String sessionId, int reason) {
         log.error("TradeSpiImpl onDisconnect sessionId = " + sessionId + "reason=" + reason);
-
+        OnDisconnectedEvent event = new OnDisconnectedEvent(this, LoginTypeEnum.TRADE.getCode());
+        applicationContext.publishEvent(event);
     }
 
     @Override

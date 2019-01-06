@@ -6,7 +6,9 @@ import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.constant.LoginState;
 import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.enums.ApiResponseEnum;
+import com.bazinga.capital.enums.LoginTypeEnum;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
+import com.bazinga.capital.event.OnDisconnectedEvent;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
 import com.bazinga.capital.model.CirculateTypeConfig;
@@ -46,7 +48,8 @@ public class QuoteSpiImpl implements QuoteSpi {
     public void onDisconnected(int reason) {
         log.error("onDisconnected reason =" + reason);
         LoginState.LOGIN_RESULT = false;
-
+        OnDisconnectedEvent event = new OnDisconnectedEvent(this, LoginTypeEnum.QUOTE.getCode());
+        applicationContext.publishEvent(event);
     }
 
     @Override
