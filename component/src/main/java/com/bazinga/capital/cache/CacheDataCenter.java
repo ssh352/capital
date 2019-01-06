@@ -1,4 +1,6 @@
-package com.bazinga.capital.config;
+package com.bazinga.capital.cache;
+
+import com.bazinga.capital.model.CirculateTypeConfig;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -12,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CacheDataCenter {
 
     public static Map<String, String> tickerPersistMap = new ConcurrentHashMap<>(256);
+
+    public static Map<String,CirculateTypeConfig>  CONFIG_MAP = new ConcurrentHashMap<>(8);
     public static Set<String> TICKER_PERSIST_SET = new HashSet<>();
 
     /**
