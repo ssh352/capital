@@ -3,6 +3,7 @@ package com.bazinga.capital.component;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
+import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.util.ThreadPoolUtils;
 import com.zts.xtp.trade.model.response.OrderResponse;
@@ -24,8 +25,6 @@ public class OnOrderEventComponent {
     @Autowired
     private CancelOrderComponent cancelOrderComponent;
 
-    @Autowired
-    private CapitalOrderInfoService capitalOrderInfoService;
 
     public void dealWithOrderInfo(OrderResponse orderResponse) {
 

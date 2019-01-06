@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 〈系统订单信息 Service〉<p>
+ * 〈111 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author yunshan
@@ -56,5 +56,17 @@ public class CapitalOrderInfoServiceImpl implements CapitalOrderInfoService {
     public int countByCondition(CapitalOrderInfoQuery query) {
         Assert.notNull(query, "查询条件不能为空");
         return capitalOrderInfoDAO.countByCondition(query);
+    }
+
+    @Override
+    public CapitalOrderInfo getByOrderXtpId(String orderXtpId) {
+        Assert.notNull(orderXtpId, "唯一键不能为空");
+        return capitalOrderInfoDAO.selectByOrderXtpId(orderXtpId);
+    }
+
+    @Override
+    public int updateByOrderXtpId(CapitalOrderInfo record) {
+        Assert.notNull(record, "待更新记录不能为空");
+        return capitalOrderInfoDAO.updateByOrderXtpId(record);
     }
 }

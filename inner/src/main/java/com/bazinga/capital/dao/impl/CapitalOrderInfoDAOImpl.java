@@ -3,6 +3,7 @@ package com.bazinga.capital.dao.impl;
 import com.bazinga.capital.dao.CapitalOrderInfoDAO;
 import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.query.CapitalOrderInfoQuery;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.util.List;
 
+import org.springframework.util.Assert;
+
  /**
-  * 〈系统订单信息 DAO〉<p>
+  * 〈111 DAO〉<p>
   * 〈功能详细描述〉
   *
-  * @author yunshan
+  * @author
   * @date 2019-01-06
   */
 @Repository
@@ -51,5 +54,15 @@ public class CapitalOrderInfoDAOImpl extends SqlSessionDaoSupport implements Cap
     @Override
     public Integer countByCondition(CapitalOrderInfoQuery query) {
         return (Integer)this.getSqlSession().selectOne( MAPPER_NAME + ".countByCondition", query);
+    }
+
+    @Override
+    public CapitalOrderInfo selectByOrderXtpId(String orderXtpId) {
+        return this.getSqlSession().selectOne( MAPPER_NAME + ".selectByOrderXtpId", orderXtpId);
+    }
+
+    @Override
+    public int updateByOrderXtpId(CapitalOrderInfo record) {
+        return this.getSqlSession().update( MAPPER_NAME + ".updateByOrderXtpId", record);
     }
 }

@@ -6,7 +6,7 @@ import com.bazinga.capital.query.CapitalOrderInfoQuery;
 import java.util.List;
 
 /**
- * 〈系统订单信息 Service〉<p>
+ * 〈111 Service〉<p>
  * 〈功能详细描述〉
  *
  * @author
@@ -48,4 +48,18 @@ public interface CapitalOrderInfoService {
      * @param query 查询参数
      */
     int countByCondition(CapitalOrderInfoQuery query);
+
+    /**
+     * 唯一键orderXtpId 查询
+     *
+     * @param orderXtpId 查询参数
+     */
+    CapitalOrderInfo getByOrderXtpId(String orderXtpId);
+
+    /**
+     * 唯一键orderXtpId 更新
+     *
+     * @param record 更新参数
+     */
+    int updateByOrderXtpId(CapitalOrderInfo record);
 }

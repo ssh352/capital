@@ -1,7 +1,9 @@
 package com.bazinga.capital.handler;
 
 import com.bazinga.capital.enums.*;
+import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.model.OrderInfo;
+import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.service.OrderInfoService;
 import com.bazinga.capital.util.DateUtil;
 import com.zts.xtp.trade.model.response.OrderResponse;
@@ -23,13 +25,41 @@ public class OrderResponseHandlerImpl extends AbstractTransDataHandler<OrderResp
     @Autowired
     private OrderInfoService orderInfoService;
 
+    @Autowired
+    private CapitalOrderInfoService capitalOrderInfoService;
+
     @Override
     public void transDataToPersist(OrderResponse response) {
         executorService.execute(() -> {
             OrderInfo orderInfo = new OrderInfo();
             transformData(orderInfo, response);
             orderInfoService.save(orderInfo);
+            CapitalOrderInfo capitalOrderInfo = capitalOrderInfoService.getByOrderXtpId(response.getOrderXtpId());
+            if (capitalOrderInfo == null) {
+                CapitalOrderInfo saveObject = buildCapitalOrderInfo(orderInfo);
+                capitalOrderInfoService.save(saveObject);
+            } else {
+                CapitalOrderInfo forUpdate = new CapitalOrderInfo();
+                forUpdate.setOrderXtpId(capitalOrderInfo.getOrderXtpId());
+                forUpdate.setTradedQuantity(capitalOrderInfo.getTradedQuantity() + (int) response.getQtyTraded());
+                capitalOrderInfoService.updateByOrderXtpId(forUpdate);
+            }
         });
+    }
+
+    private CapitalOrderInfo buildCapitalOrderInfo(OrderInfo orderInfo) {
+        CapitalOrderInfo capitalOrderInfo = new CapitalOrderInfo();
+        capitalOrderInfo.setTradedQuantity(orderInfo.getQtyTraded().intValue());
+        capitalOrderInfo.setTicketName("");
+        capitalOrderInfo.setTicker(orderInfo.getTicker());
+        capitalOrderInfo.setStopInsert(EnableStatusEnum.ENABLE.getCode());
+        capitalOrderInfo.setStopCancel(EnableStatusEnum.ENABLE.getCode());
+        capitalOrderInfo.setStatus(orderInfo.getOrderStatusType());
+        capitalOrderInfo.setOrderXtpId(orderInfo.getOrderXtpId());
+        capitalOrderInfo.setExchangeType(orderInfo.getMarketType());
+        capitalOrderInfo.setQuantity(orderInfo.getQuantity().intValue());
+        capitalOrderInfo.setOrderPrice(orderInfo.getPrice());
+        return capitalOrderInfo;
     }
 
     private void transformData(OrderInfo orderInfo, OrderResponse response) {

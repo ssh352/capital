@@ -6,7 +6,7 @@ import com.bazinga.capital.query.CapitalOrderInfoQuery;
 import java.util.List;
 
 /**
- * 〈系统订单信息 DAO〉<p>
+ * 〈111 DAO〉<p>
  * 〈功能详细描述〉
  *
  * @author
@@ -48,5 +48,19 @@ public interface CapitalOrderInfoDAO {
      * @param query 查询参数
      */
     Integer countByCondition(CapitalOrderInfoQuery query);
+
+    /**
+     * 唯一键orderXtpId 查询
+     *
+     * @param orderXtpId 查询参数
+     */
+    CapitalOrderInfo selectByOrderXtpId(String orderXtpId);
+
+    /**
+     * 唯一键orderXtpId 更新
+     *
+     * @param record 更新参数
+     */
+    int updateByOrderXtpId(CapitalOrderInfo record);
 
 }

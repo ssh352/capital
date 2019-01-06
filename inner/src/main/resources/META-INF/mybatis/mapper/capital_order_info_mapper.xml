@@ -43,24 +43,24 @@
         where id = #{id}
     </select>
 
-    <select id="selectByTicker" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByOrderXtpId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from capital_order_info
-        where ticker = #{ticker} limit 1
+        where order_xtp_id = #{orderXtpId} limit 1
     </select>
 
-    <update id="updateByTicker" parameterType="com.bazinga.capital.model.CapitalOrderInfo">
+    <update id="updateByOrderXtpId" parameterType="com.bazinga.capital.model.CapitalOrderInfo">
         update capital_order_info
         <set>
+        <if test="ticker != null">
+            ticker = #{ticker, jdbcType=VARCHAR},
+        </if>
         <if test="ticketName != null">
             ticket_name = #{ticketName, jdbcType=VARCHAR},
         </if>
         <if test="exchangeType != null">
             exchange_type = #{exchangeType, jdbcType=TINYINT},
-        </if>
-        <if test="orderXtpId != null">
-            order_xtp_id = #{orderXtpId, jdbcType=VARCHAR},
         </if>
         <if test="quantity != null">
             quantity = #{quantity, jdbcType=INTEGER},
@@ -87,7 +87,7 @@
             update_time = #{updateTime, jdbcType=TIMESTAMP},
         </if>
         </set>
-        where ticker = #{ticker} limit 1
+        where order_xtp_id = #{orderXtpId} limit 1
     </update>
     <!-- 新增一条记录 -->
     <insert id="insert" parameterType="com.bazinga.capital.model.CapitalOrderInfo" useGeneratedKeys="true" keyProperty="id">
