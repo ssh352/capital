@@ -46,6 +46,7 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                         .quantity(1000).build();
                 tradeApiService.insertOrder(orderInsertRequest);
                 CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(event.getTicker());
+                CacheDataCenter.TICKER_PERSIST_SET.add(event.getTicker());
                 log.info("调用 api 委托下单完成");
             } catch (Exception e) {
                 log.error("委托下单异常 参数 = " + JSONObject.toJSONString(event), e);
