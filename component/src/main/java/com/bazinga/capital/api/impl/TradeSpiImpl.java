@@ -32,6 +32,8 @@ public class TradeSpiImpl implements TradeSpi {
 
     @Override
     public void onDisconnect(String sessionId, int reason) {
+        log.error("TradeSpiImpl onDisconnect sessionId = " + sessionId + "reason=" + reason);
+
     }
 
     @Override

@@ -50,7 +50,6 @@ public class InitDataComponent {
             tickerConfigDTO.setMinInsertQuantity(config.getMinInsertQuantity());
             tickerConfigDTO.setCirculateType(config.getCirculateType());
             tickerConfigDTO.setCirculateZ(item.getCirculateZ());
-            log.info("tickerConfigDTO ={}",JSONObject.toJSONString(tickerConfigDTO));
             CacheDataCenter.TICKER_CONFIG_MAP.put(item.getTicker(), tickerConfigDTO);
         });
 
