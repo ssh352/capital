@@ -72,7 +72,7 @@ public class CirculateInfoTest {
             }else if(item.getCirculateZ()>= 3* CommonConstant.ONE_HUNDRED_MILLION &&
                     item.getCirculateZ()< 8* CommonConstant.ONE_HUNDRED_MILLION){
                 forUpdate.setId(item.getId());
-                forUpdate.setCirculateType(TickerTypeEnum.MEDIUM.getCode());
+                forUpdate.setCirculateType(TickerTypeEnum.LARGE.getCode());
             }else {
                 forUpdate.setId(item.getId());
                 forUpdate.setCirculateType(TickerTypeEnum.HUGE.getCode());

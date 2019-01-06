@@ -10,7 +10,7 @@ public enum TickerTypeEnum {
     MIN(0, "1亿以下"),
     MEDIUM(1, "1到3亿"),
     LARGE(2, "3到8亿"),
-    HUGE(4, "8亿以上");
+    HUGE(3, "8亿以上");
 
     private Integer code;
 
