@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.CirculateTypeConfigDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.CirculateTypeConfig">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="circulate_type" jdbcType="TINYINT" property="circulateType"/>
+        <result column="percent" jdbcType="INTEGER" property="percent"/>
+        <result column="min_insert_quantity" jdbcType="BIGINT" property="minInsertQuantity"/>
+        <result column="check_circulate_delay" jdbcType="INTEGER" property="checkCirculateDelay"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            circulate_type,
+            percent,
+            min_insert_quantity,
+            check_circulate_delay,
+            create_time,
+            update_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from circulate_type_config
+        where id = #{id}
+    </select>
+
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.CirculateTypeConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into circulate_type_config (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{circulateType, jdbcType=TINYINT},
+            #{percent, jdbcType=INTEGER},
+            #{minInsertQuantity, jdbcType=BIGINT},
+            #{checkCirculateDelay, jdbcType=INTEGER},
+            #{createTime, jdbcType=TIMESTAMP},
+            #{updateTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.CirculateTypeConfig">
+        update circulate_type_config
+        <set>
+            <if test="circulateType != null">
+                circulate_type = #{circulateType, jdbcType=TINYINT},
+            </if>
+            <if test="percent != null">
+                percent = #{percent, jdbcType=INTEGER},
+            </if>
+            <if test="minInsertQuantity != null">
+                min_insert_quantity = #{minInsertQuantity, jdbcType=BIGINT},
+            </if>
+            <if test="checkCirculateDelay != null">
+                check_circulate_delay = #{checkCirculateDelay, jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="circulateType != null">
+            and circulate_type = #{circulateType, jdbcType=TINYINT}
+        </if>
+        <if test="percent != null">
+            and percent = #{percent, jdbcType=INTEGER}
+        </if>
+        <if test="minInsertQuantity != null">
+            and min_insert_quantity = #{minInsertQuantity, jdbcType=BIGINT}
+        </if>
+        <if test="checkCirculateDelay != null">
+            and check_circulate_delay = #{checkCirculateDelay, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="updateTimeFrom != null">
+            <![CDATA[
+            and update_time >= #{updateTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="updateTimeTo != null">
+            <![CDATA[
+            and update_time <= #{updateTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.CirculateTypeConfigQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from circulate_type_config
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.CirculateTypeConfigQuery" resultType="java.lang.Integer">
+        select count(1)
+        from circulate_type_config
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
