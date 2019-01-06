@@ -46,6 +46,7 @@ public class QuoteSpiImpl implements QuoteSpi {
     public void onDisconnected(int reason) {
         log.error("onDisconnected reason =" + reason);
         LoginState.LOGIN_RESULT = false;
+
     }
 
     @Override

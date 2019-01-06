@@ -13,7 +13,7 @@ public interface QuoteApiService {
 
      int logout();
 
-
+     boolean connectAndLogin();
 
      void setHeartBeatInterval(int var1);
 

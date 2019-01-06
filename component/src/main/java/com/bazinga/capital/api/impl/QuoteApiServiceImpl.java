@@ -20,9 +20,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 @PropertySource("classpath:xtp_config.properties")
 @Slf4j
-public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
+public class QuoteApiServiceImpl implements QuoteApiService {
     private QuoteApi quoteApi;
-
 
     @Autowired
     private QuoteSpi quoteSpi;
@@ -58,7 +57,7 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public boolean connectAndLogin() {
         log.info("afterPropertiesSet start--------");
         loadLibrary(libFolder);
         quoteApi = new QuoteApi(quoteSpi);
@@ -67,8 +66,9 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
         int loginResult = quoteApi.login(ip, port, user, password, 1);
         LoginState.LOGIN_RESULT = (loginResult == 0);
         log.info("logResult={} code={}", LoginState.LOGIN_RESULT, loginResult);
-
+        return LoginState.LOGIN_RESULT;
     }
+
 
     @Override
     public void connect() {
@@ -89,6 +89,8 @@ public class QuoteApiServiceImpl implements QuoteApiService, InitializingBean {
     public int logout() {
         return quoteApi.logout();
     }
+
+
 
 
     @Override

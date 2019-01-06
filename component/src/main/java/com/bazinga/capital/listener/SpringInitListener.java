@@ -27,6 +27,8 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("spring initialed ----------->");
+        boolean loginResult = quoteApiService.connectAndLogin();
+        log.info("行情登录结果loginResult = {}", loginResult);
         try {
             initDataComponent.initConfigData();
             if (LoginState.LOGIN_RESULT) {
