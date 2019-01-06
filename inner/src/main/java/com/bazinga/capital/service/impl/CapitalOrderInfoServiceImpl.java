@@ -67,6 +67,7 @@ public class CapitalOrderInfoServiceImpl implements CapitalOrderInfoService {
     @Override
     public int updateByOrderXtpId(CapitalOrderInfo record) {
         Assert.notNull(record, "待更新记录不能为空");
+        record.setUpdateTime(new Date());
         return capitalOrderInfoDAO.updateByOrderXtpId(record);
     }
 }
