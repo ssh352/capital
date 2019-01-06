@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bazinga.capital.dao.CapitalOrderInfoDAO">
+
+    <resultMap id="BaseResultMap" type="com.bazinga.capital.model.CapitalOrderInfo">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="ticker" jdbcType="VARCHAR" property="ticker"/>
+        <result column="ticket_name" jdbcType="VARCHAR" property="ticketName"/>
+        <result column="exchange_type" jdbcType="TINYINT" property="exchangeType"/>
+        <result column="order_xtp_id" jdbcType="VARCHAR" property="orderXtpId"/>
+        <result column="quantity" jdbcType="INTEGER" property="quantity"/>
+        <result column="traded_quantity" jdbcType="INTEGER" property="tradedQuantity"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <!-- 字段列表 -->
+    <sql id="Base_Column_List">
+        id,
+            ticker,
+            ticket_name,
+            exchange_type,
+            order_xtp_id,
+            quantity,
+            traded_quantity,
+            order_price,
+            status,
+            create_time,
+            update_time
+        </sql>
+
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from capital_order_info
+        where id = #{id}
+    </select>
+
+    <select id="selectByTicker" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from capital_order_info
+        where ticker = #{ticker} limit 1
+    </select>
+
+    <update id="updateByTicker" parameterType="com.bazinga.capital.model.CapitalOrderInfo">
+        update capital_order_info
+        <set>
+        <if test="ticketName != null">
+            ticket_name = #{ticketName, jdbcType=VARCHAR},
+        </if>
+        <if test="exchangeType != null">
+            exchange_type = #{exchangeType, jdbcType=TINYINT},
+        </if>
+        <if test="orderXtpId != null">
+            order_xtp_id = #{orderXtpId, jdbcType=VARCHAR},
+        </if>
+        <if test="quantity != null">
+            quantity = #{quantity, jdbcType=INTEGER},
+        </if>
+        <if test="tradedQuantity != null">
+            traded_quantity = #{tradedQuantity, jdbcType=INTEGER},
+        </if>
+        <if test="orderPrice != null">
+            order_price = #{orderPrice, jdbcType=DECIMAL},
+        </if>
+        <if test="status != null">
+            status = #{status, jdbcType=TINYINT},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            update_time = #{updateTime, jdbcType=TIMESTAMP},
+        </if>
+        </set>
+        where ticker = #{ticker} limit 1
+    </update>
+    <!-- 新增一条记录 -->
+    <insert id="insert" parameterType="com.bazinga.capital.model.CapitalOrderInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into capital_order_info (<include refid="Base_Column_List" />)
+        values(
+        #{id, jdbcType=BIGINT},
+            #{ticker, jdbcType=VARCHAR},
+            #{ticketName, jdbcType=VARCHAR},
+            #{exchangeType, jdbcType=TINYINT},
+            #{orderXtpId, jdbcType=VARCHAR},
+            #{quantity, jdbcType=INTEGER},
+            #{tradedQuantity, jdbcType=INTEGER},
+            #{orderPrice, jdbcType=DECIMAL},
+            #{status, jdbcType=TINYINT},
+            #{createTime, jdbcType=TIMESTAMP},
+            #{updateTime, jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <!-- 根据主键更新数据 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.bazinga.capital.model.CapitalOrderInfo">
+        update capital_order_info
+        <set>
+            <if test="ticker != null">
+                ticker = #{ticker, jdbcType=VARCHAR},
+            </if>
+            <if test="ticketName != null">
+                ticket_name = #{ticketName, jdbcType=VARCHAR},
+            </if>
+            <if test="exchangeType != null">
+                exchange_type = #{exchangeType, jdbcType=TINYINT},
+            </if>
+            <if test="orderXtpId != null">
+                order_xtp_id = #{orderXtpId, jdbcType=VARCHAR},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity, jdbcType=INTEGER},
+            </if>
+            <if test="tradedQuantity != null">
+                traded_quantity = #{tradedQuantity, jdbcType=INTEGER},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id} limit 1
+    </update>
+
+    <!-- 等值查询条件 -->
+    <sql id="Equal_Where_List">
+        <if test="ticker != null">
+            and ticker = #{ticker, jdbcType=VARCHAR}
+        </if>
+        <if test="ticketName != null">
+            and ticket_name = #{ticketName, jdbcType=VARCHAR}
+        </if>
+        <if test="exchangeType != null">
+            and exchange_type = #{exchangeType, jdbcType=TINYINT}
+        </if>
+        <if test="orderXtpId != null">
+            and order_xtp_id = #{orderXtpId, jdbcType=VARCHAR}
+        </if>
+        <if test="quantity != null">
+            and quantity = #{quantity, jdbcType=INTEGER}
+        </if>
+        <if test="tradedQuantity != null">
+            and traded_quantity = #{tradedQuantity, jdbcType=INTEGER}
+        </if>
+        <if test="orderPrice != null">
+            and order_price = #{orderPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="status != null">
+            and status = #{status, jdbcType=TINYINT}
+        </if>
+    </sql>
+
+    <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
+    <sql id="Range_Where_List">
+        <if test="createTimeFrom != null">
+            <![CDATA[
+            and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="createTimeTo != null">
+            <![CDATA[
+            and create_time <= #{createTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="updateTimeFrom != null">
+            <![CDATA[
+            and update_time >= #{updateTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="updateTimeTo != null">
+            <![CDATA[
+            and update_time <= #{updateTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </sql>
+
+    <!-- 上次查询Id最大值 -->
+    <sql id="GtLastMaxId_Where">
+        <if test="lastMaxId != null and lastMaxId > 0">
+            and id > #{lastMaxId}
+        </if>
+    </sql>
+
+     <!-- 排序条件 -->
+    <sql id="Order_By">
+        <if test="sorts != null and sorts.size > 0">
+            ORDER BY
+            <foreach collection="sorts" item="sortItem" separator=",">
+                ${sortItem.column} ${sortItem.type.message}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 根据查询参数查询数据 -->
+    <select id="selectByCondition" parameterType="com.bazinga.capital.query.CapitalOrderInfoQuery" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from capital_order_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+            <include refid="GtLastMaxId_Where" />
+        </where>
+        <include refid="Order_By"/>
+        <if test="limit > 0">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 根据查询参数查询数据总量 -->
+    <select id="countByCondition" parameterType="com.bazinga.capital.query.CapitalOrderInfoQuery" resultType="java.lang.Integer">
+        select count(1)
+        from capital_order_info
+        <where>
+            <include refid="Equal_Where_List"/>
+            <include refid="Range_Where_List"/>
+        </where>
+    </select>
+
+
+</mapper>
