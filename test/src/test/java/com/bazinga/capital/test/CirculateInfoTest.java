@@ -1,5 +1,7 @@
 package com.bazinga.capital.test;
 
+import com.bazinga.capital.constant.CommonConstant;
+import com.bazinga.capital.enums.TickerTypeEnum;
 import com.bazinga.capital.model.CirculateInfo;
 import com.bazinga.capital.service.CirculateInfoService;
 import com.bazinga.capital.query.CirculateInfoQuery;
@@ -57,13 +59,26 @@ public class CirculateInfoTest {
     @Test
     public void getByCondition() {
         CirculateInfoQuery query = new CirculateInfoQuery();
-        query.setTicker(null);
-        query.setTickerName(null);
-        query.setCirculate(null);
-        query.setCirculateZ(null);
-        query.setCirculateType(null);
-
         List<CirculateInfo> circulateInfos = circulateInfoService.listByCondition(query);
+        circulateInfos.forEach(item->{
+            CirculateInfo forUpdate = new CirculateInfo();
+            if(item.getCirculateZ()< 1* CommonConstant.ONE_HUNDRED_MILLION){
+                forUpdate.setId(item.getId());
+                forUpdate.setCirculateType(TickerTypeEnum.MIN.getCode());
+            }else if(item.getCirculateZ()>= 1* CommonConstant.ONE_HUNDRED_MILLION &&
+                    item.getCirculateZ()< 3* CommonConstant.ONE_HUNDRED_MILLION){
+                forUpdate.setId(item.getId());
+                forUpdate.setCirculateType(TickerTypeEnum.MEDIUM.getCode());
+            }else if(item.getCirculateZ()>= 3* CommonConstant.ONE_HUNDRED_MILLION &&
+                    item.getCirculateZ()< 8* CommonConstant.ONE_HUNDRED_MILLION){
+                forUpdate.setId(item.getId());
+                forUpdate.setCirculateType(TickerTypeEnum.MEDIUM.getCode());
+            }else {
+                forUpdate.setId(item.getId());
+                forUpdate.setCirculateType(TickerTypeEnum.HUGE.getCode());
+            }
+            circulateInfoService.updateById(forUpdate);
+        });
         LOGGER.info("query total size: " + circulateInfos.size());
 
     }
@@ -79,6 +94,10 @@ public class CirculateInfoTest {
         circulateInfo.setChangeTime(null);
 
         int result = circulateInfoService.updateById(circulateInfo);
-        Assert.assertTrue(result > 0);
+        Assert.assertTrue(result < 1* CommonConstant.ONE_HUNDRED_MILLION);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(10^8);
     }
 }
