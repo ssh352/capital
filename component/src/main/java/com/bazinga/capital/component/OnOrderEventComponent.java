@@ -5,11 +5,9 @@ import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.enums.ApiResponseEnum;
 import com.bazinga.capital.handler.AbstractTransDataHandler;
 import com.bazinga.capital.handler.TransDataHandlerFactory;
-import com.bazinga.capital.model.CapitalOrderInfo;
-import com.bazinga.capital.model.CirculateTypeConfig;
-import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.util.ThreadPoolUtils;
 import com.zts.xtp.trade.model.response.OrderResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/1/6
  */
 @Component
+@Slf4j
 public class OnOrderEventComponent {
 
     private static final ScheduledExecutorService threadPool = ThreadPoolUtils.createScheduled(4, "delayGetMarket");
@@ -46,6 +45,10 @@ public class OnOrderEventComponent {
                 break;
             case XTP_ORDER_STATUS_CANCELED:
                 CacheDataCenter.DISABLE_INSERT_ORDER_SET.remove(orderResponse.getTicker());
+                log.info("撤单成功 ticker ={}, orderXtpId= {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
+                break;
+            case XTP_ORDER_STATUS_ALLTRADED:
+                log.info("交易成功 ticker = {}, orderXtpId = {}", orderResponse.getTicker(), orderResponse.getOrderXtpId());
             default:
                 break;
         }
