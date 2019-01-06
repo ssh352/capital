@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-public class TradeApiServiceImpl implements TradeApiService, InitializingBean {
+public class TradeApiServiceImpl implements TradeApiService {
 
     private TradeApi tradeApi;
 
@@ -72,12 +72,13 @@ public class TradeApiServiceImpl implements TradeApiService, InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public String initAndLogin() {
         loadLibrary(libFolder);
         tradeApi = new TradeApi(tradeSpi);
         tradeApi.init(clientId, key, dataFolder, XtpLogLevel.XTP_LOG_LEVEL_INFO);
         sessionId = tradeApi.login(ip, port, user, password, TransferProtocol.XTP_PROTOCOL_TCP);
-        log.info("session = {}", sessionId);
+        log.info("initAndLogin session = {}", sessionId);
+        return sessionId;
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.zts.xtp.trade.model.request.*;
 public interface TradeApiService {
     void shutdown();
 
+    String initAndLogin();
+
     String getApiLastError();
 
     String insertOrder(OrderInsertRequest var1);
