@@ -40,4 +40,9 @@ public class DepthMarketDataExHandlerImpl extends AbstractTransDataHandler<Depth
     String handlerMapKey() {
         return ApiResponseEnum.DEPTH_MARKET_DATA_EX_RESPONSE.getCode();
     }
+
+    @Override
+    boolean isSingleThreadPool() {
+        return false;
+    }
 }

@@ -14,14 +14,19 @@ public abstract class AbstractTransDataHandler<T> implements InitializingBean {
 
     /**
      * 将响应信息持久化
+     *
      * @param response api 响应信息
      */
     public abstract void transDataToPersist(T response);
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         TransDataHandlerFactory.handlerMap.put(handlerMapKey(), this);
-        executorService = ThreadPoolUtils.create(8, 30, 2000, handlerMapKey());
+        if (isSingleThreadPool()) {
+            executorService = ThreadPoolUtils.createSingle(1000, handlerMapKey());
+        } else {
+            executorService = ThreadPoolUtils.create(4, 30, 1000, handlerMapKey());
+        }
     }
 
     /**
@@ -30,4 +35,6 @@ public abstract class AbstractTransDataHandler<T> implements InitializingBean {
      * @return 返回 key
      */
     abstract String handlerMapKey();
+
+    abstract boolean isSingleThreadPool();
 }

@@ -16,7 +16,6 @@ public class TickByTickHandlerImpl extends AbstractTransDataHandler<TickByTickRe
     @Autowired
     private TickByTickComponent tickByTickComponent;
 
-
     @Override
     public void transDataToPersist(TickByTickResponse response) {
         executorService.execute(() -> {
@@ -27,5 +26,10 @@ public class TickByTickHandlerImpl extends AbstractTransDataHandler<TickByTickRe
     @Override
     String handlerMapKey() {
         return ApiResponseEnum.TICK_BY_TICK.getCode();
+    }
+
+    @Override
+    boolean isSingleThreadPool() {
+        return false;
     }
 }

@@ -38,4 +38,9 @@ public class OrderResponseHandlerImpl extends AbstractTransDataHandler<OrderResp
     String handlerMapKey() {
         return ApiResponseEnum.ORDER_RESPONSE.getCode();
     }
+
+    @Override
+    boolean isSingleThreadPool() {
+        return true;
+    }
 }

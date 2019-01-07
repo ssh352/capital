@@ -43,4 +43,9 @@ public class TicketInfoResponseHandlerImpl extends AbstractTransDataHandler<Tick
     String handlerMapKey() {
         return ApiResponseEnum.TICKET_INFO_RESPONSE.getCode();
     }
+
+    @Override
+    boolean isSingleThreadPool() {
+        return false;
+    }
 }

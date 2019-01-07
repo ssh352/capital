@@ -58,4 +58,9 @@ public class AssetResponseHandlerImpl extends AbstractTransDataHandler<AssetResp
     String handlerMapKey() {
         return ApiResponseEnum.ASSET_RESPONSE.getCode();
     }
+
+    @Override
+    boolean isSingleThreadPool() {
+        return false;
+    }
 }
