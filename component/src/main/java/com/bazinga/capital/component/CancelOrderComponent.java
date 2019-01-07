@@ -46,6 +46,7 @@ public class CancelOrderComponent {
         CacheDataCenter.TICKER_PERSIST_SET.remove(ticker);
         if (CollectionUtils.isEmpty(list)) {
             log.warn("未查询到10s 后的行情数据 ticker= {},orderXtpId ={}", ticker, orderXtpId);
+            tradeApiService.cancelOrder(orderXtpId);
         } else {
             DepthMarketData depthMarketData = list.get(0);
             String bidQty = depthMarketData.getBidQty();
