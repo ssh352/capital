@@ -155,3 +155,44 @@ CREATE TABLE `depth_market_data_ex` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '买一买一队列信息'
+
+
+CREATE TABLE `disable_insert_ticket` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ticker` varchar(10) NOT NULL COMMENT '股票代码',
+  `day` varchar(15) DEFAULT NULL COMMENT '日期显示 格式 yyyy-MM-dd',
+  `operate_type` tinyint(4) NOT NULL COMMENT '0 系统操作 1 人工操作',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='禁止下单股票';
+
+CREATE TABLE `circulate_type_config` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `circulate_type` tinyint(4) NOT NULL COMMENT '类型  0 一亿一下  1 1亿到3亿   2 3亿以上',
+  `percent` int(4) NOT NULL COMMENT '百分比 如果是5% 则值为5',
+  `min_insert_quantity` bigint(10) NOT NULL COMMENT '能下单的最小股数',
+  `check_circulate_delay` int(4) NOT NULL COMMENT '查询行情与流通信息对比的延时时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='股票分类配置信息';
+
+CREATE TABLE `capital_order_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ticker` varchar(30) NOT NULL COMMENT '股票代码',
+  `ticket_name` varchar(60) DEFAULT NULL COMMENT '股票名称',
+  `exchange_type` tinyint(4) NOT NULL COMMENT '交易所类型 上海 1， 深圳 2， 未知 3',
+  `order_xtp_id` varchar(30) DEFAULT NULL COMMENT 'xtp 订单号',
+  `quantity` int(8) NOT NULL COMMENT '下单数量',
+  `traded_quantity` int(8) NOT NULL COMMENT '成交数量',
+  `order_price` decimal(16,2) NOT NULL COMMENT '下单价格',
+  `status` tinyint(4) NOT NULL COMMENT '订单 状态 1  本地初始化, 2 xtp 系统初始化,3 未成交, 4 全部成交,5 部分成交,6 全部撤单, 7部分撤单',
+  `stop_insert` tinyint(4) NOT NULL COMMENT '0 可以下单  1 禁止下单',
+  `stop_cancel` tinyint(4) NOT NULL COMMENT '0 允许撤单, 1 禁止撤单',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_order_xtp_id` (`order_xtp_id`) USING HASH,
+  KEY `idx_create_time` (`create_time`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1480 DEFAULT CHARSET=utf8 COMMENT='系统订单信息';
