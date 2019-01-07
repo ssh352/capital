@@ -44,23 +44,24 @@ public class CancelOrderComponent {
         List<DepthMarketData> list = depthMarketDataService.listByCondition(query);
         log.info(" cancel order check 撤单 检查 ------->移除行情需要保存股票  ticker={}", ticker);
         CacheDataCenter.TICKER_PERSIST_SET.remove(ticker);
-        if (CollectionUtils.isEmpty(list)) {
-            log.warn("未查询到10s 后的行情数据 ticker= {},orderXtpId ={}", ticker, orderXtpId);
-            tradeApiService.cancelOrder(orderXtpId);
-        } else {
-            DepthMarketData depthMarketData = list.get(0);
-            String bidQty = depthMarketData.getBidQty();
-            Long[] bidQtyArr = JSONObject.parseObject(bidQty, Long[].class);
-            if (bidQty != null && bidQtyArr.length > 0) {
-                TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(ticker);
-                if (tickerConfigDTO != null) {
-                    if (bidQtyArr[0] < tickerConfigDTO.getCirculateZ() * tickerConfigDTO.getPercent() / CommonConstant.ONE_HUNDRED) {
-                        log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
-                        tradeApiService.cancelOrder(orderXtpId);
-                    }
-                }
-            }
-        }
+        tradeApiService.cancelOrder(orderXtpId);
+//        if (CollectionUtils.isEmpty(list)) {
+//            log.warn("未查询到10s 后的行情数据 ticker= {},orderXtpId ={}", ticker, orderXtpId);
+//            tradeApiService.cancelOrder(orderXtpId);
+//        } else {
+//            DepthMarketData depthMarketData = list.get(0);
+//            String bidQty = depthMarketData.getBidQty();
+//            Long[] bidQtyArr = JSONObject.parseObject(bidQty, Long[].class);
+//            if (bidQty != null && bidQtyArr.length > 0) {
+//                TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(ticker);
+//                if (tickerConfigDTO != null) {
+//                    if (bidQtyArr[0] < tickerConfigDTO.getCirculateZ() * tickerConfigDTO.getPercent() / CommonConstant.ONE_HUNDRED) {
+//                        log.info("触发小于 流通 z 股数 撤单 ticker = {},orderXtpId = {}", ticker, orderXtpId);
+//                        tradeApiService.cancelOrder(orderXtpId);
+//                    }
+//                }
+//            }
+//        }
     }
 
 
