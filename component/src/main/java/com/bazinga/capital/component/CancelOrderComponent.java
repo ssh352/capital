@@ -41,7 +41,7 @@ public class CancelOrderComponent {
         query.setDataTimeFrom(startDate);
         query.setTicker(ticker);
         query.addOrderBy("date_time", Sort.SortType.DESC);
-        List<DepthMarketData> list = depthMarketDataService.listByCondition(query);
+        //List<DepthMarketData> list = depthMarketDataService.listByCondition(query);
         log.info(" cancel order check 撤单 检查 ------->移除行情需要保存股票  ticker={}", ticker);
         CacheDataCenter.TICKER_PERSIST_SET.remove(ticker);
         tradeApiService.cancelOrder(orderXtpId);
