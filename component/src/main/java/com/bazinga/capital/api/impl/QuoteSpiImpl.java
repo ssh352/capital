@@ -83,6 +83,7 @@ public class QuoteSpiImpl implements QuoteSpi {
 
     @Override
     public void onDepthMarketData(DepthMarketDataResponse depthMarketData, DepthMarketDataExResponse depthMarketDataExResponse) {
+        log.info("on call back onDepthMarketData");
         boolean isSaved = false;
         if (isCanInsertOrder(depthMarketData)) {
             applicationContext.publishEvent(new MarketData2InsertOrderEvent(this, depthMarketData.getTicker(),
