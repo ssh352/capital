@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class TickerConfigDTO {
 
+    private String tickerName;
     /**
      * 类型  0 一亿一下  1 1亿到3亿   2 3亿以上
      *
