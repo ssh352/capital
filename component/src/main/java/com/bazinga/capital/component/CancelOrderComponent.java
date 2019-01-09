@@ -6,12 +6,14 @@ import com.bazinga.capital.base.Sort;
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.dto.TickerConfigDTO;
+import com.bazinga.capital.event.CancelOrderEvent;
 import com.bazinga.capital.model.DepthMarketData;
 import com.bazinga.capital.query.DepthMarketDataQuery;
 import com.bazinga.capital.service.DepthMarketDataService;
 import com.bazinga.capital.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -25,6 +27,9 @@ import java.util.List;
 @Component
 @Slf4j
 public class CancelOrderComponent {
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
     private TradeApiService tradeApiService;
@@ -43,8 +48,7 @@ public class CancelOrderComponent {
         query.addOrderBy("date_time", Sort.SortType.DESC);
         //List<DepthMarketData> list = depthMarketDataService.listByCondition(query);
         log.info(" cancel order check 撤单 检查 ------->移除行情需要保存股票  ticker={}", ticker);
-        CacheDataCenter.TICKER_PERSIST_SET.remove(ticker);
-        tradeApiService.cancelOrder(orderXtpId);
+        applicationContext.publishEvent(new CancelOrderEvent(this,ticker,orderXtpId));
 //        if (CollectionUtils.isEmpty(list)) {
 //            log.warn("未查询到10s 后的行情数据 ticker= {},orderXtpId ={}", ticker, orderXtpId);
 //            tradeApiService.cancelOrder(orderXtpId);
