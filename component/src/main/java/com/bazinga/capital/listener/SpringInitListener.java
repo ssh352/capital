@@ -12,6 +12,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author yunshan
  * @date 2019/1/6
@@ -29,10 +31,13 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
     @Autowired
     private TradeApiService tradeApiService;
 
+    private AtomicInteger atomicInteger = new AtomicInteger(0);
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        if(contextRefreshedEvent.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")){
+        if(atomicInteger.getAndIncrement()==0 &&
+                contextRefreshedEvent.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")){
             log.info("spring initialed ----------->");
             try {
                 initDataComponent.initConfigData();
@@ -49,6 +54,7 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
             }
             tradeApiService.initAndLogin();
             log.info("<------登录初始化成功------->");
+
         }
 
 
