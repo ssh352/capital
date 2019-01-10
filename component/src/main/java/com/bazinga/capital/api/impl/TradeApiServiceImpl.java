@@ -53,6 +53,8 @@ public class TradeApiServiceImpl implements TradeApiService {
 
     private String sessionId;
 
+
+
     private static void loadLibrary(String libFolder) {
         System.load(libFolder + "/libxtptraderapi.so");
         System.load(libFolder + "/libglog.so");

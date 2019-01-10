@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,20 +31,26 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        log.info("spring initialed ----------->");
-        try {
-            initDataComponent.initConfigData();
+
+        if(contextRefreshedEvent.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")){
+            log.info("spring initialed ----------->");
+            try {
+                initDataComponent.initConfigData();
 //            if (LoginState.LOGIN_RESULT) {
 //                quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
 //                log.info("订阅深圳市场行情数据成功");
 //            }
-        } catch (Exception e) {
-            log.error("初始化配置信息异常", e);
+            } catch (Exception e) {
+                log.error("初始化配置信息异常", e);
+            }
+            log.info("<------数据初始化成功------->");
+            if(!LoginState.LOGIN_RESULT){
+                quoteApiService.connectAndLogin();
+            }
+            tradeApiService.initAndLogin();
+            log.info("<------登录初始化成功------->");
         }
-        log.info("<------数据初始化成功------->");
-        quoteApiService.connectAndLogin();
-        tradeApiService.initAndLogin();
-        log.info("<------登录初始化成功------->");
+
 
     }
 }
