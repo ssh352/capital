@@ -36,7 +36,7 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        if(atomicInteger.getAndIncrement()==0 &&
+        if(atomicInteger.get()==0 &&
                 contextRefreshedEvent.getApplicationContext().getDisplayName().equals("Root WebApplicationContext")){
             log.info("spring initialed ----------->");
             try {
@@ -54,7 +54,7 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
             }
             tradeApiService.initAndLogin();
             log.info("<------登录初始化成功------->");
-
+            atomicInteger.set(-1);
         }
 
 
