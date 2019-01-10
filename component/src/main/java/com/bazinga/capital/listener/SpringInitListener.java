@@ -33,10 +33,10 @@ public class SpringInitListener implements ApplicationListener<ContextRefreshedE
         log.info("spring initialed ----------->");
         try {
             initDataComponent.initConfigData();
-            if (LoginState.LOGIN_RESULT) {
-                quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
-                log.info("订阅深圳市场行情数据成功");
-            }
+//            if (LoginState.LOGIN_RESULT) {
+//                quoteApiService.subscribeAllMarketData(ExchangeType.SZ.getType());
+//                log.info("订阅深圳市场行情数据成功");
+//            }
         } catch (Exception e) {
             log.error("初始化配置信息异常", e);
         }
