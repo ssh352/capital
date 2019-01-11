@@ -27,7 +27,7 @@ public class CirculateTypeConfigController {
     @Autowired
     private CirculateTypeConfigService circulateTypeConfigService;
 
-    @RequestMapping(value = "dataList", method = RequestMethod.POST)
+    @RequestMapping(value = "dataList", method = RequestMethod.GET)
     @ResponseBody
     public PlatformResult getDataList() {
         PlatformResult platformResult = PlatformResult.buildFailureResult();
@@ -43,7 +43,7 @@ public class CirculateTypeConfigController {
         return platformResult;
     }
 
-    @RequestMapping(value = "getById", method = RequestMethod.POST)
+    @RequestMapping(value = "getById", method = RequestMethod.GET)
     @ResponseBody
     public PlatformResult getById(Long id) {
         PlatformResult platformResult = PlatformResult.buildFailureResult();
