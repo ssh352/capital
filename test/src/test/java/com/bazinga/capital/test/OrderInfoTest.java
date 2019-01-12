@@ -1,8 +1,12 @@
 package com.bazinga.capital.test;
 
+import com.bazinga.capital.component.OrderInfoPersistComponent;
+import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.model.OrderInfo;
+import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.service.OrderInfoService;
 import com.bazinga.capital.query.OrderInfoQuery;
+import com.bazinga.capital.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
@@ -11,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import org.junit.runner.RunWith;
@@ -31,6 +36,26 @@ public class OrderInfoTest{
 
     @Resource
     private OrderInfoService orderInfoService;
+
+    @Autowired
+    private OrderInfoPersistComponent orderInfoPersistComponent;
+
+    @Autowired
+    private CapitalOrderInfoService capitalOrderInfoService;
+
+    @Test
+    public void test(){
+        OrderInfoQuery query = new OrderInfoQuery();
+        Date createTimeFrom = DateUtil.parseDate("2019-01-11 00:00:00", DateUtil.DEFAULT_FORMAT);
+        Date createTimeTo = DateUtil.parseDate("2019-01-11 23:59:59", DateUtil.DEFAULT_FORMAT);
+        query.setCreateTimeFrom(createTimeFrom);
+        query.setCreateTimeTo(createTimeTo);
+        List<OrderInfo> orderInfos = orderInfoService.listByCondition(query);
+        orderInfos.forEach(item->{
+            CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
+            capitalOrderInfoService.save(capitalOrderInfo);
+        });
+    }
 
     @Test
     public void add(){

@@ -174,19 +174,20 @@ CREATE TABLE `capital_order_info` (
   `ticket_name` varchar(60) DEFAULT NULL COMMENT '股票名称',
   `exchange_type` tinyint(4) NOT NULL COMMENT '交易所类型 上海 1， 深圳 2， 未知 3',
   `order_xtp_id` varchar(30) DEFAULT NULL COMMENT 'xtp 订单号',
+  `order_cancel_xtp_id` varchar(30) DEFAULT NULL COMMENT 'xtp 撤单号',
   `quantity` int(8) NOT NULL COMMENT '下单数量',
   `traded_quantity` int(8) NOT NULL COMMENT '成交数量',
   `order_price` decimal(16,2) NOT NULL COMMENT '下单价格',
   `status` tinyint(4) NOT NULL COMMENT '订单 状态 1  本地初始化, 2 xtp 系统初始化,3 未成交, 4 全部成交,5 部分成交,6 全部撤单, 7部分撤单',
   `stop_insert` tinyint(4) NOT NULL COMMENT '0 可以下单  1 禁止下单',
   `stop_cancel` tinyint(4) NOT NULL COMMENT '0 允许撤单, 1 禁止撤单',
+  `cancel_time` datetime DEFAULT NULL COMMENT '撤单时间',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_order_xtp_id` (`order_xtp_id`) USING HASH,
   KEY `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1480 DEFAULT CHARSET=utf8 COMMENT='系统订单信息';
-
 
 CREATE TABLE `cancel_order_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',

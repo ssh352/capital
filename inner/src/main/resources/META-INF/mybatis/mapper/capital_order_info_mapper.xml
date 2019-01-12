@@ -16,6 +16,7 @@
         <result column="stop_insert" jdbcType="TINYINT" property="stopInsert"/>
         <result column="stop_cancel" jdbcType="TINYINT" property="stopCancel"/>
         <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime"/>
+        <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
@@ -35,6 +36,7 @@
             stop_insert,
             stop_cancel,
             cancel_time,
+            insert_time,
             create_time,
             update_time
         </sql>
@@ -116,6 +118,7 @@
             #{stopInsert, jdbcType=TINYINT},
             #{stopCancel, jdbcType=TINYINT},
             #{cancelTime, jdbcType=TIMESTAMP},
+            #{insertTime, jdbcType=TIMESTAMP},
             #{createTime, jdbcType=TIMESTAMP},
             #{updateTime, jdbcType=TIMESTAMP}
             )

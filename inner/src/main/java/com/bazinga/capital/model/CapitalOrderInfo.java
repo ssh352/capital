@@ -127,6 +127,11 @@ public class CapitalOrderInfo implements Serializable {
     private Date cancelTime;
 
     /**
+     * 下单时间
+     */
+    private Date insertTime;
+
+    /**
      * 创建时间
      *
      * @允许为空   NO

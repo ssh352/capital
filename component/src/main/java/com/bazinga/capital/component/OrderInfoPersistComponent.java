@@ -7,6 +7,7 @@ import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.service.OrderInfoService;
 import com.bazinga.capital.util.DateUtil;
 import com.zts.xtp.trade.model.response.OrderResponse;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,10 +45,12 @@ public class OrderInfoPersistComponent {
     }
 
 
-    private CapitalOrderInfo buildCapitalOrderInfo(OrderInfo orderInfo) {
+    public CapitalOrderInfo buildCapitalOrderInfo(OrderInfo orderInfo) {
         CapitalOrderInfo capitalOrderInfo = new CapitalOrderInfo();
         capitalOrderInfo.setTradedQuantity(orderInfo.getQtyTraded().intValue());
         capitalOrderInfo.setTicketName("");
+        capitalOrderInfo.setCancelTime(orderInfo.getCancelTime());
+        capitalOrderInfo.setOrderCancelXtpId(ObjectUtils.toString(orderInfo.getOrderCancelXtpId(),""));
         capitalOrderInfo.setTicker(orderInfo.getTicker());
         capitalOrderInfo.setStopInsert(EnableStatusEnum.ENABLE.getCode());
         capitalOrderInfo.setStopCancel(EnableStatusEnum.ENABLE.getCode());
