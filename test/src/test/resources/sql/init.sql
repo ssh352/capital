@@ -187,18 +187,6 @@ CREATE TABLE `capital_order_info` (
   KEY `idx_create_time` (`create_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1480 DEFAULT CHARSET=utf8 COMMENT='系统订单信息';
 
-CREATE TABLE `disable_operate_ticket` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `ticker` varchar(10) NOT NULL COMMENT '股票代码',
-  `ticker_name` varchar(30) DEFAULT NULL,
-  `day` varchar(15) DEFAULT NULL COMMENT '日期显示 格式 yyyy-MM-dd',
-  `operate_type` tinyint(4) NOT NULL COMMENT '0 系统操作 1 人工操作',
-  `buisness_type` tinyint(4) NOT NULL COMMENT '2 进制标识 11 禁止下单 禁止撤单, 10 禁止下单,01 禁止撤单 00 都不禁止',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_ticker_day` (`ticker`,`day`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='禁止操作股票池';
 
 CREATE TABLE `cancel_order_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -212,3 +200,16 @@ CREATE TABLE `cancel_order_log` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_order_xtp_id` (`order_xtp_id`) USING HASH
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='撤单动作日志表';
+
+CREATE TABLE `disable_operate_ticket_pool` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ticker` varchar(10) NOT NULL COMMENT '股票代码',
+  `ticker_name` varchar(30) DEFAULT NULL,
+  `day` varchar(15) DEFAULT NULL COMMENT '日期显示 格式 yyyy-MM-dd',
+  `operate_status` tinyint(4) NOT NULL COMMENT '0 系统操作 1 人工操作',
+  `business_status` tinyint(4) NOT NULL COMMENT '2 进制标识 11 禁止下单 禁止撤单, 10 禁止下单,01 禁止撤单 00 都不禁止',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_ticker_day` (`ticker`,`day`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='禁止操作股票池';
