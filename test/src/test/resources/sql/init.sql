@@ -157,16 +157,6 @@ CREATE TABLE `depth_market_data_ex` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '买一买一队列信息'
 
 
-CREATE TABLE `disable_insert_ticket` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `ticker` varchar(10) NOT NULL COMMENT '股票代码',
-  `day` varchar(15) DEFAULT NULL COMMENT '日期显示 格式 yyyy-MM-dd',
-  `operate_type` tinyint(4) NOT NULL COMMENT '0 系统操作 1 人工操作',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='禁止下单股票';
-
 CREATE TABLE `circulate_type_config` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `circulate_type` tinyint(4) NOT NULL COMMENT '类型  0 一亿一下  1 1亿到3亿   2 3亿以上',
@@ -210,3 +200,15 @@ CREATE TABLE `disable_operate_ticket` (
   UNIQUE KEY `uk_ticker_day` (`ticker`,`day`) USING HASH
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='禁止操作股票池';
 
+CREATE TABLE `cancel_order_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ticker` varchar(10) NOT NULL COMMENT '股票代码',
+  `ticker_name` varchar(30) DEFAULT NULL COMMENT '股票名称',
+  `order_xtp_id` varchar(30) NOT NULL COMMENT '订单号',
+  `status` tinyint(4) NOT NULL COMMENT '状态 1 成功  2 失败  0 初始化',
+  `retry_count` int(8) DEFAULT '0' COMMENT '重试次数',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_order_xtp_id` (`order_xtp_id`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='撤单动作日志表';
