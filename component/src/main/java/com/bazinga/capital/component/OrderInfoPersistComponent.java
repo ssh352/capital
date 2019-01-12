@@ -50,6 +50,7 @@ public class OrderInfoPersistComponent {
         capitalOrderInfo.setTradedQuantity(orderInfo.getQtyTraded().intValue());
         capitalOrderInfo.setTicketName("");
         capitalOrderInfo.setCancelTime(orderInfo.getCancelTime());
+        capitalOrderInfo.setInsertTime(orderInfo.getInsertTime());
         capitalOrderInfo.setOrderCancelXtpId(ObjectUtils.toString(orderInfo.getOrderCancelXtpId(),""));
         capitalOrderInfo.setTicker(orderInfo.getTicker());
         capitalOrderInfo.setStopInsert(EnableStatusEnum.ENABLE.getCode());
