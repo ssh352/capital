@@ -6,15 +6,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 〈DisableInsertTicket 查询参数〉<p>
+ * 〈禁止操作池 查询参数〉<p>
  *
  * @author
- * @date 2019-01-09
+ * @date 2019-01-12
  */
 @lombok.Data
 @lombok.EqualsAndHashCode(callSuper = true)
 @lombok.ToString(callSuper = true)
-public class DisableInsertTicketQuery extends PagingQuery implements Serializable {
+public class DisableOperateTicketPoolQuery extends PagingQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,12 @@ public class DisableInsertTicketQuery extends PagingQuery implements Serializabl
     /**
      * 0 系统操作 1 人工操作
      */
-    private Integer operateType;
+    private Integer operateStatus;
+
+    /**
+     * 2 进制标识 11 禁止下单 禁止撤单, 10 禁止下单,01 禁止撤单 00 都不禁止
+     */
+    private Integer businessStatus;
 
     /**
      * 创建时间 开始

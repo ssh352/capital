@@ -8,12 +8,14 @@
         <result column="ticket_name" jdbcType="VARCHAR" property="ticketName"/>
         <result column="exchange_type" jdbcType="TINYINT" property="exchangeType"/>
         <result column="order_xtp_id" jdbcType="VARCHAR" property="orderXtpId"/>
+        <result column="order_cancel_xtp_id" jdbcType="VARCHAR" property="orderCancelXtpId"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
         <result column="traded_quantity" jdbcType="INTEGER" property="tradedQuantity"/>
         <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="stop_insert" jdbcType="TINYINT" property="stopInsert"/>
         <result column="stop_cancel" jdbcType="TINYINT" property="stopCancel"/>
+        <result column="cancel_time" jdbcType="TIMESTAMP" property="cancelTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
@@ -25,12 +27,14 @@
             ticket_name,
             exchange_type,
             order_xtp_id,
+            order_cancel_xtp_id,
             quantity,
             traded_quantity,
             order_price,
             status,
             stop_insert,
             stop_cancel,
+            cancel_time,
             create_time,
             update_time
         </sql>
@@ -62,6 +66,9 @@
         <if test="exchangeType != null">
             exchange_type = #{exchangeType, jdbcType=TINYINT},
         </if>
+        <if test="orderCancelXtpId != null">
+            order_cancel_xtp_id = #{orderCancelXtpId, jdbcType=VARCHAR},
+        </if>
         <if test="quantity != null">
             quantity = #{quantity, jdbcType=INTEGER},
         </if>
@@ -79,6 +86,9 @@
         </if>
         <if test="stopCancel != null">
             stop_cancel = #{stopCancel, jdbcType=TINYINT},
+        </if>
+        <if test="cancelTime != null">
+            cancel_time = #{cancelTime, jdbcType=TIMESTAMP},
         </if>
         <if test="createTime != null">
             create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -98,12 +108,14 @@
             #{ticketName, jdbcType=VARCHAR},
             #{exchangeType, jdbcType=TINYINT},
             #{orderXtpId, jdbcType=VARCHAR},
+            #{orderCancelXtpId, jdbcType=VARCHAR},
             #{quantity, jdbcType=INTEGER},
             #{tradedQuantity, jdbcType=INTEGER},
             #{orderPrice, jdbcType=DECIMAL},
             #{status, jdbcType=TINYINT},
             #{stopInsert, jdbcType=TINYINT},
             #{stopCancel, jdbcType=TINYINT},
+            #{cancelTime, jdbcType=TIMESTAMP},
             #{createTime, jdbcType=TIMESTAMP},
             #{updateTime, jdbcType=TIMESTAMP}
             )
@@ -125,6 +137,9 @@
             <if test="orderXtpId != null">
                 order_xtp_id = #{orderXtpId, jdbcType=VARCHAR},
             </if>
+            <if test="orderCancelXtpId != null">
+                order_cancel_xtp_id = #{orderCancelXtpId, jdbcType=VARCHAR},
+            </if>
             <if test="quantity != null">
                 quantity = #{quantity, jdbcType=INTEGER},
             </if>
@@ -142,6 +157,9 @@
             </if>
             <if test="stopCancel != null">
                 stop_cancel = #{stopCancel, jdbcType=TINYINT},
+            </if>
+            <if test="cancelTime != null">
+                cancel_time = #{cancelTime, jdbcType=TIMESTAMP},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -167,6 +185,9 @@
         <if test="orderXtpId != null">
             and order_xtp_id = #{orderXtpId, jdbcType=VARCHAR}
         </if>
+        <if test="orderCancelXtpId != null">
+            and order_cancel_xtp_id = #{orderCancelXtpId, jdbcType=VARCHAR}
+        </if>
         <if test="quantity != null">
             and quantity = #{quantity, jdbcType=INTEGER}
         </if>
@@ -189,6 +210,16 @@
 
     <!-- 范围查询条件，包括 <、 >、between、like、in等 -->
     <sql id="Range_Where_List">
+        <if test="cancelTimeFrom != null">
+            <![CDATA[
+            and cancel_time >= #{cancelTimeFrom, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="cancelTimeTo != null">
+            <![CDATA[
+            and cancel_time <= #{cancelTimeTo, jdbcType=TIMESTAMP}
+            ]]>
+        </if>
         <if test="createTimeFrom != null">
             <![CDATA[
             and create_time >= #{createTimeFrom, jdbcType=TIMESTAMP}

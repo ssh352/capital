@@ -22,6 +22,9 @@ public class CancelOrderListener implements ApplicationListener<CancelOrderEvent
     @Override
     public void onApplicationEvent(CancelOrderEvent cancelOrderEvent) {
         log.info("监听到撤单事件 ticker={},orderXtpId={}", cancelOrderEvent.getTicker(), cancelOrderEvent.getOrderXtpId());
+
+
+
         tradeApiService.cancelOrder(cancelOrderEvent.getOrderXtpId());
         if (CacheDataCenter.TICKER_PERSIST_SET.contains(cancelOrderEvent.getTicker())) {
             CacheDataCenter.TICKER_PERSIST_SET.remove(cancelOrderEvent.getTicker());

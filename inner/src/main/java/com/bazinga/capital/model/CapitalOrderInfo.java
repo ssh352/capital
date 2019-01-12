@@ -1,16 +1,14 @@
 package com.bazinga.capital.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Date;
-
-import java.io.Serializable;
 
 /**
  * 〈系统订单信息〉<p>
  *
  * @author
- * @date 2019-01-06
+ * @date 2019-01-12
  */
 @lombok.Data
 @lombok.ToString
@@ -32,8 +30,7 @@ public class CapitalOrderInfo implements Serializable {
      *
      * @最大长度   30
      * @允许为空   NO
-     * @是否索引   YES
-     * @唯一索引   uk_ticker
+     * @是否索引   NO
      */
     private String ticker;
 
@@ -41,7 +38,7 @@ public class CapitalOrderInfo implements Serializable {
      * 股票名称
      *
      * @最大长度   60
-     * @允许为空   NO
+     * @允许为空   YES
      * @是否索引   NO
      */
     private String ticketName;
@@ -59,9 +56,19 @@ public class CapitalOrderInfo implements Serializable {
      *
      * @最大长度   30
      * @允许为空   YES
-     * @是否索引   NO
+     * @是否索引   YES
+     * @唯一索引   uk_order_xtp_id
      */
     private String orderXtpId;
+
+    /**
+     * xtp 撤单号
+     *
+     * @最大长度   30
+     * @允许为空   YES
+     * @是否索引   NO
+     */
+    private String orderCancelXtpId;
 
     /**
      * 下单数量
@@ -110,6 +117,14 @@ public class CapitalOrderInfo implements Serializable {
      * @是否索引   NO
      */
     private Integer stopCancel;
+
+    /**
+     * 撤单时间
+     *
+     * @允许为空   YES
+     * @是否索引   NO
+     */
+    private Date cancelTime;
 
     /**
      * 创建时间

@@ -1,18 +1,19 @@
 package com.bazinga.capital.component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bazinga.capital.constant.CommonStatusConstant;
 import com.bazinga.capital.dto.TickerConfigDTO;
 import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.model.CirculateInfo;
 import com.bazinga.capital.model.CirculateTypeConfig;
-import com.bazinga.capital.model.DisableInsertTicket;
+import com.bazinga.capital.model.DisableOperateTicketPool;
 import com.bazinga.capital.query.CirculateInfoQuery;
 import com.bazinga.capital.query.CirculateTypeConfigQuery;
-import com.bazinga.capital.query.DisableInsertTicketQuery;
+import com.bazinga.capital.query.DisableOperateTicketPoolQuery;
 import com.bazinga.capital.service.CirculateInfoService;
 import com.bazinga.capital.service.CirculateTypeConfigService;
-import com.bazinga.capital.service.DisableInsertTicketService;
+import com.bazinga.capital.service.DisableOperateTicketPoolService;
 import com.bazinga.capital.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class InitDataComponent {
     private CirculateInfoService circulateInfoService;
 
     @Autowired
-    private DisableInsertTicketService disableInsertTicketService;
+    private DisableOperateTicketPoolService disableOperateTicketPoolService;
 
     public void initConfigData() {
         initCirculateTypeConfig();
@@ -50,12 +51,12 @@ public class InitDataComponent {
     }
 
     private void initDisableInsertTicket() {
-        DisableInsertTicketQuery query= new DisableInsertTicketQuery();
-        query.setDay(DateUtil.format(new Date(),DateUtil.yyyy_MM_dd));
-        List<DisableInsertTicket> disableInsertTickets = disableInsertTicketService.listByCondition(query);
-        disableInsertTickets.forEach(item->{
-            CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(item.getTicker());
-        });
+        DisableOperateTicketPoolQuery query = new DisableOperateTicketPoolQuery();
+        query.setDay(DateUtil.format(new Date(), DateUtil.yyyy_MM_dd));
+        List<DisableOperateTicketPool> disableInsertTickets = disableOperateTicketPoolService.listByCondition(query);
+        disableInsertTickets.stream().filter(item -> item.isAllowBusiness(CommonStatusConstant.DISABLE_INSERT))
+                .forEach(item -> CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(item.getTicker()));
+
     }
 
     private void initTickerConfigDTO() {

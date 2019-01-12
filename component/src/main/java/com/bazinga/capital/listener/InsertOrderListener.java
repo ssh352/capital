@@ -3,12 +3,8 @@ package com.bazinga.capital.listener;
 import com.alibaba.fastjson.JSONObject;
 import com.bazinga.capital.api.TradeApiService;
 import com.bazinga.capital.cache.CacheDataCenter;
-import com.bazinga.capital.dto.TickerConfigDTO;
-import com.bazinga.capital.enums.OperateTypeEnum;
+import com.bazinga.capital.component.DisableOperateTicketPoolComponent;
 import com.bazinga.capital.event.MarketData2InsertOrderEvent;
-import com.bazinga.capital.model.DisableInsertTicket;
-import com.bazinga.capital.service.DisableInsertTicketService;
-import com.bazinga.capital.util.DateUtil;
 import com.zts.xtp.common.enums.BusinessType;
 import com.zts.xtp.common.enums.MarketType;
 import com.zts.xtp.common.enums.PriceType;
@@ -18,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * 下单监听器
@@ -35,7 +29,7 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
     private TradeApiService tradeApiService;
 
     @Autowired
-    private DisableInsertTicketService disableInsertTicketService;
+    private DisableOperateTicketPoolComponent disableOperateTicketPoolComponent;
 
     @Override
     public void onApplicationEvent(MarketData2InsertOrderEvent event) {
@@ -55,9 +49,7 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
                         .sideType(SideType.XTP_SIDE_BUY)
                         .quantity(100).build();
                 tradeApiService.insertOrder(orderInsertRequest);
-                CacheDataCenter.DISABLE_INSERT_ORDER_SET.add(event.getTicker());
-                DisableInsertTicket disableInsertTicket = buildDisableInsertTicket(event.getTicker());
-                disableInsertTicketService.save(disableInsertTicket);
+                disableOperateTicketPoolComponent.tickerAddToDisableInsert(event.getTicker());
                 CacheDataCenter.TICKER_PERSIST_SET.add(event.getTicker());
                 log.info("调用 api 委托下单完成");
             } catch (Exception e) {
@@ -66,15 +58,5 @@ public class InsertOrderListener implements ApplicationListener<MarketData2Inser
         }
     }
 
-    private DisableInsertTicket buildDisableInsertTicket(String ticker) {
-        DisableInsertTicket disableInsertTicket = new DisableInsertTicket();
-        disableInsertTicket.setOperateType(OperateTypeEnum.SYSTEM_AUTO.getCode());
-        disableInsertTicket.setTicker(ticker);
-        TickerConfigDTO tickerConfigDTO = CacheDataCenter.TICKER_CONFIG_MAP.get(ticker);
-        if (tickerConfigDTO != null) {
-            disableInsertTicket.setTickerName(tickerConfigDTO.getTickerName());
-        }
-        disableInsertTicket.setDay(DateUtil.format(new Date(), DateUtil.yyyy_MM_dd));
-        return disableInsertTicket;
-    }
+
 }
