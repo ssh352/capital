@@ -148,5 +148,131 @@ public class CapitalOrderInfo implements Serializable {
      */
     private Date updateTime;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTicker() {
+        return ticker;
+    }
+
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
+
+    public Integer getExchangeType() {
+        return exchangeType;
+    }
+
+    public void setExchangeType(Integer exchangeType) {
+        this.exchangeType = exchangeType;
+    }
+
+    public String getOrderXtpId() {
+        return orderXtpId;
+    }
+
+    public void setOrderXtpId(String orderXtpId) {
+        this.orderXtpId = orderXtpId;
+    }
+
+    public String getOrderCancelXtpId() {
+        return orderCancelXtpId;
+    }
+
+    public void setOrderCancelXtpId(String orderCancelXtpId) {
+        this.orderCancelXtpId = orderCancelXtpId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getTradedQuantity() {
+        return tradedQuantity;
+    }
+
+    public void setTradedQuantity(Integer tradedQuantity) {
+        this.tradedQuantity = tradedQuantity;
+    }
+
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(BigDecimal orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getStopInsert() {
+        return stopInsert;
+    }
+
+    public void setStopInsert(Integer stopInsert) {
+        this.stopInsert = stopInsert;
+    }
+
+    public Integer getStopCancel() {
+        return stopCancel;
+    }
+
+    public void setStopCancel(Integer stopCancel) {
+        this.stopCancel = stopCancel;
+    }
+
+    public Date getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(Date cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public Date getInsertTime() {
+        return insertTime;
+    }
+
+    public void setInsertTime(Date insertTime) {
+        this.insertTime = insertTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }
