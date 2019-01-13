@@ -89,6 +89,17 @@ public class CapitalOrderInfoQuery extends PagingQuery implements Serializable {
      */
     private Date updateTimeTo;
 
+
+    /**
+     * 更新时间 开始
+     */
+    private Date cancelTimeFrom;
+
+    /**
+     * 更新时间 结束
+     */
+    private Date cancelTimeTo;
+
     /**
      * xtp 撤单号
      *
