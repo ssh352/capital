@@ -33,6 +33,7 @@
             <list>
                 <value>DisableCircularReferenceDetect</value>
                 <value>WriteNullStringAsEmpty</value>
+                <value>WriteDateUseDateFormat</value>
             </list>
         </property>
     </bean>
