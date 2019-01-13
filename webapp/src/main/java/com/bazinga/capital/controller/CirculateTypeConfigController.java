@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,12 +67,14 @@ public class CirculateTypeConfigController {
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ResponseBody
-    public PlatformResult update(CirculateTypeConfig config) {
+    public PlatformResult update(@RequestBody CirculateTypeConfig config) {
         PlatformResult platformResult = PlatformResult.buildFailureResult();
         try {
             Assert.notNull(config.getId(), "更新主键不能为空");
             Assert.notNull(config, "更新对象不能为空");
             circulateTypeConfigService.updateById(config);
+            platformResult.setCode(PlatformResult.SUCCESS);
+            platformResult.setMsg("success");
         } catch (IllegalArgumentException e) {
             log.error("参数校验异常 参数=" + JSONObject.toJSONString(config), e);
             platformResult.setMsg("参数校验异常");

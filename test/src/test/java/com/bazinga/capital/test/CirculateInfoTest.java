@@ -46,7 +46,7 @@ public class CirculateInfoTest {
     private TicketInfoService ticketInfoService;
 
     @Test
-    private void test(){
+    public void test(){
         List<TicketInfo> ticketInfos = ticketInfoService.listByCondition(new TicketInfoQuery());
         Map<String,String> ticketMap = new HashMap<>(4096);
         ticketInfos.forEach(item->{
