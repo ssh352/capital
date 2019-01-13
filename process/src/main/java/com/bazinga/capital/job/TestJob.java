@@ -38,26 +38,26 @@ public class TestJob {
     public void test() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         log.info("job test {}", simpleDateFormat.format(new Date()));
-        OrderInfoQuery query = new OrderInfoQuery();
-        Date createTimeFrom = DateUtil.parseDate("2019-01-11 00:00:00", DateUtil.DEFAULT_FORMAT);
-        Date createTimeTo = DateUtil.parseDate("2019-01-11 23:59:59", DateUtil.DEFAULT_FORMAT);
-        query.setCreateTimeFrom(createTimeFrom);
-        query.setCreateTimeTo(createTimeTo);
-        List<OrderInfo> orderInfos = orderInfoService.listByCondition(query);
-        orderInfos.forEach(item->{
-            CapitalOrderInfo byOrderXtpId = capitalOrderInfoService.getByOrderXtpId(item.getOrderXtpId());
-            if(byOrderXtpId==null){
-                CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
-                capitalOrderInfoService.save(capitalOrderInfo);
-            }else{
-                byOrderXtpId.setStatus(item.getOrderStatusType());
-                byOrderXtpId.setTicketName(CacheDataCenter.TICKER_CONFIG_MAP.get(item.getTicker()).getTickerName());
-                byOrderXtpId.setCancelTime(item.getCancelTime());
-                byOrderXtpId.setTradedQuantity(item.getQtyTraded().intValue());
-                byOrderXtpId.setOrderCancelXtpId(ObjectUtils.toString(item.getOrderCancelXtpId(),""));
-                capitalOrderInfoService.updateByOrderXtpId(byOrderXtpId);
-            }
-        });
+//        OrderInfoQuery query = new OrderInfoQuery();
+//        Date createTimeFrom = DateUtil.parseDate("2019-01-11 00:00:00", DateUtil.DEFAULT_FORMAT);
+//        Date createTimeTo = DateUtil.parseDate("2019-01-11 23:59:59", DateUtil.DEFAULT_FORMAT);
+//        query.setCreateTimeFrom(createTimeFrom);
+//        query.setCreateTimeTo(createTimeTo);
+//        List<OrderInfo> orderInfos = orderInfoService.listByCondition(query);
+//        orderInfos.forEach(item->{
+//            CapitalOrderInfo byOrderXtpId = capitalOrderInfoService.getByOrderXtpId(item.getOrderXtpId());
+//            if(byOrderXtpId==null){
+//                CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
+//                capitalOrderInfoService.save(capitalOrderInfo);
+//            }else{
+//                byOrderXtpId.setStatus(item.getOrderStatusType());
+//                byOrderXtpId.setTicketName(CacheDataCenter.TICKER_CONFIG_MAP.get(item.getTicker()).getTickerName());
+//                byOrderXtpId.setCancelTime(item.getCancelTime());
+//                byOrderXtpId.setTradedQuantity(item.getQtyTraded().intValue());
+//                byOrderXtpId.setOrderCancelXtpId(ObjectUtils.toString(item.getOrderCancelXtpId(),""));
+//                capitalOrderInfoService.updateByOrderXtpId(byOrderXtpId);
+//            }
+//        });
     }
 
 }
