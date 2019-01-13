@@ -1,5 +1,6 @@
 package com.bazinga.capital.test;
 
+import com.bazinga.capital.cache.CacheDataCenter;
 import com.bazinga.capital.component.OrderInfoPersistComponent;
 import com.bazinga.capital.model.CapitalOrderInfo;
 import com.bazinga.capital.model.OrderInfo;
@@ -59,6 +60,7 @@ public class OrderInfoTest{
                 capitalOrderInfoService.save(capitalOrderInfo);
             }else{
                 byOrderXtpId.setStatus(item.getOrderStatusType());
+                byOrderXtpId.setTicketName(CacheDataCenter.TICKER_CONFIG_MAP.get(item.getTicker()).getTickerName());
                 byOrderXtpId.setCancelTime(item.getCancelTime());
                 byOrderXtpId.setTradedQuantity(item.getQtyTraded().intValue());
                 byOrderXtpId.setOrderCancelXtpId(ObjectUtils.toString(item.getOrderCancelXtpId(),""));
