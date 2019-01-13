@@ -7,6 +7,7 @@ import com.bazinga.capital.service.CapitalOrderInfoService;
 import com.bazinga.capital.service.OrderInfoService;
 import com.bazinga.capital.query.OrderInfoQuery;
 import com.bazinga.capital.util.DateUtil;
+import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
@@ -52,8 +53,16 @@ public class OrderInfoTest{
         query.setCreateTimeTo(createTimeTo);
         List<OrderInfo> orderInfos = orderInfoService.listByCondition(query);
         orderInfos.forEach(item->{
-            CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
-            capitalOrderInfoService.save(capitalOrderInfo);
+            CapitalOrderInfo byOrderXtpId = capitalOrderInfoService.getByOrderXtpId(item.getOrderXtpId());
+            if(byOrderXtpId==null){
+                CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
+                capitalOrderInfoService.save(capitalOrderInfo);
+            }else{
+                byOrderXtpId.setCancelTime(item.getCancelTime());
+                byOrderXtpId.setTradedQuantity(item.getQtyTraded().intValue());
+                byOrderXtpId.setOrderCancelXtpId(ObjectUtils.toString(item.getOrderCancelXtpId(),""));
+                capitalOrderInfoService.updateByOrderXtpId(byOrderXtpId);
+            }
         });
     }
 
