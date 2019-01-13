@@ -1,5 +1,7 @@
 package com.bazinga.capital.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,8 +12,7 @@ import java.util.Date;
  * @author
  * @date 2019-01-12
  */
-@lombok.Data
-@lombok.ToString
+@Data
 public class CapitalOrderInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
