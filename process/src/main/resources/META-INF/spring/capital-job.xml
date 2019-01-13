@@ -15,7 +15,7 @@
 
     <task:scheduled-tasks scheduler="taskScheduler">
         <!-- 每半分钟触发任务 -->
-        <task:scheduled ref="testJob" method="test" cron="0/5 * * * * ?"/>
+        <task:scheduled ref="testJob" method="test" cron="0/10 * * * * ?"/>
         <!--<task:scheduled ref="queryAllTicketJob" method="execute" cron="0 0 1 * * ?"/>-->
         <task:scheduled ref="subscribeAllMarketDataJob" method="execute" cron="0 30 9 * * ?"/>
         <!--<task:scheduled ref="ticketByTicketJob" method="execute" cron="0 0 1 * * ?"/>-->
