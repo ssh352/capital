@@ -3,16 +3,22 @@ package com.bazinga.capital.test;
 import com.bazinga.capital.constant.CommonConstant;
 import com.bazinga.capital.enums.TickerTypeEnum;
 import com.bazinga.capital.model.CirculateInfo;
+import com.bazinga.capital.model.TicketInfo;
+import com.bazinga.capital.query.TicketInfoQuery;
 import com.bazinga.capital.service.CirculateInfoService;
 import com.bazinga.capital.query.CirculateInfoQuery;
+import com.bazinga.capital.service.TicketInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -35,6 +41,24 @@ public class CirculateInfoTest {
 
     @Resource
     private CirculateInfoService circulateInfoService;
+
+    @Autowired
+    private TicketInfoService ticketInfoService;
+
+    @Test
+    private void test(){
+        List<TicketInfo> ticketInfos = ticketInfoService.listByCondition(new TicketInfoQuery());
+        Map<String,String> ticketMap = new HashMap<>(4096);
+        ticketInfos.forEach(item->{
+            ticketMap.put(item.getTicker(),item.getTicketName());
+        });
+        CirculateInfoQuery query = new CirculateInfoQuery();
+        List<CirculateInfo> circulateInfos = circulateInfoService.listByCondition(query);
+        circulateInfos.forEach(item->{
+            item.setTickerName(ticketMap.get(item.getTicker()));
+            circulateInfoService.updateById(item);
+        });
+    }
 
     @Test
     public void add() {
