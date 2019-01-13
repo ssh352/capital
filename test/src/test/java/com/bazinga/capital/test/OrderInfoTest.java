@@ -58,6 +58,7 @@ public class OrderInfoTest{
                 CapitalOrderInfo capitalOrderInfo = orderInfoPersistComponent.buildCapitalOrderInfo(item);
                 capitalOrderInfoService.save(capitalOrderInfo);
             }else{
+                byOrderXtpId.setStatus(item.getOrderStatusType());
                 byOrderXtpId.setCancelTime(item.getCancelTime());
                 byOrderXtpId.setTradedQuantity(item.getQtyTraded().intValue());
                 byOrderXtpId.setOrderCancelXtpId(ObjectUtils.toString(item.getOrderCancelXtpId(),""));
